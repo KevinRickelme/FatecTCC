@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace ProjetoFatec.Controllers
 {
-    
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +15,7 @@ namespace ProjetoFatec.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();

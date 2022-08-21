@@ -10,12 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(o=>o.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options => 
+                     {
+                         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                     })
                      .AddCookie(options =>
                      {
-                         options.LoginPath = "/Login";
+                         options.LoginPath = "/login-microsoft";
                          options.AccessDeniedPath = "/Error/AccessDenied";
 
+                     })
+                     .AddMicrosoftAccount(mopt =>
+                     {
+                         mopt.ClientId = "51829ae1-66c7-4f3f-9e64-f949cff32bf3";
+                         mopt.ClientSecret = "qTQ8Q~ZEv-TA-aJGpAb_ap5vO5HIur~Tjsom0aiK";
                      });
 
 builder.Services.AddTransient<ILoginRepository, LoginRepository>();
@@ -38,10 +46,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

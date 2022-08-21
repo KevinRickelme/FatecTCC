@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFatec.Interfaces;
 using ProjetoFatec.Models;
 
 namespace ProjetoFatec.Controllers
 {
+    
     public class LoginController : Controller
     {
         private readonly ILoginRepository _loginRepository;
@@ -33,6 +35,12 @@ namespace ProjetoFatec.Controllers
                 TempData["MensagemErro"] = $"Não foi possível realizar o login. {ex.Message}"; 
                 return RedirectToAction("Index");
             }
+        }
+
+        public IActionResult Sair()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
         }
     }
 }
