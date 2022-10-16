@@ -11,6 +11,7 @@ namespace ProjetoFatec.Models
         public string Email { get; set; }
         public string UsuarioSenha { get; set; }
        public int Privilegio { get; set; }
+        public bool PrimeiroAcesso { get; set; }
 
 
     }

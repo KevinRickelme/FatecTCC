@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFatec.Models;
+using ProjetoFatec.Utils;
+using ProjetoFatec.ViewModels;
 using System.Diagnostics;
 
 namespace ProjetoFatec.Controllers
@@ -16,8 +18,12 @@ namespace ProjetoFatec.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            CookiesViewModel cvm = new CookiesViewModel();
+            cvm.Nome = ClaimUtils.GetClaimInfo(User, "name");
+            cvm.Email = ClaimUtils.GetClaimInfo(User, "emailadress");
+            ViewData["Claims"] = cvm;
             return View();
         }
 

@@ -34,7 +34,7 @@ namespace ProjetoFatec.Controllers
                     claim.Value
                 });
 
-            return Json(claims);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
