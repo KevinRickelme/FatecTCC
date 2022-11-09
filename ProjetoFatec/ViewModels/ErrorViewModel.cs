@@ -1,4 +1,4 @@
-namespace ProjetoFatec.Models
+namespace ProjetoFatec.ViewModels
 {
     public class ErrorViewModel
     {

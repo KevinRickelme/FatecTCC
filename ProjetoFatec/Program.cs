@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(options =>
                          mopt.ClientSecret = "qTQ8Q~ZEv-TA-aJGpAb_ap5vO5HIur~Tjsom0aiK";
                      });
 
-builder.Services.AddTransient<ILoginRepository, LoginRepository>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
 
 var app = builder.Build();
@@ -51,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Usuario}/{action=Index}/{id?}");
 
 app.Run();

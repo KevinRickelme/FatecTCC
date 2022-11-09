@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoFatec.Models;
 
+
 namespace ProjetoFatec.Data
 {
     public class ApplicationContext : DbContext
@@ -11,6 +12,11 @@ namespace ProjetoFatec.Data
 
         }
 
-        public DbSet<Usuario> Logins { get; set; }
+        public DbSet<Usuario> Login { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Usuario>().HasIndex(e => e.Email).IsUnique();
+        }
     }
 }
