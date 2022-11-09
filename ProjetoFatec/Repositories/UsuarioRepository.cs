@@ -33,7 +33,7 @@ namespace ProjetoFatec.Repositories
         public bool PrimeiroAcesso(CookiesViewModel cvm)
         {
             bool result = _context.Login.Any(u => u.Email == cvm.Email);
-            return !result;
+             return !result;
         }
     }
 }
