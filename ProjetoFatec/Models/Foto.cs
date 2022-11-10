@@ -9,8 +9,6 @@ namespace ProjetoFatec.Models
         [Key]
         [Column("Id")]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("IdPublicacao")]
         public Publicacao Publicacao { get; set; }
         [Required]
         [Column("CaminhoFoto")]

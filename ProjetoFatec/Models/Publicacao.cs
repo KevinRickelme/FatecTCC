@@ -19,7 +19,9 @@ namespace ProjetoFatec.Models
         public DateTime DataCriacao { get; set; }
         [Required]
         [ForeignKey("IdFoto")]
-        public Foto Foto { get; set; }
+        public Foto? Foto { get; set; }
+        public List<Comentario>? Comentario { get; set; }
+
 
 
     }

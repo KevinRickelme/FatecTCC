@@ -26,14 +26,13 @@ namespace ProjetoFatec.Models
         public string Telefone { get; set; } //ex. 11900000000
         [Required]
         [Column("DataNascimento")]
-        public DateOnly DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
         [Required]
         [MaxLength(1)]
         [Column("Sexo")]
         public SexoEnum Sexo { get; set; }
         [Column("NomeCurso")]
         public string NomeCurso { get; set; }
-        [ForeignKey("IdFotoPerfil")]
         public FotoPerfil FotoPerfil { get; set; }
         [Column("Biografia")]
         public string Biografia { get; set; }

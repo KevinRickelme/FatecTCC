@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoFatec.Models
 {
+    [Table("Feed")]
     public class Feed
     {
         [Key]
@@ -11,6 +12,7 @@ namespace ProjetoFatec.Models
         [Required]
         [ForeignKey("IdPerfil")]
         public Perfil Perfil { get; set; }
+        public List<Publicacao> Publicacao { get; set; }
 
     }
 }
