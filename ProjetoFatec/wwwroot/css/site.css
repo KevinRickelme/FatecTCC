@@ -1,22 +1,96 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #FDFDFD;
 }
 
-.field-validation-error{
-    color:#e01d1d;
+.field-validation-error {
+    color: #e01d1d;
 }
+
+
+.logo-SI3 {
+    margin-left: 10em;
+}
+
+.nav-items-right {
+    margin-right: 10em;
+}
+
+.navbar {
+    margin-top: 1em;
+}
+
+.navbar-nav li {
+    margin-right: 4em;
+}
+
+.navbar-nav .menus {
+    margin-right: 3em;
+    width: 5em;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.botao-menus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    color: #626262;
+}
+
+    .botao-menus:hover {
+        color: #9B3737;
+        font-size: 17px;
+        transition: 0.5s;
+    }
+
+.menus-items {
+    margin-left: 1.5em;
+    width: 32px;
+    height: 32px;
+}
+
+.botaoLoginPrincipal {
+    word-spacing: 10px;
+    font-weight: 650;
+    color: #9B3737;
+    font-size: 20px;
+    vertical-align: middle;
+    display: table-cell;
+    width: 180px;
+    height: 53px;
+    border-radius: 25px;
+    background-color: transparent;
+    border-color: #9B3737;
+    transform: 0.5s;
+}
+
+    .botaoLoginPrincipal:hover {
+        width: 185px;
+        background-color: rgba(155, 55, 55, 15%);
+        border-color: red;
+        color: #9B3737;
+        transition: 0.5s;
+    }
