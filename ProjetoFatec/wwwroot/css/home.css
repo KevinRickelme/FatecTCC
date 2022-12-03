@@ -1,0 +1,117 @@
+html {
+    width: 100%;
+}
+
+.search-area {
+    width: 100%;
+    padding: 0;
+}
+
+
+.searchArea {
+    width: 15em;
+    border-radius: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    align-items: center;
+}
+
+    .searchArea:focus {
+        width: 20em;
+        transition: all 0.5s ease-in-out;
+    }
+
+.divProfile {
+    width: 15em;
+    background-color: #F6F6F6;
+    border-radius: 50px;
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+}
+
+.btn-profile {
+    width: 100%;
+}
+
+
+.dropdown-menu {
+    text-align: center;
+    width: 100%;
+    border-end-start-radius: 25px;
+    border-end-end-radius: 25px;
+    background-color: #F6F6F6;
+    border-style: none;
+    top: 90% !important;
+}
+dropdown-item {
+    color: #212529 !important;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #9b373752;
+}
+
+.animate {
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+}
+
+
+.removeBordaMenu {
+    transition: 0.5s !important;
+    border-start-start-radius: 25px !important;
+    border-start-end-radius: 25px !important;
+    border-end-start-radius: 0 !important;
+    border-end-end-radius: 0 !important;
+}
+
+.adicionaBordaMenu {
+    transition: 0.5s !important;
+    border-end-start-radius: 50 !important;
+    border-end-end-radius: 50 !important;
+}
+
+
+@keyframes slideIn {
+    0% {
+        transition: 1s !important;
+        opacity: 0;
+    }
+
+    100% {
+        transition: 1s !important;
+        opacity: 1;
+    }
+
+    0% {
+        transition: 1s !important;
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes slideIn {
+    0% {
+        transition: 1s !important;
+        -webkit-opacity: 0;
+    }
+
+    100% {
+        transition: 1s !important;
+        -webkit-opacity: 1;
+    }
+
+    0% {
+        transition: 1s !important;
+        -webkit-opacity: 0;
+    }
+}
+
+.slideIn {
+    -webkit-animation-name: slideIn;
+    animation-name: slideIn;
+}

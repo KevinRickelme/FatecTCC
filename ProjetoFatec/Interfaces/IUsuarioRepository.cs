@@ -8,5 +8,10 @@ namespace ProjetoFatec.Interfaces
     {
         void CadastrarUsuario(CookiesViewModel cvm);
         bool PrimeiroAcesso(CookiesViewModel cvm);
+        Usuario? GetUsuario(string email);
+        bool CadastrarPerfilDeUsuario(IFormCollection formularioCadastro, string emailUsuario);
+
+        Perfil GetPerfil(CookiesViewModel cvm);
+        bool TemPerfilCriado(CookiesViewModel cvm);
     }
 }

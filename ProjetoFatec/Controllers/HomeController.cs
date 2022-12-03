@@ -26,14 +26,23 @@ namespace ProjetoFatec.Controllers
         public async Task<IActionResult> Index()
         {
             CookiesViewModel cvm = new CookiesViewModel();
-            cvm.Nome = ClaimUtils.GetClaimInfo(User, "name");
+            cvm.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+            cvm.PrimeiroNome = cvm.Nome.Split()[0];
             cvm.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
             ViewData["Claims"] = cvm;
 
             if (_usuarioRepository.PrimeiroAcesso(cvm))
-                _usuarioRepository.CadastrarUsuario(cvm);
-
-            return View();
+            {
+                return RedirectToAction("Cadastro", "Usuario");
+            }
+            else {
+                if (!(_usuarioRepository.TemPerfilCriado(cvm)))
+                {
+                    return RedirectToAction("Cadastro", "Usuario");
+                }
+                    ViewData["PerfilUsuario"] = _usuarioRepository.GetPerfil(cvm);
+                return View();
+            }
         }
 
 
@@ -47,5 +56,8 @@ namespace ProjetoFatec.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
     }
 }

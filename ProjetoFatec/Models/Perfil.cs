@@ -33,8 +33,10 @@ namespace ProjetoFatec.Models
         public SexoEnum Sexo { get; set; }
         [Column("NomeCurso")]
         public string NomeCurso { get; set; }
-        public FotoPerfil FotoPerfil { get; set; }
+        public FotoPerfil? FotoPerfil { get; set; }
         [Column("Biografia")]
-        public string Biografia { get; set; }
+        public string? Biografia { get; set; }
+        [Column("SemestreAtual")]
+        public int SemestreAtual { get; set; }
     }
 }

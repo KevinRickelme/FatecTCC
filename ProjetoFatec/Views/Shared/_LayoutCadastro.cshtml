@@ -1,8 +1,4 @@
-﻿@{
-    var perfil = ViewData["PerfilUsuario"] as Perfil;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -10,12 +6,16 @@
     <title>@ViewData["Title"] - ProjetoFatec</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user-body.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/cadastro.css">
 </head>
 <body>
     <header>
+
+
         <div class="container-fluid">
 
+            <!-- Quando for passar para C# remover essa navbar-->
             <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-white box-shadow mb-3 abc">
                 <div class="container-fluid">
                     <div class="logo-SI3">
@@ -26,61 +26,35 @@
                         </svg>
                     </div>
 
-                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="navbar-collapse collapse flex-row-reverse">
                         <ul class="navbar-nav">
-                            <li class="nav-item menus">
-                                <a class="nav-link botao-menus" href="#">
-                                    <img class="menus-items" src="./imgs/help-us-icon.svg">
-                                    <span>Home</span>
+                            <li class="nav-link menus">
+                                <a class="botao-menus" href="#">
+                                    <img class="menus-items" src="~/imgs/about-us.svg">
+                                    <span>Sobre nós</span>
                                 </a>
                             </li>
-                            <li class="nav-item menus">
-                                <a class="nav-link botao-menus" href="#">
-                                    <img class="menus-items" src="./imgs/about-us.svg">
-                                    <span>Amigos</span>
-
+                            <li class="nav-link menus">
+                                <a class="botao-menus" href="#">
+                                    <img class="menus-items" src="~/imgs/contact.svg">
+                                    <span>Contato</span>
                                 </a>
                             </li>
-                            <li class="nav-item menus">
-                                <a class="nav-link botao-menus" href="#">
-                                    <img class="menus-items" src="./imgs/contact.svg">
-                                    <span>Chat</span>
-                                </a>
+                            <li class="nav-link menus linhaMenu">
+                                <svg class="linhaMenu" width="3" height="80" viewBox="0 0 3 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="1.5" y1="6.55671e-08" x2="1.5" y2="80" stroke="#EDEDED" stroke-width="3" />
+                                </svg>
                             </li>
-                            <li class="nav-item menus">
-                                <div class="btn-group divProfile" id="x">
-                                    <button type="button" data-bs-toggle="dropdown" class="btn btn-profile btn-profile-pic border-0">Olá, <strong>@perfil.Nome.Split()[0]</strong>!</button>
-                                    <a class="btn dropdown-toggle-split btn-profile-pic border-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <div class="profile-pic">
-                                            <img class="img-fluid profile-pic" id="dropdownBotao" src="./imgs/perfil.png">
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu slideIn animate">
-                                        <li><a class="dropdown-item" href="#">Meu perfil</a></li>
-                                        <li><a class="dropdown-item" href="#">Configurações</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" asp-action="Sair" asp-controller="Usuario">Sair</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-
-
                         </ul>
-
-                        <div class="search-area">
-                            <form class="form-inline my-2 my-lg-0">
-                                <input class="form-control mr-sm-2 searchArea" type="search" placeholder="Procurar pessoa" aria-label="Search">
-                            </form>
-                        </div>
                     </div>
+
                 </div>
             </nav>
-
-
         </div>
     </header>
     <div class="container">
@@ -89,15 +63,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - ProjetoFatec - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="./lib/jquery/dist/jquery.min.js"></script>
+    <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>

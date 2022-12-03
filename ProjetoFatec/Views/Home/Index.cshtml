@@ -1,11 +1,15 @@
 ﻿@using ProjetoFatec.ViewModels
 @{
-    ViewData["Title"] = "Home Page";
-    var x = ViewData["Claims"] as CookiesViewModel;
-    var y = "xxx";
+    var perfil = ViewData["PerfilUsuario"] as Perfil;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Bem-vindo, @x.Nome</a>.</p>
+    
+    <p><strong>Nome</strong>:  @perfil.Nome</p>
+    <p><strong>Sobrenome</strong>: @perfil.Sobrenome</p>
+    <p><strong>Email</strong>: @perfil.Usuario.Email</p>
+    <p><strong>Telefone</strong>: @perfil.Telefone</p>
+    <p><strong>Nome do curso</strong>: @perfil.NomeCurso</p>
+    <p><strong>Semestre atual</strong>: @perfil.SemestreAtual</p>
 </div>

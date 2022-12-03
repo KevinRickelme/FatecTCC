@@ -1,18 +1,36 @@
 html {
     font-size: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #626262 !important;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
+.htmlLayout {
+    width: 92% !important;
+}
+
+.container-body {
+    width: 92% !important;
+}
+
+.container-fluid {
+    width: 100%;
+}
+
+@media(max-width: 992px) {
+
+    .linhaMenu {
+        display: none;
     }
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+@media(max-width: 533.34px) {
+    .botao-menus:hover {
+        color: #9B3737;
+        font-size: 1em;
+        transition: 0.5s;
+    }
 }
+
 
 body {
     margin-bottom: 60px;
@@ -37,13 +55,11 @@ body {
 }
 
 .navbar-nav li {
-    margin-right: 4em;
+    margin-right: 3em;
+    width: 100%;
 }
 
 .navbar-nav .menus {
-    margin-right: 3em;
-    width: 5em;
-    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,23 +67,27 @@ body {
 }
 
 .botao-menus {
-    display: flex;
+    width: 6em;
+    align-items: center;
     flex-direction: column;
-    justify-content: center;
     text-align: center;
     text-decoration: none;
+    font-weight: 350;
     letter-spacing: 0.01em;
     color: #626262;
 }
 
-    .botao-menus:hover {
-        color: #9B3737;
-        font-size: 17px;
-        transition: 0.5s;
-    }
+span {
+    display: block;
+}
+
+.botao-menus:hover {
+    color: #9B3737;
+    font-size: 1.1em;
+    transition: 0.5s;
+}
 
 .menus-items {
-    margin-left: 1.5em;
     width: 32px;
     height: 32px;
 }
@@ -77,8 +97,6 @@ body {
     font-weight: 650;
     color: #9B3737;
     font-size: 20px;
-    vertical-align: middle;
-    display: table-cell;
     width: 180px;
     height: 53px;
     border-radius: 25px;
@@ -87,10 +105,23 @@ body {
     transform: 0.5s;
 }
 
-    .botaoLoginPrincipal:hover {
-        width: 185px;
-        background-color: rgba(155, 55, 55, 15%);
-        border-color: red;
-        color: #9B3737;
-        transition: 0.5s;
+    .botaoLoginPrincipal:active {
+        width: 185px !important;
+        background-color: #9B3737 !important;
+        border-color: red !important;
+        color: white !important;
+        transition: 0.5s !important;
     }
+
+.menus {
+    width: 100%;
+    align-items: center;
+}
+
+.botaoLoginPrincipal:hover {
+    width: 185px;
+    background-color: rgba(155, 55, 55, 15%);
+    border-color: red;
+    color: #9B3737;
+    transition: 0.5s;
+}
