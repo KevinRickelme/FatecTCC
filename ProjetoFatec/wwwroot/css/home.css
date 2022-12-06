@@ -1,11 +1,41 @@
 html {
     width: 100%;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media(max-width: 641px) {
+    html {
+        width: 100%;
+        font-size: 10px;
+    }
+
+    .divHomePrincipal {
+        width: 100% !important;
+    }
+}
+
+@media(max-width: 385px) {
+    html {
+        width: 100%;
+        font-size: 8px !important;
+    }
+
+    .divHomePrincipal {
+        width: 100% !important;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 .search-area {
     width: 100%;
     padding: 0;
 }
+
 
 
 .searchArea {
@@ -47,9 +77,7 @@ html {
     border-style: none;
     top: 90% !important;
 }
-dropdown-item {
-    color: #212529 !important;
-}
+
 .dropdown-item:hover, .dropdown-item:focus {
     background-color: #9b373752;
 }
@@ -115,3 +143,195 @@ dropdown-item {
     -webkit-animation-name: slideIn;
     animation-name: slideIn;
 }
+
+
+/* Parte do index Home */
+
+.divHomePrincipal, .divHomePrincipalPostagens {
+    justify-content: center;
+    display: flex;
+}
+
+main {
+    height: 100%;
+    background-color: white;
+}
+
+.divPost {
+    width: 75%;
+    height: 10em;
+    margin-top: 2%;
+    border-radius: 24px;
+    align-items: center;
+    padding-right: 3%;
+    background-color: #fafafa;
+}
+
+.divPoste {
+    width: 77%;
+    height: 100%;
+}
+
+.divPostar {
+    width: 85%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    font-size: 200%;
+    padding-left: 5%;
+    background-color: #fafafa;
+}
+
+.divPostagem {
+    display: flex;
+    margin-top: 2%;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    margin-bottom: 2%;
+    display: flex;
+    padding-left: 2%;
+    background-color: #fafafa;
+}
+
+.divPostar {
+    border-style: solid !important;
+    border-width: 1px;
+    border-color: #d6d6d6 !important;
+    color: #9A9A9A;
+    font-weight: 400;
+}
+
+    .divPostar:hover {
+        background-color: rgb(215, 215, 215);
+        transition: 0.5s;
+        color: #8a8a8a;
+    }
+
+.divPicPostagem {
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.pic-post {
+    width: 100%;
+    height: 100%;
+}
+
+.pic-postagem {
+    width: 100%;
+    height: 100%;
+}
+
+.divPicPostagem {
+    width: 9em;
+    height: 9em;
+}
+
+
+footer {
+    display: flex;
+}
+
+.divPostagemInfo {
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.post-nome {
+    color: #757575;
+    font-size: 150%;
+    font-weight: 500;
+}
+
+.post-curso {
+    padding-top: 0.5%;
+    color: #A6A6A6;
+    font-size: 100%;
+}
+
+.post-tempo {
+    padding-top: 0.5%;
+    color: #A6A6A6;
+    font-size: 100%;
+}
+
+.post-conteudo {
+    color: #838383;
+    padding-right: 1%;
+    padding-top: 2%;
+    width: 80%;
+    text-align: justify;
+}
+
+.botoesPost {
+    width: 85%;
+    padding-top: 2%;
+    margin-bottom: 5%;
+}
+
+.post-btnLike, .post-btnComentar, .post-btnCompartilhar {
+    background-color: #F9F9F9;
+    margin-right: 5%;
+    border-radius: 23px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 30px !important;
+    color: #9F9F9F;
+}
+
+.svg-like-gostei {
+    color: #9F9F9F !important;
+}
+
+.post-qtdLike {
+    color: #757575;
+    font-weight: lighter;
+}
+
+
+.modal-content {
+    margin-left: 8%;
+    margin-top: 20%;
+    border-radius: 25px;
+}
+
+
+.divModal {
+    display: flex;
+}
+
+
+.txtPublicacao {
+    border-style: none;
+}
+
+
+.btnPublicar {
+    font-weight: 500;
+    color: #9B3737;
+    font-size: 20px;
+    width: 185px;
+    height: 53px;
+    border-radius: 25px;
+    background-color: transparent;
+    border-color: #9B3737;
+    margin-top: 2em;
+}
+
+    .btnPublicar:hover {
+        width: 185px;
+        background-color: rgba(155, 55, 55, 15%);
+        border-color: red;
+        color: #9B3737;
+        transition: 0.5s;
+    }
+    .btnPublicar:active {
+        width: 185px !important;
+        background-color: #9B3737 !important;
+        border-color: red !important;
+        color: white !important;
+        transition: 0.5s !important;
+    }

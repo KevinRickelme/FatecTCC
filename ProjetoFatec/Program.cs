@@ -27,6 +27,7 @@ builder.Services.AddAuthentication(options =>
                      });
 
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<IPublicacaoRepository, PublicacaoRepository>();
 
 
 var app = builder.Build();

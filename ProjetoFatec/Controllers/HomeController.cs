@@ -40,7 +40,8 @@ namespace ProjetoFatec.Controllers
                 {
                     return RedirectToAction("Cadastro", "Usuario");
                 }
-                    ViewData["PerfilUsuario"] = _usuarioRepository.GetPerfil(cvm);
+                ViewData["PerfilUsuario"] = _usuarioRepository.GetPerfil(cvm);
+                ViewData["Publicacoes"] = _usuarioRepository.GetPublicacoes(cvm);
                 return View();
             }
         }

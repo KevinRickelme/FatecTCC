@@ -13,5 +13,6 @@ namespace ProjetoFatec.Interfaces
 
         Perfil GetPerfil(CookiesViewModel cvm);
         bool TemPerfilCriado(CookiesViewModel cvm);
+        List<Publicacao> GetPublicacoes(CookiesViewModel cvm);
     }
 }

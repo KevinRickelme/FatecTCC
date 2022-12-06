@@ -11,7 +11,7 @@ namespace ProjetoFatec.Models
         public int Id { get; set; }
         [Required]
         [ForeignKey("IdPerfil")]
-        public Perfil Perfil { get; set; }
+        public Perfil? Perfil { get; set; }
         [Column("Legenda")]
         public string Legenda { get; set; }
         [Required]
@@ -19,8 +19,8 @@ namespace ProjetoFatec.Models
         public DateTime DataCriacao { get; set; }
         [Required]
         [ForeignKey("IdFoto")]
-        public Foto? Foto { get; set; }
         public List<Comentario>? Comentario { get; set; }
+
 
 
 

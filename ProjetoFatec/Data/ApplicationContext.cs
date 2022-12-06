@@ -35,9 +35,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
                 .WithMany(c => c.Comentario)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Foto>()
-                .HasOne(f => f.Publicacao)
-                .WithOne(p => p.Foto);
+
 
             modelBuilder.Entity<FotoPerfil>()
                 .HasOne(fp => fp.Perfil)

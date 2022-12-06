@@ -85,5 +85,18 @@ namespace ProjetoFatec.Repositories
                 return false;
             }
         }
+
+        public List<Publicacao> GetPublicacoes(CookiesViewModel cvm)
+        {
+            try
+            {
+                var result = _context.Publicacoes.ToList().FindAll(p => p.Perfil.Usuario.Id == GetUsuario(cvm.Email).Id).OrderByDescending(p=>p.DataCriacao).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

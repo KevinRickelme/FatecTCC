@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoFatec.Data;
 
@@ -11,9 +12,10 @@ using ProjetoFatec.Data;
 namespace ProjetoFatec.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221204005722_testando")]
+    partial class testando
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,9 +68,6 @@ namespace ProjetoFatec.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Descricao");
 
-                    b.Property<int?>("IdFoto")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdPublicacao")
                         .HasColumnType("int");
 
@@ -117,12 +116,7 @@ namespace ProjetoFatec.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("CaminhoFoto");
 
-                    b.Property<int>("PublicacaoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PublicacaoId");
 
                     b.ToTable("Foto");
                 });
@@ -226,6 +220,9 @@ namespace ProjetoFatec.Migrations
                     b.Property<int?>("FeedId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdFoto")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdPerfil")
                         .HasColumnType("int");
 
@@ -237,6 +234,9 @@ namespace ProjetoFatec.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FeedId");
+
+                    b.HasIndex("IdFoto")
+                        .IsUnique();
 
                     b.HasIndex("IdPerfil");
 
@@ -314,17 +314,6 @@ namespace ProjetoFatec.Migrations
                     b.Navigation("Perfil");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Models.Foto", b =>
-                {
-                    b.HasOne("ProjetoFatec.Models.Publicacao", "Publicacao")
-                        .WithMany()
-                        .HasForeignKey("PublicacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Publicacao");
-                });
-
             modelBuilder.Entity("ProjetoFatec.Models.FotoPerfil", b =>
                 {
                     b.HasOne("ProjetoFatec.Models.Perfil", "Perfil")
@@ -353,11 +342,19 @@ namespace ProjetoFatec.Migrations
                         .WithMany("Publicacao")
                         .HasForeignKey("FeedId");
 
+                    b.HasOne("ProjetoFatec.Models.Foto", "Foto")
+                        .WithOne("Publicacao")
+                        .HasForeignKey("ProjetoFatec.Models.Publicacao", "IdFoto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProjetoFatec.Models.Perfil", "Perfil")
                         .WithMany()
                         .HasForeignKey("IdPerfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Foto");
 
                     b.Navigation("Perfil");
                 });
@@ -365,6 +362,12 @@ namespace ProjetoFatec.Migrations
             modelBuilder.Entity("ProjetoFatec.Models.Feed", b =>
                 {
                     b.Navigation("Publicacao");
+                });
+
+            modelBuilder.Entity("ProjetoFatec.Models.Foto", b =>
+                {
+                    b.Navigation("Publicacao")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjetoFatec.Models.Perfil", b =>
