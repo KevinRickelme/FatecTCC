@@ -1,15 +1,15 @@
-﻿@using ProjetoFatec.ViewModels
+﻿@using ProjetoFatec.Application.ViewModels
 @model PostViewModel;
 @{
     var perfil = ViewData["PerfilUsuario"] as Perfil;
-    List<Publicacao> publicacoes = new List<Publicacao>();
-    publicacoes = ViewData["Publicacoes"] as List<Publicacao>;
+    List<PublicacaoViewModel> publicacoes = new List<PublicacaoViewModel>();
+    publicacoes = ViewData["Publicacoes"] as List<PublicacaoViewModel>;
 }
 
 <div class="container divHomePrincipal">
-    <div class="container-fluid divPost row justify-content-between">
+    <div class="container divPost row justify-content-between">
         <div class="col divPic">
-            <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="./imgs/kevin.jpg">
+            <img class="img profile-pic pic-post" id="dropdownBotao" src="./imgs/kevin.jpg">
         </div>
         <a class="col-4 divPostar" href="#"data-bs-toggle="modal" data-bs-target="#modalPostagem">
             Criar publicação
@@ -29,15 +29,15 @@
                     </div>
             <div class="modal-body">
 
-            <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post">
+                <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                 
                             <div class="mb-3">
-                        <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?"></textarea>
+                        <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=postagem></textarea><span asp-validation-for="postagem"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="formFile" class="form-label">Inserir imagem</label>
-                                <input class="form-control input inputImagem" type="file" id="formFile" name="imagem">
+                                <label for="formFile" class="form-label" asp-for=imagem>Inserir imagem</label>
+                                <input class="form-control input inputImagem" type="file" id="formFile" name="imagem" accept="image/*">
                               </div>
                 
                           
@@ -54,38 +54,42 @@
             </div>
 
 
-@if(publicacoes != null){
+@if(publicacoes.Count != null){
     @foreach(var pub in publicacoes){
     <div class="container divHomePrincipalPostagens">
-        <div class="container-fluid divPoste">
-            <div class="col-4 divPostagem" href="#">
+        <div class="container-fluid divPoste"  style="background-color:white;">
+            <div class="row-4 divPostagem" href="#">
                 <div class="col-1 divPic divPicPostagem">
                     <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/kevin.jpg">
                 </div>
-                <div class="col-12 divPic divPostagemInfo">
+                <div class="row divPic divPostagemInfo">
                     <a class="post-nome row">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
                     <a class="post-curso row">@pub.Perfil.NomeCurso, @pub.Perfil.SemestreAtual</a>
                     <a class="post-tempo row">@pub.DataCriacao</a>
+                </div>
+            </div>
+            <div class="row-col-4 divPostagemInfos">
                     <p class="post-conteudo row">@pub.Legenda</p>
-                    <svg width="15" height="15" viewBox="0 3 32 32" fill="none" class="svg-like col" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5.33338 10.6667H12.816L11.3187 6.17735C11.0494 5.36669 11.1854 4.46802 11.6854 3.77469C12.1854 3.08135 12.996 2.66669 13.8507 2.66669H16C16.396 2.66669 16.7707 2.84269 17.0254 3.14669L23.292 10.6667H26.6667C28.1374 10.6667 29.3334 11.8627 29.3334 13.3334V25.3334C29.3334 26.804 28.1374 28 26.6667 28H8.92404C8.38153 27.9982 7.85233 27.8318 7.40642 27.5228C6.96051 27.2138 6.61888 26.7767 6.42671 26.2694L2.75071 16.468C2.69489 16.3183 2.66644 16.1598 2.66671 16V13.3334C2.66671 11.8627 3.86271 10.6667 5.33338 10.6667ZM26.6667 13.3334H24V25.3334H26.6667V13.3334ZM5.33338 15.7587L8.92404 25.3334H21.3334V12.4827L15.376 5.33335H13.848L15.9307 11.5774C15.9983 11.7778 16.0172 11.9914 15.9857 12.2006C15.9543 12.4098 15.8734 12.6084 15.7498 12.7801C15.6263 12.9517 15.4635 13.0915 15.2752 13.1877C15.0868 13.2839 14.8782 13.3339 14.6667 13.3334H5.33338V15.7587Z" fill="#252525" />
-                    </svg>
-                    <a class="post-qtdLike col">0 Likes</a>
+                    @if(pub.CaminhoFoto != null)
+                        {
+                        <img src="@pub.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
+                        }<br/>                    
+                    <a class="post-qtdLike col"><span class=" fa-regular fa-heart"></span> 0 Likes</a>
 
+                    <hr/>
 
                     <div class="botoesPost row">
                         <a class="btn post-btnLike col">
-                            Gostei
+                            <span class=" fa-regular fa-heart"></span> Gostei
                         </a>
-                        <a class="btn post-btnComentar col">Comentar</a>
-                        <a class="btn post-btnCompartilhar col">Compartilhar</a>
+                        <a class="btn post-btnComentar col"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                        <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                     </div>
                 </div>
 
             </div>
 
 
-        </div>
     </div>
     }
 }

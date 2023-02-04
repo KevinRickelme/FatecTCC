@@ -1,27 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoFatec.Interfaces;
-using ProjetoFatec.Models;
-using ProjetoFatec.Repositories;
+using ProjetoFatec.Application.Interfaces;
+using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Domain.Entities;
+using ProjetoFatec.Domain.Enums;
+using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Utils;
 using ProjetoFatec.ViewModels;
-using ProjetoFatec.Enums;
-using System.Security.Claims;
-using System.Net;
 
 namespace ProjetoFatec.Controllers
 {
-    
+
     public class UsuarioController : Controller
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-        private CookiesViewModel cookie;
-        public UsuarioController(IUsuarioRepository usuarioRepositorio)
+        private readonly IUsuarioService _usuarioService;
+        private readonly IPerfilService _perfilService;
+        public UsuarioController(IUsuarioService usuarioService, IPerfilService perfilService)
         {
-            _usuarioRepository = usuarioRepositorio;
-            cookie = new CookiesViewModel();
+            _usuarioService = usuarioService;
+            _perfilService = perfilService;
         }
 
         public IActionResult Index()
@@ -34,7 +32,6 @@ namespace ProjetoFatec.Controllers
                 return View();
         }
 
-
         public IActionResult Sair()
         {
             HttpContext.SignOutAsync();
@@ -43,32 +40,34 @@ namespace ProjetoFatec.Controllers
         [Authorize]
         public async Task<IActionResult> Cadastro()
         {
-            CookiesViewModel cvm = new CookiesViewModel();
-            cvm.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
-            cvm.PrimeiroNome = cvm.Nome.Split()[0];
-            cvm.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
+            UsuarioViewModel usuario = new UsuarioViewModel();
+            usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
-            if (_usuarioRepository.PrimeiroAcesso(cvm)) { 
-                _usuarioRepository.CadastrarUsuario(cvm);
-                if ((_usuarioRepository.TemPerfilCriado(cvm)))
+
+
+            if (_usuarioService.PrimeiroAcesso(usuario)) {
+                _usuarioService.Add(usuario);
+                if ((_usuarioService.TemPerfilCriado(usuario)))
                 {
                     return RedirectToAction("Index", "Home");
                 }
                 else 
                 {
-                    cookie = cvm;
-                    ViewData["Claims"] = cvm;
+                    ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                    ViewBag.PrimeiroNome = (ClaimUtils.GetClaimInfo(User, "name")).Split()[0];
+                    ViewBag.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
                     return View();
                 }
             }
             else
             {
-                if (_usuarioRepository.TemPerfilCriado(cvm))
+                if (_usuarioService.TemPerfilCriado(usuario))
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                cookie = cvm;
-                ViewData["Claims"] = cvm;
+                ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                ViewBag.PrimeiroNome = (ClaimUtils.GetClaimInfo(User, "name")).Split()[0];
+                ViewBag.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
                 return View();
             }
         }
@@ -77,16 +76,17 @@ namespace ProjetoFatec.Controllers
         public async Task<IActionResult> Cadastrar()
         {
             try {
-                CookiesViewModel cvm = new CookiesViewModel();
-                cvm.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
-                cvm.PrimeiroNome = cvm.Nome.Split()[0];
-                cvm.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
+                UsuarioViewModel usuario = new UsuarioViewModel();
+                usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
-                if(_usuarioRepository.PrimeiroAcesso(cvm))
-                    _usuarioRepository.CadastrarUsuario(cvm);
+                if(_usuarioService.PrimeiroAcesso(usuario))
+                    _usuarioService.Add(usuario);
                 string EmailUsuario = ClaimUtils.GetClaimInfo(User, "emailaddress");
-                if(!(_usuarioRepository.TemPerfilCriado(cvm)))
-                    _usuarioRepository.CadastrarPerfilDeUsuario(Request.Form, EmailUsuario);
+                if(!(_usuarioService.TemPerfilCriado(usuario)))
+                {
+                    PerfilViewModel pf = CriarPerfil(Request.Form, EmailUsuario);
+                    _perfilService.Add(pf);
+                }
                 return RedirectToAction("Index","Home");
             }
             catch(Exception ex)
@@ -97,6 +97,22 @@ namespace ProjetoFatec.Controllers
 
 
             
+        }
+
+        private PerfilViewModel CriarPerfil(IFormCollection formularioCadastro, string emailUsuario)
+        {
+            PerfilViewModel perfil = new PerfilViewModel()
+            {
+                Nome = formularioCadastro["PrimeiroNome"],
+                Sobrenome = formularioCadastro["Sobrenome"],
+                Telefone = formularioCadastro["DDD"] + formularioCadastro["Telefone"],
+                Usuario = _usuarioService.GetUsuario(emailUsuario).Result,
+                DataNascimento = Convert.ToDateTime(formularioCadastro["DataNascimento"]),
+                Sexo = formularioCadastro["Sexo"] == "Feminino" ? SexoEnum.Feminino : SexoEnum.Masculino,
+                NomeCurso = formularioCadastro["NomeCurso"],
+                SemestreAtual = int.Parse(formularioCadastro["SemestreAtual"])
+            };
+            return perfil;
         }
     }
 }

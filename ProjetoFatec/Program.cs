@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using ProjetoFatec.Data;
-using ProjetoFatec.Interfaces;
-using ProjetoFatec.Repositories;
+using ProjetoFatec.Infra.Data.Context;
+using ProjetoFatec.Infra.IoC;
+using ProjetoFatec.MVC.MappingConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(o=>o.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+
+builder.Services.AddInfraestructure(builder.Configuration);
+
+builder.Services.AddAutoMapperConfiguration();
 
 builder.Services.AddAuthentication(options => 
                      {
@@ -26,11 +29,25 @@ builder.Services.AddAuthentication(options =>
                          mopt.ClientSecret = "qTQ8Q~ZEv-TA-aJGpAb_ap5vO5HIur~Tjsom0aiK";
                      });
 
-builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddTransient<IPublicacaoRepository, PublicacaoRepository>();
-
 
 var app = builder.Build();
+
+
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<ApplicationContext>();
+        context.Database.Migrate();
+    }
+    catch(Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError("Ocorreu um erro na migração ou alimentação dos dados. Ex => " + ex.Message + "\nStack => " + ex.StackTrace);
+    }
+}
 
 
 
@@ -41,7 +58,6 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

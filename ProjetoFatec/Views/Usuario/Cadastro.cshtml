@@ -1,13 +1,15 @@
 ﻿@{
     Layout = "_LayoutCadastro";
-    var user = ViewData["Claims"] as CookiesViewModel;
+    var PrimeiroNome = ViewBag.PrimeiroNome;
+    var EmailUsuario = ViewBag.Email;
+
 }
 
 
 <div class="container-fluid mainDiv">
     <div class="container-fluid textos-cadastro">
         <p class="home-title titulo-cadastro">
-            Olá, <strong>@user.PrimeiroNome</strong>!
+            Olá, <strong>@PrimeiroNome</strong>!
         </p>
         <p class="home-title subtitulo-cadastro">
             Notamos que este é seu primeiro acesso.
@@ -29,7 +31,7 @@
             </div>
             <div class="col-12">
                 <label for="inputAddress" class="form-label">Email</label>
-                <input type="text" class="form-control input inputEmail" id="inputAddress" name="Email" value="@user.Email" readonly style="color:dimgray">
+                <input type="text" class="form-control input inputEmail" id="inputAddress" name="Email" value="@EmailUsuario" readonly style="color:dimgray">
             </div>
             <div class="col-md-4">
                 <label for="label labelTelefone" class="form-label">Telefone</label>

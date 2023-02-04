@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoFatec.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using ProjetoFatec.Application.Interfaces;
+using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Domain.Entities;
+using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Utils;
 using ProjetoFatec.ViewModels;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ProjetoFatec.Controllers
 {
@@ -10,29 +15,31 @@ namespace ProjetoFatec.Controllers
     public class PublicacaoController : Controller
     {
         private readonly ILogger<PublicacaoController> _logger;
-        private readonly IUsuarioRepository _usuarioRepository;
-        private readonly IPublicacaoRepository _publicacaoRepository;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IPublicacaoService _publicacaoService;
+        private readonly IPerfilService _perfilService;
 
-
-        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioRepository usuarioRepositorio, IPublicacaoRepository publicacaoRepository)
+        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService)
         {
             _logger = logger;
-            _usuarioRepository = usuarioRepositorio;
-            _publicacaoRepository= publicacaoRepository;
+            _usuarioService = usuarioService;
+            _publicacaoService = publicacaoService;
+            _perfilService = perfilService;
         }
 
 
-        public IActionResult PublicarPostagem()
+        public async Task<IActionResult> PublicarPostagem(PostViewModel pvm, IFormFile imagem)
         {
             try
             {
-                CookiesViewModel cvm = new CookiesViewModel();
-                cvm.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
-                cvm.PrimeiroNome = cvm.Nome.Split()[0];
-                cvm.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
-                var perfil = _usuarioRepository.GetPerfil(cvm);
+                var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
+                var perfil = _perfilService.GetPerfil(usuario).Result;
+                var form = Request.Form;
 
-                if (_publicacaoRepository.PostarPublicacao(Request.Form, perfil))
+                var publicacao = PopularPublicacao(form, perfil, imagem);
+
+                bool sucesso = _publicacaoService.Add(publicacao);
+                if (sucesso)
                     return RedirectToAction("Index", "Home");
                 else
                     return BadRequest();
@@ -40,6 +47,34 @@ namespace ProjetoFatec.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.ToString());
+            }
+        }
+
+        private PublicacaoViewModel PopularPublicacao(IFormCollection form, Perfil perfil, IFormFile imagem)
+        {
+            PublicacaoViewModel pb = new PublicacaoViewModel();
+            pb.DataCriacao = DateTime.Now;
+            pb.Legenda = form["textoPublicacao"];
+            pb.Perfil = perfil;
+            pb.CaminhoFoto = SalvarImagem(imagem, perfil.Id).Result;
+            return pb;
+        }
+
+        private async Task<string> SalvarImagem(IFormFile imagem, int idPerfil)
+        {
+            if (imagem != null)
+            {
+                var caminho = Path.Combine("wwwroot/imgs/" + idPerfil + imagem.FileName);
+                using (FileStream stream = new FileStream(caminho, FileMode.Create))
+                {
+                    await imagem.CopyToAsync(stream);
+                    stream.Close();
+                }
+                return caminho;
+            }
+            else
+            {
+                return null;
             }
         }
     }
