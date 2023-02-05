@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ProjetoFatec.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         [AllowAnonymous]

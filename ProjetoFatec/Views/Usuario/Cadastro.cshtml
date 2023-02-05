@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "_LayoutCadastro";
+    var PrimeiroNome = ViewBag.PrimeiroNome;
+    var EmailUsuario = ViewBag.Email;
+
+}
+
+
+<div class="container-fluid mainDiv">
+    <div class="container-fluid textos-cadastro">
+        <p class="home-title titulo-cadastro">
+            Olá, <strong>@PrimeiroNome</strong>!
+        </p>
+        <p class="home-title subtitulo-cadastro">
+            Notamos que este é seu primeiro acesso.
+        </p>
+        <p class="legenda legenda-cadastro">
+            Para acessar a plataforma, preencha alguns dados pessoais primeiro.
+        </p>
+    </div>
+
+    <div class="container-fluid div-formulario-cadastro">
+        <form class="row g-3 form-cadastro" action="Cadastrar" method="post">
+            <div class="col-md-6">
+                <label for="label labelPrimeiroNome" class="form-label">Primeiro Nome*</label>
+                <input type="text" class="form-control input inputPrimeiroNome" id="inputPrimeiroNome" name="PrimeiroNome" placeholder="João">
+            </div>
+            <div class="col-md-6">
+                <label for="label labelSobreNome" class="form-label">Sobrenome</label>
+                <input type="text" class="form-control input" id="input inputSobrenome" name="Sobrenome" placeholder="da Silva">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Email</label>
+                <input type="text" class="form-control input inputEmail" id="inputAddress" name="Email" value="@EmailUsuario" readonly style="color:dimgray">
+            </div>
+            <div class="col-md-4">
+                <label for="label labelTelefone" class="form-label">Telefone</label>
+                <div class="row divtelefone">
+                    <div class="col-4">
+                        <input type="text" class="form-control input inputDDD" id="inputDDD" name="DDD" placeholder="11">
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control input inputTelefone" id="inputTelefone" name="Telefone" placeholder="912345678">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label for="label labelDataNascimento" class="form-label">Data de Nascimento*</label>
+                <input type="date" class="form-control input" id="inputDataNascimento" name="DataNascimento">
+            </div>
+            <div class="col-md-3">
+                <label for="label labelSexo" class="form-label">Sexo* </label>
+                <select id="inputCurso" class="form-select input inputSexo" name="Sexo">
+                    <option selected>Selecione...</option>
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label for="label labelCurso" class="form-label">Curso</label>
+                <select id="inputCurso" class="form-select input inputCurso" name="NomeCurso">
+                    <option selected>Selecione...</option>
+                    <option>Análise e Desenvolvimento de Sistemas</option>
+                    <option>Comércio Exterior</option>
+                    <option>Gestão da Produção Industrial</option>
+                    <option>Gestão Empresarial</option>
+                    <option>Logística</option>
+                    <option>Logística Aeroportuária</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="label labelSemestreAtual" class="form-label">Semestre Atual*</label>
+                <input type="text" class="form-control input inputSemestreAtual" id="inputSemestreAtual" name="SemestreAtual" placeholder="5">
+            </div>
+
+            <div class=" legendas-cadastro">
+                <label for="label labelLegendas" class="form-label labelLegendas">Legenda</label><br>
+                <label for="label labelLegendas1" class="form-label labelLegendas1">* Obrigatório</label>
+            </div>
+
+
+            <div class="col-12 d-flex justify-content-center">
+                <!--<a href="./HomeLayout.html" class="btn btn-primary botaoLogin" id="botaoCadastrar">Continuar</a>-->
+                
+                  <button type="submit" class="btn btn-primary botaoLogin" id="botaoCadastrar">Continuar</button>
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script src="./lib/jquery/dist/jquery.min.js"></script>
+<script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/site.js" asp-append-version="true"></script>

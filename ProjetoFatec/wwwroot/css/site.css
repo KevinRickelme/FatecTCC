@@ -1,22 +1,127 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #626262 !important;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.htmlLayout {
+    width: 92% !important;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.container-body {
+    width: 92% !important;
 }
+
+.container-fluid {
+    width: 100%;
+}
+
+@media(max-width: 992px) {
+
+    .linhaMenu {
+        display: none;
+    }
+}
+
+@media(max-width: 533.34px) {
+    .botao-menus:hover {
+        color: #9B3737;
+        font-size: 1em;
+        transition: 0.5s;
+    }
+}
+
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #FDFDFD;
 }
 
-.field-validation-error{
-    color:#e01d1d;
+.field-validation-error {
+    color: #e01d1d;
+}
+
+
+.logo-SI3 {
+    margin-left: 10em;
+}
+
+.nav-items-right {
+    margin-right: 10em;
+}
+
+.navbar {
+    margin-top: 1em;
+}
+
+.navbar-nav li {
+    margin-right: 3em;
+    width: 100%;
+}
+
+.navbar-nav .menus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.botao-menus {
+    width: 6em;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 350;
+    letter-spacing: 0.01em;
+    color: #626262;
+}
+
+span {
+    display: block;
+}
+
+.botao-menus:hover {
+    color: #9B3737;
+    font-size: 1.1em;
+    transition: 0.5s;
+}
+
+.menus-items {
+    width: 32px;
+    height: 32px;
+}
+
+.botaoLoginPrincipal {
+    word-spacing: 10px;
+    font-weight: 650;
+    color: #9B3737;
+    font-size: 20px;
+    width: 180px;
+    height: 53px;
+    border-radius: 25px;
+    background-color: transparent;
+    border-color: #9B3737;
+    transform: 0.5s;
+}
+
+    .botaoLoginPrincipal:active {
+        width: 185px !important;
+        background-color: #9B3737 !important;
+        border-color: red !important;
+        color: white !important;
+        transition: 0.5s !important;
+    }
+
+.menus {
+    width: 100%;
+    align-items: center;
+}
+
+.botaoLoginPrincipal:hover {
+    width: 185px;
+    background-color: rgba(155, 55, 55, 15%);
+    border-color: red;
+    color: #9B3737;
+    transition: 0.5s;
 }

@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿
+    $(
+        function animateProfileInfo() {
+            $(document).click(function () {
+                if ($('.btn-profile-pic').hasClass('show')) {
+                    $('.divProfile').addClass('removeBordaMenu');
+                }
+                else {
+                    $('.divProfile').removeClass('removeBordaMenu');
+                    $('.divProfile').addClass('adicionaBordaMenu');
+                }
+            });
+        });

@@ -1,0 +1,107 @@
+﻿html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    width: 100%;
+}
+
+section {
+    margin-top: 2em;
+}
+
+
+@media(max-width: 992px) {
+    .imagem {
+        display: none;
+    }
+
+    section {
+        margin-right: 3em;
+    }
+}
+
+@media (max-width: 770px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+
+@media (max-width: 533.34px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+.texto {
+    text-align: center;
+}
+
+.home-title {
+    line-height: 1.3em;
+    font-size: 4em;
+    margin-top: 1em;
+    text-decoration: none;
+    color: #9B3737;
+    font-weight: 350;
+}
+
+#home2 {
+    margin-top: 0;
+    text-align: justify;
+}
+
+.legenda {
+    text-align: center;
+    color: #626262;
+    font-size: 1.8em;
+    text-decoration: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#legenda2 {
+    margin-top: 2em;
+    text-align: justify;
+}
+
+
+#botaoLoginHome {
+    font-weight: 500;
+    color: #9B3737;
+    font-size: 20px;
+    width: 274px;
+    height: 53px;
+    border-radius: 25px;
+    background-color: transparent;
+    border-color: #9B3737;
+    margin-top: 2em;
+}
+
+    #botaoLoginHome:hover {
+        width: 300px;
+        background-color: rgba(155, 55, 55, 15%);
+        border-color: red;
+        color: #9B3737;
+        transition: 0.5s;
+    }
+
+#imagemHome2 {
+    margin-left: 0;
+}
+
+.descricao {
+    text-align: justify;
+    color: #626262;
+    font-size: 2em;
+    text-decoration: none;
+    font-weight: 300;
+    margin: 0 auto;
+}
+
+#descricao3 {
+    margin-top: 3em;
+}
+
+#divTextoHome2, #divTextoHome3 {
+    margin-left: 2em;
+}

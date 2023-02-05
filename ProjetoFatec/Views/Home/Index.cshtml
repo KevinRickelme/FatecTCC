@@ -1,11 +1,98 @@
-﻿@using ProjetoFatec.ViewModels
+﻿@using ProjetoFatec.Application.ViewModels
+@model PostViewModel;
 @{
-    ViewData["Title"] = "Home Page";
-    var x = ViewData["Claims"] as CookiesViewModel;
-    var y = "xxx";
+    var perfil = ViewData["PerfilUsuario"] as Perfil;
+    List<PublicacaoViewModel> publicacoes = new List<PublicacaoViewModel>();
+    publicacoes = ViewData["Publicacoes"] as List<PublicacaoViewModel>;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">Bem-vindo, @x.Nome</a>.</p>
+<div class="container divHomePrincipal">
+    <div class="container divPost row justify-content-between">
+        <div class="col divPic">
+            <img class="img profile-pic pic-post" id="dropdownBotao" src="./imgs/kevin.jpg">
+        </div>
+        <a class="col-4 divPostar" href="#"data-bs-toggle="modal" data-bs-target="#modalPostagem">
+            Criar publicação
+        </a>
+    </div>
+
+
+
 </div>
+
+<div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+            <div class="modal-body">
+
+                <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                
+                            <div class="mb-3">
+                        <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=postagem></textarea><span asp-validation-for="postagem"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label" asp-for=imagem>Inserir imagem</label>
+                                <input class="form-control input inputImagem" type="file" id="formFile" name="imagem" accept="image/*">
+                              </div>
+                
+                          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btnPublicar">Publicar</button>
+                    </div>
+                    </form>
+                        
+                    
+                </div>
+                </div>
+            </div>
+            </div>
+
+
+@if(publicacoes.Count != null){
+    @foreach(var pub in publicacoes){
+    <div class="container divHomePrincipalPostagens">
+        <div class="container-fluid divPoste"  style="background-color:white;">
+            <div class="row-4 divPostagem" href="#">
+                <div class="col-1 divPic divPicPostagem">
+                    <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/kevin.jpg">
+                </div>
+                <div class="row divPic divPostagemInfo">
+                    <a class="post-nome row">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
+                    <a class="post-curso row">@pub.Perfil.NomeCurso, @pub.Perfil.SemestreAtual</a>
+                    <a class="post-tempo row">@pub.DataCriacao</a>
+                </div>
+            </div>
+            <div class="row-col-4 divPostagemInfos">
+                    <p class="post-conteudo row">@pub.Legenda</p>
+                    @if(pub.CaminhoFoto != null)
+                        {
+                        <img src="@pub.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
+                        }<br/>                    
+                    <a class="post-qtdLike col"><span class=" fa-regular fa-heart"></span> 0 Likes</a>
+
+                    <hr/>
+
+                    <div class="botoesPost row">
+                        <a class="btn post-btnLike col">
+                            <span class=" fa-regular fa-heart"></span> Gostei
+                        </a>
+                        <a class="btn post-btnComentar col"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                        <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+    </div>
+    }
+}
+else{
+    <a>Não existem postagens :(</a>
+}
