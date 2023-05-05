@@ -13,6 +13,8 @@ namespace ProjetoFatec.Application.ViewModels
     public class PerfilViewModel
     {
         public int Id { get; set; }
+        public ICollection<Amigo> Amigos { get; set; }
+        public ICollection<Perfil> PerfisDeAmigos { get; set; }
         public Usuario Usuario { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
@@ -25,5 +27,7 @@ namespace ProjetoFatec.Application.ViewModels
         public int SemestreAtual { get; set; }
         [NotMapped]
         public string Email { get; set; }
+        public Feed Feed { get; set; }
+
     }
 }

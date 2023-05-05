@@ -13,9 +13,13 @@ namespace ProjetoFatec.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<FotoPerfil> modelBuilder)
         {
-            modelBuilder
-                .HasOne(fp => fp.Perfil)
-                .WithOne(p => p.FotoPerfil);
+            modelBuilder.HasKey(fp => fp.Id);
+
+            modelBuilder.Property(fp => fp.CaminhoFoto).IsRequired();
+
+            modelBuilder.HasOne(fp => fp.Perfil).WithOne(p => p.FotoPerfil).HasForeignKey<Perfil>(p=>p.IdFotoPerfil);
+
+
         }
     }
 }

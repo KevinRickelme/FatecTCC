@@ -3,17 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoFatec.Domain.Entities
 {
-    [Table("FotoPerfil")]
     public class FotoPerfil
     {
-        [Key]
-        [Column("Id")]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("IdPerfil")]
+
         public Perfil Perfil { get; set; }
-        [Required]
-        [Column("CaminhoFoto")]
+        public int IdPerfil { get; set; }
+
         public string CaminhoFoto { get; set; }
     }
 }

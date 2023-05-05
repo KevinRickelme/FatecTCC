@@ -12,8 +12,8 @@ using ProjetoFatec.Infra.Data.Context;
 namespace ProjetoFatec.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230203190642_inicial")]
-    partial class inicial
+    [Migration("20230420185948_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,20 +24,18 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Amigo", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Amigo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("DataAmizade")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataAmizade");
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("IdPerfilSolicitante")
+                    b.Property<int>("IdPerfil")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -45,50 +43,39 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPerfilSolicitante");
+                    b.HasIndex("IdPerfil");
 
-                    b.ToTable("Amigo");
+                    b.ToTable("Amigos");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Comentario", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Comentario", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataComentario")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataComentario");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Descricao");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdPerfil")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdPublicacao")
                         .HasColumnType("int");
 
-                    b.Property<int>("PerfilId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPublicacao");
-
-                    b.HasIndex("PerfilId");
-
-                    b.ToTable("Comentario");
+                    b.ToTable("Comentarios");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Feed", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Feed", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -99,74 +86,65 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
                     b.HasIndex("IdPerfil");
 
-                    b.ToTable("Feed");
+                    b.ToTable("Feeds");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Foto", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Foto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CaminhoFoto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CaminhoFoto");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PublicacaoId")
+                    b.Property<int>("IdPublicacao")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PublicacaoId");
-
-                    b.ToTable("Foto");
+                    b.ToTable("Fotos");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.FotoPerfil", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.FotoPerfil", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CaminhoFoto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CaminhoFoto");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdPerfil")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPerfil")
-                        .IsUnique();
-
-                    b.ToTable("FotoPerfil");
+                    b.ToTable("FotoPerfis");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Perfil", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Perfil", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Biografia")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Biografia");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataNascimento");
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdFotoPerfil")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
@@ -174,28 +152,22 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Nome");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("NomeCurso")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("NomeCurso");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SemestreAtual")
-                        .HasColumnType("int")
-                        .HasColumnName("SemestreAtual");
+                        .HasColumnType("int");
 
                     b.Property<int>("Sexo")
-                        .HasMaxLength(1)
-                        .HasColumnType("int")
-                        .HasColumnName("Sexo");
+                        .HasColumnType("int");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Sobrenome");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
@@ -204,17 +176,20 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("IdFotoPerfil")
+                        .IsUnique();
 
-                    b.ToTable("Perfil");
+                    b.HasIndex("IdUsuario")
+                        .IsUnique();
+
+                    b.ToTable("Perfis");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Publicacao", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Publicacao", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
@@ -222,8 +197,7 @@ namespace ProjetoFatec.Infra.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("FeedId")
                         .HasColumnType("int");
@@ -233,8 +207,7 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
                     b.Property<string>("Legenda")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Legenda");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -242,61 +215,64 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
                     b.HasIndex("IdPerfil");
 
-                    b.ToTable("Publicacao");
+                    b.ToTable("Publicacoes");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Usuario", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Email");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IdPerfil")
+                        .HasColumnType("int");
 
                     b.Property<int>("Privilegio")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Privilegio");
+                        .HasDefaultValue(0);
 
                     b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Status");
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Login");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Amigo", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Amigo", b =>
                 {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Perfil", "PerfilSolicitante")
-                        .WithMany()
-                        .HasForeignKey("IdPerfilSolicitante")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "PerfilSolicitante")
+                        .WithMany("Amigos")
+                        .HasForeignKey("IdPerfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PerfilSolicitante");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Comentario", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Comentario", b =>
                 {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Publicacao", "Publicacao")
-                        .WithMany("Comentario")
-                        .HasForeignKey("IdPublicacao")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "Perfil")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Perfil", "Perfil")
-                        .WithMany()
-                        .HasForeignKey("PerfilId")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Publicacao", "Publicacao")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -305,10 +281,10 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Navigation("Publicacao");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Feed", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Feed", b =>
                 {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Perfil", "Perfil")
-                        .WithMany()
+                    b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "Perfil")
+                        .WithMany("Feeds")
                         .HasForeignKey("IdPerfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -316,47 +292,33 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Navigation("Perfil");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Foto", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Perfil", b =>
                 {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Publicacao", "Publicacao")
-                        .WithMany()
-                        .HasForeignKey("PublicacaoId")
+                    b.HasOne("ProjetoFatec.Domain.Entities.FotoPerfil", "FotoPerfil")
+                        .WithOne("Perfil")
+                        .HasForeignKey("ProjetoFatec.Domain.Entities.Perfil", "IdFotoPerfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Publicacao");
-                });
-
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.FotoPerfil", b =>
-                {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Perfil", "Perfil")
-                        .WithOne("FotoPerfil")
-                        .HasForeignKey("ProjetoFatec.Infra.Data.Models.FotoPerfil", "IdPerfil")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Usuario", "Usuario")
+                        .WithOne("Perfil")
+                        .HasForeignKey("ProjetoFatec.Domain.Entities.Perfil", "IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Perfil");
-                });
-
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Perfil", b =>
-                {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("IdUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("FotoPerfil");
 
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Publicacao", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Publicacao", b =>
                 {
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Feed", null)
-                        .WithMany("Publicacao")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Feed", null)
+                        .WithMany("Publicacões")
                         .HasForeignKey("FeedId");
 
-                    b.HasOne("ProjetoFatec.Infra.Data.Models.Perfil", "Perfil")
-                        .WithMany()
+                    b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "Perfil")
+                        .WithMany("Publicacoes")
                         .HasForeignKey("IdPerfil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -364,19 +326,37 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Navigation("Perfil");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Feed", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Feed", b =>
                 {
-                    b.Navigation("Publicacao");
+                    b.Navigation("Publicacões");
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Perfil", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.FotoPerfil", b =>
                 {
-                    b.Navigation("FotoPerfil");
+                    b.Navigation("Perfil")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjetoFatec.Infra.Data.Models.Publicacao", b =>
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Perfil", b =>
                 {
-                    b.Navigation("Comentario");
+                    b.Navigation("Amigos");
+
+                    b.Navigation("Comentarios");
+
+                    b.Navigation("Feeds");
+
+                    b.Navigation("Publicacoes");
+                });
+
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Publicacao", b =>
+                {
+                    b.Navigation("Comentarios");
+                });
+
+            modelBuilder.Entity("ProjetoFatec.Domain.Entities.Usuario", b =>
+                {
+                    b.Navigation("Perfil")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

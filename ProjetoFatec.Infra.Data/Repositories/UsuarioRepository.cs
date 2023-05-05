@@ -23,7 +23,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<Usuario?> GetUsuario(string email)
         {
-            return await _context.Login.FirstOrDefaultAsync(u=> u.Email == email);
+            return await _context.Login.Include("Perfil").FirstOrDefaultAsync(u=> u.Email == email);
         }
 
         public bool PrimeiroAcesso(Usuario cvm)

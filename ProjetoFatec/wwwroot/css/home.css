@@ -4,6 +4,42 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.upload_dropZone {
+    color: #9B3737;
+    outline: 2px dashed #9B3737;
+    outline-offset: -12px;
+    transition: outline-offset 0.2s ease-out, outline-color 0.3s ease-in-out, background-color 0.2s ease-out;
+}
+
+
+    .upload_dropZone.highlight {
+        outline-offset: -4px;
+        outline-color: #9B3737;
+        background-color: #9B3737;
+    }
+
+.upload_svg {
+    fill: #9B3737;
+}
+
+.btn-upload {
+    color: #fff;
+    background-color: #9B3737;
+}
+
+    .btn-upload:hover,
+    .btn-upload:focus {
+        color: #fff;
+        background-color: #9B3737;
+    }
+
+.upload_img {
+    width: calc(100% - (2rem / 2));
+    object-fit: contain;
+}
+
+
+
 @media(max-width: 641px) {
     html {
         width: 100%;
@@ -52,17 +88,20 @@ a {
 .searchArea {
     width: 20em;
     height: 3em;
-    border-radius: 10px;
+    border-radius: 100px;
     font-size: 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin-left: 2%;
-    align-items: left;
+    margin-left: auto;
+    margin-right: 15%;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
 }
 
     .searchArea:focus {
-        width: 24em;
+        width: 21em;
         transition: all 0.5s ease-in-out;
     }
+
 
 .divProfile {
     width: 15em;
@@ -156,14 +195,12 @@ a {
     animation-name: slideIn;
 }
 
-
 /* Parte do index Home */
-
 .divHomePrincipal, .divHomePrincipalPostagens {
     justify-content: center;
     margin-top: 2%;
     display: flex;
-    width: 60%;
+    width: 45%;
 }
 
 main {
@@ -294,13 +331,18 @@ footer {
     align-items: left;
 }
 
+
+.modal-dialog {
+    width: 80%;
+}
+
 .post-btnLike, .post-btnComentar, .post-btnCompartilhar {
     background-color: #fafafa;
     border-radius: 1vh;
     align-items: center;
     justify-content: center;
     padding: 0 auto;
-    font-size: 150%;
+    font-size: 1em;
     width: 100%;
     height: 100% !important;
     color: #9F9F9F;
@@ -370,4 +412,56 @@ hr {
     margin-top: 3%;
     border-radius: 10px;
     border-top: 5% solid #a7a7a7;
+}
+
+/*Seção comentários*/
+.divPicPostagem.comentario {
+      
+}
+.pic-post.comentario {
+    width: 100%;
+    height: auto;
+    margin: 0 0 0 0;
+    padding: 0.3em;
+}
+
+.divComentariosPrincipal {
+    height: auto;
+    background-color: #fafafa;
+    margin-left:0;
+    margin-right:auto;
+    padding:0;
+}
+.divComentarios {
+    margin-right: 0px;
+    margin-left: auto;
+    width: 88%;
+    padding: 0;
+}
+
+.post-nome.comentario {
+    font-size: 1em;
+
+}
+.post-tempo.comentario {
+    font-size: 0.8em;
+
+    
+}
+.post-curso.comentario {
+    font-size: 0.8em;
+}
+.post-comentarios.comentario {
+    font-size: 1em;
+    padding-top: 2%;
+    margin-left: 2%;
+    width: 95%;
+    text-align: justify;
+}
+
+div.divPicPostagem.comentario {
+    width: 10%;
+    height: auto;
+    margin: 0 0 0 0;
+    padding: 0;
 }

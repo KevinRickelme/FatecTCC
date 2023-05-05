@@ -16,10 +16,12 @@ namespace ProjetoFatec.Controllers
     {
         private readonly IUsuarioService _usuarioService;
         private readonly IPerfilService _perfilService;
-        public UsuarioController(IUsuarioService usuarioService, IPerfilService perfilService)
+        private readonly IFeedService _feedService;
+        public UsuarioController(IUsuarioService usuarioService, IPerfilService perfilService, IFeedService feedService)
         {
             _usuarioService = usuarioService;
             _perfilService = perfilService;
+            _feedService = feedService;
         }
 
         public IActionResult Index()
@@ -27,6 +29,9 @@ namespace ProjetoFatec.Controllers
             if(HttpContext.User.Identities.FirstOrDefault().Claims.Count() > 1)
             {
                 return RedirectToAction("Index", "Home");
+
+                //(DateTime.Now - DateTime.Now).Minutes
+
             }
             else
                 return View();
@@ -53,7 +58,8 @@ namespace ProjetoFatec.Controllers
                 }
                 else 
                 {
-                    ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                    var nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                    ViewBag.Nome = nome;
                     ViewBag.PrimeiroNome = (ClaimUtils.GetClaimInfo(User, "name")).Split()[0];
                     ViewBag.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
                     return View();
@@ -65,7 +71,8 @@ namespace ProjetoFatec.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                string nome = (ClaimUtils.GetClaimInfo(User, "name"));
+                ViewBag.Nome = nome;
                 ViewBag.PrimeiroNome = (ClaimUtils.GetClaimInfo(User, "name")).Split()[0];
                 ViewBag.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
                 return View();
@@ -86,6 +93,11 @@ namespace ProjetoFatec.Controllers
                 {
                     PerfilViewModel pf = CriarPerfil(Request.Form, EmailUsuario);
                     _perfilService.Add(pf);
+                    pf = _perfilService.GetPerfilViewModel(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result;
+                    pf.Feed = SalvarFeed(_perfilService.GetPerfil(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result.Id).Result;
+                    
+                    //pf.Id = _perfilService.GetPerfil(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result.Id;
+                    
                 }
                 return RedirectToAction("Index","Home");
             }
@@ -97,6 +109,16 @@ namespace ProjetoFatec.Controllers
 
 
             
+        }
+
+        private async Task<Feed> SalvarFeed(int IdPerfil)
+        {
+            FeedViewModel feed = new FeedViewModel()
+            {
+                IdPerfil = IdPerfil
+            };
+            _feedService.Add(feed);
+            return await _feedService.GetFeed(IdPerfil);
         }
 
         private PerfilViewModel CriarPerfil(IFormCollection formularioCadastro, string emailUsuario)

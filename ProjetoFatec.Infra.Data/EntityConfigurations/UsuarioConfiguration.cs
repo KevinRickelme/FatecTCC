@@ -15,13 +15,16 @@ namespace ProjetoFatec.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Usuario> modelBuilder)
         {
+            modelBuilder.HasKey(u => u.Id);
+
             modelBuilder.HasIndex(u => u.Email).IsUnique();
 
             modelBuilder.Property(u => u.Status)
-                .HasDefaultValue(StatusUsuarioEnum.Ativo);
+                .HasDefaultValue(StatusUsuarioEnum.Ativo).IsRequired();
 
             modelBuilder.Property(u => u.Privilegio)
-                .HasDefaultValue(PrivilegioEnum.Padrao);
+                .HasDefaultValue(PrivilegioEnum.Padrao).IsRequired();
+
         }
     }
 }

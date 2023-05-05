@@ -1,0 +1,48 @@
+﻿@using ProjetoFatec.Domain.Entities;
+@model Perfil;
+
+<a>@Model.Nome</a> <br />
+
+<a>@Model.Sobrenome</a>
+<br />
+ 
+<a>@Model.NomeCurso</a>
+<br />
+
+<a>@Model.Biografia</a>
+<br />
+
+<a>@Model.DataNascimento</a>
+<br />
+
+@if(Model.Amigos.Count != 0){
+    @foreach(var am in Model.PerfisDeAmigos)
+    {
+        <a>amigo: @am.Nome</a>
+        <br />
+    }
+}
+
+
+@if(ViewBag.MeuPerfil){
+    <a>Seção de publicar postagem</a>
+}
+else{
+    if(!Model.Amigos.Where(a=>a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil).Any()){
+        <form asp-action="PedidoAmizade" asp-controller="Perfil" method="post">
+            @Html.HiddenFor(c=>c.Id)
+            <button class="btn btn-default">Conectar</button>
+        </form>
+    }
+    else
+    {
+        if (Model.Amigos.Where(a=>(a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil) && a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
+        {
+            <button disabled class="btn btn-default">Pendente</button>
+        }
+        else
+        {
+        <button disabled class="btn btn-default">Conectado</button>
+        }
+    }
+}

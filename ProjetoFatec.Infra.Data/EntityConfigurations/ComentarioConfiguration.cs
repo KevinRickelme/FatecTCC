@@ -14,10 +14,12 @@ namespace ProjetoFatec.Infra.Data.EntityConfigurations
         public void Configure(EntityTypeBuilder<Comentario> modelBuilder)
         {
 
-            modelBuilder
-                .HasOne(p => p.Publicacao)
-                .WithMany(c => c.Comentario)
-                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.HasKey(c => c.Id);
+            modelBuilder.Property(c => c.Descricao).IsRequired();
+            modelBuilder.Property(c => c.DataComentario).IsRequired();
+
+            modelBuilder.HasOne(c => c.Perfil).WithMany(p => p.Comentarios).HasForeignKey(p=>p.IdPerfil);
+            modelBuilder.HasOne(c => c.Publicacao).WithMany(p => p.Comentarios).HasForeignKey(c=>c.IdPublicacao).OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

@@ -18,13 +18,15 @@ namespace ProjetoFatec.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IPublicacaoService _publicacaoService;
         private readonly IPerfilService _perfilService;
+        private readonly IFeedService _feedService;
 
-        public HomeController(ILogger<HomeController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService)
+        public HomeController(ILogger<HomeController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService, IFeedService feedService)
         {
             _logger = logger;
             _usuarioService = usuarioService;
             _publicacaoService = publicacaoService;
             _perfilService = perfilService;
+            _feedService = feedService;
         }
 
 
@@ -50,8 +52,10 @@ namespace ProjetoFatec.Controllers
                     return RedirectToAction("Cadastro", "Usuario");
                 }
                 usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
-                ViewData["PerfilUsuario"] = _perfilService.GetPerfil(usuario).Result;
-                ViewData["Publicacoes"] = _publicacaoService.GetPublicacoes(usuario).Result;
+                var perfil = _perfilService.GetPerfil(usuario).Result;
+                ViewData["PerfilUsuario"] = perfil;
+                var Feed = _feedService.GetFeed(perfil.Id).Result;
+                ViewData["Publicacoes"] = Feed.Publicacoes;
                 return View();
             }
         }

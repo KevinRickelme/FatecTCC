@@ -27,6 +27,10 @@ namespace ProjetoFatec.Infra.IoC
 
             services.AddScoped<IPerfilRepository, PerfilRepository>();
             services.AddScoped<IPerfilService, PerfilService>();
+
+            services.AddScoped<IFeedRepository, FeedRepository>();
+            services.AddScoped<IFeedService, FeedService>();
+
             return services;
         }
     }

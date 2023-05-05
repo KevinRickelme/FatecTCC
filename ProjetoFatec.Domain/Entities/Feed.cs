@@ -3,16 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoFatec.Domain.Entities
 {
-    [Table("Feed")]
     public class Feed
     {
-        [Key]
-        [Column("Id")]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("IdPerfil")]
         public Perfil Perfil { get; set; }
-        public List<Publicacao> Publicacao { get; set; }
+        public int IdPerfil { get; set; }
+        public List<Publicacao> Publicacoes { get; set; }
+
+        public Feed()
+        {
+
+        }
+
+        public Feed(int Id, Perfil Perfil, int IdPerfil, List<Publicacao> Publicacoes)
+        {
+            this.Id = Id;
+            this.Perfil = Perfil;
+            this.Publicacoes = Publicacoes;
+            this.IdPerfil = IdPerfil;
+        }
 
     }
 }

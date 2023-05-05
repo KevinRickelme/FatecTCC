@@ -1,7 +1,7 @@
 html {
     font-size: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #626262 !important;
+    color: #F6F6F6 !important;
 }
 
 .htmlLayout {
@@ -11,6 +11,7 @@ html {
 .container-body {
     width: 92% !important;
 }
+
 
 .container-fluid {
     width: 100%;
@@ -31,10 +32,9 @@ html {
     }
 }
 
-
 body {
     margin-bottom: 60px;
-    background-color: #FDFDFD;
+    background-color: #F6F6F6;
 }
 
 .field-validation-error {
@@ -51,8 +51,14 @@ body {
 }
 
 .navbar {
-    margin-top: 1em;
+    padding-top: 1em;
 }
+
+.container{
+    max-width: 100%;
+    padding:0;
+}
+
 
 .navbar-nav li {
     margin-right: 3em;

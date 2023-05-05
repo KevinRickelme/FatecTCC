@@ -23,11 +23,40 @@ namespace ProjetoFatec.Application.Services
             return _perfilRepository.Add(mapPerfil);
         }
 
+        public bool Update(PerfilViewModel perfil)
+        {
+            var mapPerfil = _mapper.Map<Perfil>(perfil);
+            return _perfilRepository.Update(mapPerfil);
+        }
+
         public async Task<Perfil?> GetPerfil(UsuarioViewModel usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             var result = await _perfilRepository.GetPerfil(mapUsuario);
             return _mapper.Map<Perfil>(result);
+        }
+        public async Task<Perfil?> GetPerfil(int idPerfil)
+        {
+            var result = await _perfilRepository.GetPerfil(idPerfil);
+            return _mapper.Map<Perfil>(result);
+        }
+
+        public async Task<PerfilViewModel?> GetPerfilViewModel(UsuarioViewModel usuario)
+        {
+            var mapUsuario = _mapper.Map<Usuario>(usuario);
+            var result = await _perfilRepository.GetPerfil(mapUsuario);
+            return _mapper.Map<PerfilViewModel>(result);
+        }
+
+        public async Task<PerfilViewModel?> GetPerfilViewModel(int idPerfil)
+        {
+            var result = await _perfilRepository.GetPerfil(idPerfil);
+            return _mapper.Map<PerfilViewModel>(result);
+        }
+
+        public async Task<bool> EnviarSolicitacao(int IdPerfilSolicitante, int IdPerfilSolicitado)
+        {
+            return _perfilRepository.EnviarSolicitacao(IdPerfilSolicitante, IdPerfilSolicitado);
         }
     }
 }

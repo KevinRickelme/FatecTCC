@@ -15,7 +15,8 @@ namespace ProjetoFatec.Application.Mappings
         {
             CreateMap<PublicacaoViewModel, Publicacao>();
             CreateMap<PerfilViewModel, Perfil>();
-            CreateMap<UsuarioViewModel, Usuario>(); 
+            CreateMap<UsuarioViewModel, Usuario>();
+            CreateMap<FeedViewModel, Feed>();
         }
     }
 }

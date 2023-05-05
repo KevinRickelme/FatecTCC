@@ -5,94 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjetoFatec.Infra.Data.Migrations
 {
-    public partial class inicial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Usuario",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Privilegio = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuario", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Perfil",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdUsuario = table.Column<int>(type: "int", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Sobrenome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Telefone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Sexo = table.Column<int>(type: "int", maxLength: 1, nullable: false),
-                    NomeCurso = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Biografia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SemestreAtual = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Perfil", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Perfil_Usuario_IdUsuario",
-                        column: x => x.IdUsuario,
-                        principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Amigo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPerfilSolicitante = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    DataAmizade = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Amigo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Amigo_Perfil_IdPerfilSolicitante",
-                        column: x => x.IdPerfilSolicitante,
-                        principalTable: "Perfil",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Feed",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPerfil = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feed", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Feed_Perfil_IdPerfil",
-                        column: x => x.IdPerfil,
-                        principalTable: "Perfil",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FotoPerfil",
+                name: "FotoPerfis",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -102,17 +20,115 @@ namespace ProjetoFatec.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FotoPerfil", x => x.Id);
+                    table.PrimaryKey("PK_FotoPerfis", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fotos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPublicacao = table.Column<int>(type: "int", nullable: false),
+                    CaminhoFoto = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fotos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Login",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Privilegio = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    IdPerfil = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Login", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Perfis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Sobrenome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sexo = table.Column<int>(type: "int", nullable: false),
+                    NomeCurso = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdFotoPerfil = table.Column<int>(type: "int", nullable: false),
+                    Biografia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SemestreAtual = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Perfis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FotoPerfil_Perfil_IdPerfil",
-                        column: x => x.IdPerfil,
-                        principalTable: "Perfil",
+                        name: "FK_Perfis_FotoPerfis_IdFotoPerfil",
+                        column: x => x.IdFotoPerfil,
+                        principalTable: "FotoPerfis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Perfis_Login_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "Login",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Publicacao",
+                name: "Amigos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPerfil = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DataAmizade = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Amigos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Amigos_Perfis_IdPerfil",
+                        column: x => x.IdPerfil,
+                        principalTable: "Perfis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feeds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPerfil = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feeds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feeds_Perfis_IdPerfil",
+                        column: x => x.IdPerfil,
+                        principalTable: "Perfis",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Publicacoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -125,145 +141,110 @@ namespace ProjetoFatec.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publicacao", x => x.Id);
+                    table.PrimaryKey("PK_Publicacoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Publicacao_Feed_FeedId",
+                        name: "FK_Publicacoes_Feeds_FeedId",
                         column: x => x.FeedId,
-                        principalTable: "Feed",
+                        principalTable: "Feeds",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Publicacao_Perfil_IdPerfil",
+                        name: "FK_Publicacoes_Perfis_IdPerfil",
                         column: x => x.IdPerfil,
-                        principalTable: "Perfil",
+                        principalTable: "Perfis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comentario",
+                name: "Comentarios",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PerfilId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    IdPerfil = table.Column<int>(type: "int", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdPublicacao = table.Column<int>(type: "int", nullable: false),
                     DataComentario = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comentario", x => x.Id);
+                    table.PrimaryKey("PK_Comentarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comentario_Perfil_PerfilId",
-                        column: x => x.PerfilId,
-                        principalTable: "Perfil",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Comentario_Publicacao_IdPublicacao",
-                        column: x => x.IdPublicacao,
-                        principalTable: "Publicacao",
+                        name: "FK_Comentarios_Perfis_Id",
+                        column: x => x.Id,
+                        principalTable: "Perfis",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Foto",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PublicacaoId = table.Column<int>(type: "int", nullable: false),
-                    CaminhoFoto = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Foto", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Foto_Publicacao_PublicacaoId",
-                        column: x => x.PublicacaoId,
-                        principalTable: "Publicacao",
+                        name: "FK_Comentarios_Publicacoes_Id",
+                        column: x => x.Id,
+                        principalTable: "Publicacoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Amigo_IdPerfilSolicitante",
-                table: "Amigo",
-                column: "IdPerfilSolicitante");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comentario_IdPublicacao",
-                table: "Comentario",
-                column: "IdPublicacao");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comentario_PerfilId",
-                table: "Comentario",
-                column: "PerfilId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Feed_IdPerfil",
-                table: "Feed",
+                name: "IX_Amigos_IdPerfil",
+                table: "Amigos",
                 column: "IdPerfil");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Foto_PublicacaoId",
-                table: "Foto",
-                column: "PublicacaoId");
+                name: "IX_Feeds_IdPerfil",
+                table: "Feeds",
+                column: "IdPerfil");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FotoPerfil_IdPerfil",
-                table: "FotoPerfil",
-                column: "IdPerfil",
+                name: "IX_Login_Email",
+                table: "Login",
+                column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Perfil_IdUsuario",
-                table: "Perfil",
-                column: "IdUsuario");
+                name: "IX_Perfis_IdFotoPerfil",
+                table: "Perfis",
+                column: "IdFotoPerfil",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Publicacao_FeedId",
-                table: "Publicacao",
+                name: "IX_Perfis_IdUsuario",
+                table: "Perfis",
+                column: "IdUsuario",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Publicacoes_FeedId",
+                table: "Publicacoes",
                 column: "FeedId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Publicacao_IdPerfil",
-                table: "Publicacao",
+                name: "IX_Publicacoes_IdPerfil",
+                table: "Publicacoes",
                 column: "IdPerfil");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Usuario_Email",
-                table: "Usuario",
-                column: "Email",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Amigo");
+                name: "Amigos");
 
             migrationBuilder.DropTable(
-                name: "Comentario");
+                name: "Comentarios");
 
             migrationBuilder.DropTable(
-                name: "Foto");
+                name: "Fotos");
 
             migrationBuilder.DropTable(
-                name: "FotoPerfil");
+                name: "Publicacoes");
 
             migrationBuilder.DropTable(
-                name: "Publicacao");
+                name: "Feeds");
 
             migrationBuilder.DropTable(
-                name: "Feed");
+                name: "Perfis");
 
             migrationBuilder.DropTable(
-                name: "Perfil");
+                name: "FotoPerfis");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Login");
         }
     }
 }

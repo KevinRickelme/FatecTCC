@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Perfil\PedidoAmizade.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.8" />
 
@@ -20,6 +24,18 @@
   <ItemGroup>
     <ProjectReference Include="..\ProjetoFatec.Infra.Data\ProjetoFatec.Infra.Data.csproj" />
     <ProjectReference Include="..\ProjetoFatec.Infra.IoC\ProjetoFatec.Infra.IoC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Perfil\PedidoAmizade.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Perfil\PedidoAmizade.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Perfil\PedidoAmizade.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ namespace ProjetoFatec.Infra.Data.Context
     public class ApplicationContext : DbContext
     {
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public ApplicationContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -25,10 +25,8 @@ namespace ProjetoFatec.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
-            modelBuilder.ApplyConfiguration(new PublicacaoConfiguration());
-            modelBuilder.ApplyConfiguration(new ComentarioConfiguration());
-            modelBuilder.ApplyConfiguration(new FotoPerfilConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
+            
         }
     }
 }

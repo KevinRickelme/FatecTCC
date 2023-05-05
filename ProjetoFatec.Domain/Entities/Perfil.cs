@@ -4,39 +4,35 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoFatec.Domain.Entities
 {
-    [Table("Perfil")]
+
     public class Perfil
     {
-        [Key]
-        [Column("Id")]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("IdUsuario")]
+
         public Usuario Usuario { get; set; }
-        [Required]
-        [Column("Nome")]
-        [MaxLength(255)]
+        public int IdUsuario { get; set; }
+
         public string Nome { get; set; }
-        [Required]
-        [Column("Sobrenome")]
-        [MaxLength(255)]
         public string Sobrenome { get; set; }
-        [Required]
-        [MaxLength(11)] 
         public string Telefone { get; set; } //ex. 11900000000
-        [Required]
-        [Column("DataNascimento")]
         public DateTime DataNascimento { get; set; }
-        [Required]
-        [MaxLength(1)]
-        [Column("Sexo")]
         public SexoEnum Sexo { get; set; }
-        [Column("NomeCurso")]
         public string NomeCurso { get; set; }
+
         public FotoPerfil? FotoPerfil { get; set; }
-        [Column("Biografia")]
+        public int? IdFotoPerfil { get; set; }
+
         public string? Biografia { get; set; }
-        [Column("SemestreAtual")]
         public int SemestreAtual { get; set; }
+
+        public ICollection<Publicacao> Publicacoes {get;set;}
+
+        public ICollection<Comentario> Comentarios { get; set; }
+        [NotMapped]
+        public List<Perfil> PerfisDeAmigos { get; set; }
+
+        public Feed? Feed { get; set; }
+        public int? IdFeed { get; set; }
+        public ICollection<Amigo> Amigos { get; set; }
     }
 }
