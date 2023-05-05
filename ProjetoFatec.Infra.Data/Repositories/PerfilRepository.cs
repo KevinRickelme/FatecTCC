@@ -40,19 +40,20 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<Perfil?> GetPerfil(int id)
         {
-            Perfil perf = await _context.Perfis.Include("Usuario").Include("Amigos").FirstOrDefaultAsync(p => p.Id == id);
+            Perfil perf = await _context.Perfis.Include("Usuario").Include("Amigos").Include("Publicacoes").FirstOrDefaultAsync(p => p.Id == id);
             if (perf != null) {
                 if (perf.Amigos.Count == 0)
-                    perf.Amigos = _context.Amigos.Where(a => a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id && a.Status == StatusAmizadeEnum.Ativo).ToList();
+                    perf.Amigos = _context.Amigos.Where(a => (a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id)).ToList();
                 if (perf.Amigos != null || perf.Amigos.Count == 0) {
                     perf.PerfisDeAmigos = new ();
                     foreach (var am in perf.Amigos)
                     {
                         
-                        if (am.IdPerfilSolicitante == perf.Id)
-                            perf.PerfisDeAmigos.Add(_context.Perfis.Where(p => p.Id == am.IdPerfilSolicitado).First());
+                        if (am.IdPerfilSolicitante == perf.Id && am.Status == StatusAmizadeEnum.Ativo)
+                            perf.PerfisDeAmigos.Add(_context.Perfis.Where(p => p.Id == am.IdPerfilSolicitado && am.Status == StatusAmizadeEnum.Ativo).First());
                         else
-                            perf.PerfisDeAmigos.Add(_context.Perfis.Where(p => p.Id == am.IdPerfilSolicitante).First());
+                            if(am.Status == StatusAmizadeEnum.Ativo)
+                                perf.PerfisDeAmigos.Add(_context.Perfis.Where(p => p.Id == am.IdPerfilSolicitante && am.Status == StatusAmizadeEnum.Ativo).First());
                     }
                 }
             }

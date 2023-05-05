@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProjetoFatec</title>
+       <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="./css/user-body.css" asp-append-version="true" />
+    <link rel="stylesheet" href="./css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src=
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+        </script>
+
+</head>
+<body>
+    <main>
+        <div class="container divHomePrincipal">
+            <div class="container-fluid divPost justify-content-between">
+                <div class="col divPic">
+                    <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="./imgs/kevin.jpg">
+                </div>
+                <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
+                    Criar publicação
+                </a>
+            </div>
+    
+            
+    
+        </div>
+    
+        <div class="container divHomePrincipalPostagens">
+            <div class="container-fluid divPoste"  style="background-color:white;">
+                <div class="row-4 divPostagem" href="#">
+                    <div class="col-1 divPicPostagem">
+                            <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/perfil.png">
+                    </div>
+                    <div class="row divPostagemInfo">
+                        <a class="post-nome row">Kevin Rickelme Marques da Silva</a>
+                        <a class="post-curso row">Análise e Desenvolvimento de Sistemas, 5</a>
+                        <a class="post-tempo row">15 min</a>
+                    </div>
+                </div>
+                        <div class="row-col-4 divPostagemInfos">
+                        <p class="post-conteudo row">Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</p>
+                        <img src="imgs/2Screenshot 2023-03-13 131650.png" class="img img-fluid mx-auto d-block img-post">
+                        <hr class="hr">
+                        <a class="post-qtdLike col"><span class=" fa-regular fa-heart"></span> 0 Likes</a>
+
+                        <div class="botoesPost row">
+                            <a class="btn post-btnLike col">
+                                <span class=" fa-regular fa-heart"></span> Gostei
+                            </a>
+                            <a class="btn post-btnComentar col"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                            <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
+                        </div>
+                    </div> 
+                    </div>
+                    
+                </div>
+
+                    
+            </div>
+        </div>
+        
+        <!-- Modal -->
+            <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                              <textarea class="form-control txtPublicacao" rows="3" id="message-text" placeholder="No que você está pensando?"></textarea>
+                            </div>
+                            <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
+                            <fieldset class="upload_dropZone text-center mb-3 p-4" id ='upload_dropzone'style="display: none;">
+
+                                <legend class="visually-hidden">Image uploader</legend>
+                            
+                                <svg class="upload_svg" width="60" height="60" aria-hidden="true">
+                                  <use href="#icon-imageUpload"></use>
+                                </svg>
+                            
+                                <p class="small my-2">Arraste &amp; solte imagens dentro deste quadro<br><i>ou</i></p>
+                                <input id="formFile" class="position-absolute invisible" type="file" accept="image/jpeg, image/png, image/svg+xml" />
+                                <label class="btn btn-upload mb-3" for="formFile">Escolha o arquivo de imagem</label>
+
+                                <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+                            
+                              </fieldset>
+                            
+                          
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary">Publicar</button>
+                    </div>
+                        
+                    
+                </div>
+                </div>
+            </div>
+
+    </main>
+    
+    
+
+
+
+
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+
+<script>
+    $(
+            function(){
+            $('#btnShowUpload').on('click',function(){
+                var x = document.getElementById('upload_dropzone');
+                if(x.style.display == 'none'){
+                    x.style.display = '';
+                }
+                else{
+                    x.style.display = 'none';
+                }        
+            });
+        });
+</script>
+
+<script>
+    $(
+        function(){
+            $(document).click(function(){
+                if($('.btn-profile-pic').hasClass('show')){
+                    $('.divProfile').addClass('removeBordaMenu');
+                }
+                else{
+                    $('.divProfile').removeClass('removeBordaMenu');
+                    $('.divProfile').addClass('adicionaBordaMenu');
+                }        
+            });
+        });
+
+        console.clear();
+('use strict');
+
+
+// Drag and drop - single or multiple image files
+// https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+// https://codepen.io/joezimjs/pen/yPWQbd?editors=1000
+(function () {
+
+  'use strict';
+  
+  // Four objects of interest: drop zones, input elements, gallery elements, and the files.
+  // dataRefs = {files: [image files], input: element ref, gallery: element ref}
+
+  const preventDefaults = event => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  const highlight = event =>
+    event.target.classList.add('highlight');
+  
+  const unhighlight = event =>
+    event.target.classList.remove('highlight');
+
+  const getInputAndGalleryRefs = element => {
+    const zone = element.closest('.upload_dropZone') || false;
+    const gallery = zone.querySelector('.upload_gallery') || false;
+    const input = zone.querySelector('input[type="file"]') || false;
+    return {input: input, gallery: gallery};
+  }
+
+  const handleDrop = event => {
+    const dataRefs = getInputAndGalleryRefs(event.target);
+    dataRefs.files = event.dataTransfer.files;
+    handleFiles(dataRefs);
+  }
+
+
+  const eventHandlers = zone => {
+
+    const dataRefs = getInputAndGalleryRefs(zone);
+    if (!dataRefs.input) return;
+
+    // Prevent default drag behaviors
+    ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+      zone.addEventListener(event, preventDefaults, false);
+      document.body.addEventListener(event, preventDefaults, false);
+    });
+
+    // Highlighting drop area when item is dragged over it
+    ;['dragenter', 'dragover'].forEach(event => {
+      zone.addEventListener(event, highlight, false);
+    });
+    ;['dragleave', 'drop'].forEach(event => {
+      zone.addEventListener(event, unhighlight, false);
+    });
+
+    // Handle dropped files
+    zone.addEventListener('drop', handleDrop, false);
+
+    // Handle browse selected files
+    dataRefs.input.addEventListener('change', event => {
+      dataRefs.files = event.target.files;
+      handleFiles(dataRefs);
+    }, false);
+
+  }
+
+
+  // Initialise ALL dropzones
+  const dropZones = document.querySelectorAll('.upload_dropZone');
+  for (const zone of dropZones) {
+    eventHandlers(zone);
+  }
+
+
+  // No 'image/gif' or PDF or webp allowed here, but it's up to your use case.
+  // Double checks the input "accept" attribute
+  const isImageFile = file => 
+    ['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type);
+
+
+  function previewFiles(dataRefs) {
+    if (!dataRefs.gallery) return;
+    for (const file of dataRefs.files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function() {
+        var oldElem = document.getElementById('imagemPreview');
+        if(oldElem != null)
+            oldElem.remove();
+        let img = document.createElement('img');
+        img.className = 'upload_img mt-2';
+        img.id = 'imagemPreview';
+        img.setAttribute('alt', file.name);
+        img.src = reader.result;
+        dataRefs.gallery.appendChild(img);
+      }
+    }
+  }
+
+  // Based on: https://flaviocopes.com/how-to-upload-files-fetch/
+  const imageUpload = dataRefs => {
+
+    // Multiple source routes, so double check validity
+    if (!dataRefs.files || !dataRefs.input) return;
+
+    const url = dataRefs.input.getAttribute('data-post-url');
+    if (!url) return;
+
+    const name = dataRefs.input.getAttribute('data-post-name');
+    if (!name) return;
+
+    const formData = new FormData();
+    formData.append(name, dataRefs.files);
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('posted: ', data);
+      if (data.success === true) {
+        previewFiles(dataRefs);
+      } else {
+        console.log('URL: ', url, '  name: ', name)
+      }
+    })
+    .catch(error => {
+      console.error('errored: ', error);
+    });
+  }
+
+
+  // Handle both selected and dropped files
+  const handleFiles = dataRefs => {
+
+    let files = [...dataRefs.files];
+
+    // Remove unaccepted file types
+    files = files.filter(item => {
+      if (!isImageFile(item)) {
+        console.log('Not an image, ', item.type);
+      }
+      return isImageFile(item) ? item : null;
+    });
+
+    if (!files.length) return;
+    dataRefs.files = files;
+
+    previewFiles(dataRefs);
+    imageUpload(dataRefs);
+  }
+
+})();
+
+
+</script>
+</html>
