@@ -12,8 +12,7 @@ namespace ProjetoFatec.Application.ViewModels
 {
     public class PublicacaoViewModel
     {
-        public int Id { get; set; }
-        public Perfil? Perfil { get; set; }
+        public Perfil Perfil { get; set; }
         public string Legenda { get; set; }
         public DateTime DataCriacao { get; set; }
         public List<Comentario>? Comentario { get; set; }

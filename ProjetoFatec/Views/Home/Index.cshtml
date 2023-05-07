@@ -4,8 +4,11 @@
     var perfil = ViewData["PerfilUsuario"] as Perfil;
     List<Publicacao> publicacoes = new List<Publicacao>();
     publicacoes = ViewData["Publicacoes"] as List<Publicacao>;
+    
 }
 
+<div class="container">
+    <div class="container divHome">
 <div class="container divHomePrincipal">
     <div class="container-fluid divPost justify-content-between">
         <div class="col divPic">
@@ -16,6 +19,39 @@
         </a>
     </div>
 </div>
+@if(perfil.Amigos.Where(a=>a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
+{
+            
+            <div class="divSolicitacaoAmizade">
+                @foreach (var amigo in perfil.Amigos.Where(a => a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente && a.IdPerfilSolicitado == perfil.Id).ToList()){
+                <form asp-action="RespostaPedidoAmizade" method="post" asp-controller="Perfil">
+                    <div class="divSolicitacaoAmizadePerfil">
+                        <div class="col-1 divPicPostagem amigo">
+                            <img class="img-fluid profile-pic pic-post col pic-postagem amigo" id="dropdownBotao" src="./imgs/perfil.png">
+                        </div>
+                        <div class="col divPostagemInfo amigo">
+                            <a class="post-nome amizade row" href="#">@amigo.PerfilSolicitante.Nome @amigo.PerfilSolicitante.Sobrenome</a>
+                            <a class="mensagem amizade row">Gostaria de se conectar com você</a>
+                            <div class="btnAceitarRecusar">
+                                    <input type="hidden" name="idSolicitante" value="@amigo.IdPerfilSolicitante"/>
+                                    <input type="hidden" name="idSolicitado" value="@amigo.IdPerfilSolicitado" />
+                                    <button class="btn btn-default btnAceitar" name="acao" value="1">Aceitar</button>
+                                    <button class="btn btn-default btnRecusar" name="acao" value="0">Recusar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                }
+            </div>
+           
+}
+
+@if (ViewBag.Erro != null)
+{
+    <div class="alert alert-danger  container divHomePrincipal" role="alert">
+        @ViewBag.Erro
+    </div>
+}
 
 <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -60,9 +96,9 @@
                 </div>
                 </div>
             </div>
-            </div>
+</div>
 
-
+</div>
 @if(publicacoes != null  || publicacoes.Count != 0){
     @foreach(var pub in publicacoes){
     <div class="container divHomePrincipalPostagens">
@@ -156,3 +192,4 @@
 else{
     <a>Não existem postagens :(</a>
 }
+</div>

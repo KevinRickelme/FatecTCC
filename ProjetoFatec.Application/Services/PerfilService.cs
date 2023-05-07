@@ -54,9 +54,11 @@ namespace ProjetoFatec.Application.Services
             return _mapper.Map<PerfilViewModel>(result);
         }
 
-        public async Task<bool> EnviarSolicitacao(int IdPerfilSolicitante, int IdPerfilSolicitado)
+        public async Task<Perfil?> GetPerfilSemAmigo(UsuarioViewModel usuario)
         {
-            return _perfilRepository.EnviarSolicitacao(IdPerfilSolicitante, IdPerfilSolicitado);
+            var mapUsuario = _mapper.Map<Usuario>(usuario);
+            var result = await _perfilRepository.GetPerfilSemAmigo(mapUsuario);
+            return _mapper.Map<Perfil>(result);
         }
     }
 }

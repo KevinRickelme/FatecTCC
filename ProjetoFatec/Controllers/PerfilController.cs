@@ -11,21 +11,23 @@ namespace ProjetoFatec.MVC.Controllers
     {
         private readonly IPerfilService _perfilService;
         private readonly IUsuarioService _usuarioService;
-        public PerfilController(IPerfilService perfilService, IUsuarioService usuarioService)
+        private readonly IAmigoService _amigoService;
+        public PerfilController(IPerfilService perfilService, IUsuarioService usuarioService, IAmigoService amigoService)
         {
             _perfilService = perfilService;
             _usuarioService = usuarioService;
+            _amigoService = amigoService;
         }
         [Route("/Perfil/{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var perfil = _perfilService.GetPerfil(id).Result;
+            var perfil = _perfilService.GetPerfilViewModel(id).Result;
             var MeuPerfil = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
             ViewData["PerfilUsuario"] = MeuPerfil;
             ViewBag.IdPerfil = MeuPerfil.Id;
             ViewBag.MeuPerfil = ClaimUtils.GetClaimInfo(User, "emailaddress") == perfil.Usuario.Email ? true : false;
-            Perfil VerPerfil = perfil;
-            return View(VerPerfil);
+            
+            return View(perfil);
         }
         [Route("/Perfil/PedidoAmizade")]
         public async Task<IActionResult> PedidoAmizade(int id)
@@ -33,10 +35,32 @@ namespace ProjetoFatec.MVC.Controllers
             var perfil = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
             ViewData["PerfilUsuario"] = perfil;
             ViewBag.IdPerfil = perfil.Id;
-            _perfilService.EnviarSolicitacao(perfil.Id, id);
+            _amigoService.EnviarSolicitacao(perfil.Id, id);
             ViewBag.MeuPerfil = ClaimUtils.GetClaimInfo(User, "emailaddress") == perfil.Usuario.Email ? true : false;
             Perfil VerPerfil = perfil;
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { @id = id });
         }
+
+        [Route("/Perfil/DesfazerPedidoAmizade")]
+        public async Task<IActionResult> DesfazerPedidoAmizade(int id)
+        {
+            var perfil = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
+            ViewData["PerfilUsuario"] = perfil;
+            ViewBag.IdPerfil = perfil.Id;
+            _amigoService.RecusarSolicitacao(perfil.Id, id);
+            ViewBag.MeuPerfil = ClaimUtils.GetClaimInfo(User, "emailaddress") == perfil.Usuario.Email ? true : false;
+            Perfil VerPerfil = perfil;
+            return RedirectToAction("Index", new { @id = id });
+        }
+
+        [Route("/Perfil/RespostaPedidoAmizade")]
+        [HttpPost]
+        public async Task<IActionResult> RespostaPedidoAmizade(int idSolicitante, int idSolicitado, int acao)
+        {
+            bool sucesso = acao == 1 ? _amigoService.AceitarSolicitacao(idSolicitante, idSolicitado) : _amigoService.RecusarSolicitacao(idSolicitante, idSolicitado);
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

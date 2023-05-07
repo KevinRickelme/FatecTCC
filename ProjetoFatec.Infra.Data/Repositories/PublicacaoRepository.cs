@@ -17,7 +17,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public bool Add(Publicacao pb)
         {
-            _context.Add(pb);
+            _context.Publicacoes.Add(pb);
             _context.SaveChanges();
             return true;
         }

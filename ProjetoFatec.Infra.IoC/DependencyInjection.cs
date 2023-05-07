@@ -31,6 +31,9 @@ namespace ProjetoFatec.Infra.IoC
             services.AddScoped<IFeedRepository, FeedRepository>();
             services.AddScoped<IFeedService, FeedService>();
 
+            services.AddScoped<IAmigoRepository, AmigoRepository>();
+            services.AddScoped<IAmigoService, AmigoService>();
+
             return services;
         }
     }

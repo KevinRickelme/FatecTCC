@@ -33,7 +33,7 @@ namespace ProjetoFatec.Controllers
             try
             {
                 var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
-                var perfil = _perfilService.GetPerfil(usuario).Result;
+                var perfil = _perfilService.GetPerfilSemAmigo(usuario).Result;
                 var form = Request.Form;
 
                 var publicacao = PopularPublicacao(form, perfil, imagem);
@@ -46,7 +46,7 @@ namespace ProjetoFatec.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToString());
+                return RedirectToAction("Index","Home", new {@erro = ex.Message.ToString()});
             }
         }
 

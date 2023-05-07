@@ -2,9 +2,9 @@
     Layout = "_LayoutCadastro";
     var PrimeiroNome = ViewBag.PrimeiroNome;
     var EmailUsuario = ViewBag.Email;
+   
 
 }
-
 
 <div class="container-fluid mainDiv">
     <div class="container-fluid textos-cadastro">
@@ -23,21 +23,21 @@
         <form class="row g-3 form-cadastro" action="Cadastrar" method="post">
             <div class="col-md-6">
                 <label for="label labelPrimeiroNome" class="form-label">Primeiro Nome*</label>
-                <input type="text" class="form-control input inputPrimeiroNome" id="inputPrimeiroNome" name="PrimeiroNome" placeholder="João">
+                <input type="text" class="form-control input inputPrimeiroNome" id="inputPrimeiroNome" name="PrimeiroNome" placeholder="João" required>
             </div>
             <div class="col-md-6">
                 <label for="label labelSobreNome" class="form-label">Sobrenome</label>
-                <input type="text" class="form-control input" id="input inputSobrenome" name="Sobrenome" placeholder="da Silva">
+                <input asp-for=@Model. type="text" class="form-control input" id="input inputSobrenome" name="Sobrenome" placeholder="da Silva" required>
             </div>
             <div class="col-12">
                 <label for="inputAddress" class="form-label">Email</label>
                 <input type="text" class="form-control input inputEmail" id="inputAddress" name="Email" value="@EmailUsuario" readonly style="color:dimgray">
             </div>
             <div class="col-md-4">
-                <label for="label labelTelefone" class="form-label">Telefone</label>
+                <label for="label labelTelefone" class="form-label" required>Telefone</label>
                 <div class="row divtelefone">
                     <div class="col-4">
-                        <input type="text" class="form-control input inputDDD" id="inputDDD" name="DDD" placeholder="11">
+                        <input type="text" class="form-control input inputDDD" id="inputDDD" name="DDD" placeholder="11" required>
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control input inputTelefone" id="inputTelefone" name="Telefone" placeholder="912345678">
@@ -45,11 +45,11 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <label for="label labelDataNascimento" class="form-label">Data de Nascimento*</label>
+                <label for="label labelDataNascimento" class="form-label" required>Data de Nascimento*</label>
                 <input type="date" class="form-control input" id="inputDataNascimento" name="DataNascimento">
             </div>
             <div class="col-md-3">
-                <label for="label labelSexo" class="form-label">Sexo* </label>
+                <label for="label labelSexo" class="form-label" required>Sexo* </label>
                 <select id="inputCurso" class="form-select input inputSexo" name="Sexo">
                     <option selected>Selecione...</option>
                     <option>Masculino</option>

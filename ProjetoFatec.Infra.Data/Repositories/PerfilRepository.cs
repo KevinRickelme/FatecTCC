@@ -35,15 +35,17 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<Perfil?> GetPerfil(Usuario usuario)
         {
-            return await _context.Perfis.FirstOrDefaultAsync(p => p.Usuario.Id == (usuario.Id));
+            Perfil perf = await _context.Perfis.FirstOrDefaultAsync(p => p.Usuario.Id == (usuario.Id));
+            perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perf.Id || a.IdPerfilSolicitante == perf.Id) && a.Status != StatusAmizadeEnum.Removido).ToList();
+
+            return perf;
         }
 
         public async Task<Perfil?> GetPerfil(int id)
         {
-            Perfil perf = await _context.Perfis.Include("Usuario").Include("Amigos").Include("Publicacoes").FirstOrDefaultAsync(p => p.Id == id);
+            Perfil perf = await _context.Perfis.Include("Usuario").Include("Publicacoes").FirstOrDefaultAsync(p => p.Id == id);
             if (perf != null) {
-                if (perf.Amigos.Count == 0)
-                    perf.Amigos = _context.Amigos.Where(a => (a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id)).ToList();
+                perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id) && a.Status != StatusAmizadeEnum.Removido).ToList();
                 if (perf.Amigos != null || perf.Amigos.Count == 0) {
                     perf.PerfisDeAmigos = new ();
                     foreach (var am in perf.Amigos)
@@ -60,17 +62,9 @@ namespace ProjetoFatec.Infra.Data.Repositories
             return perf;
         }
 
-        public bool EnviarSolicitacao(int IdPerfilSolicitante, int IdPerfilSolicitado)
+        public async Task<Perfil?> GetPerfilSemAmigo(Usuario usuario)
         {
-            Amigo PedidoAmizade = new Amigo()
-            {
-                IdPerfilSolicitante = IdPerfilSolicitante,
-                IdPerfilSolicitado = IdPerfilSolicitado,
-                Status = StatusAmizadeEnum.Pendente,
-                DataAmizade = DateTime.Now
-            };
-            _context.Amigos.Add(PedidoAmizade);
-            return _context.SaveChanges() == 1? true:false;
+            return await _context.Perfis.FirstOrDefaultAsync(p => p.Usuario.Id == (usuario.Id)); ;
         }
     }
 }

@@ -59,6 +59,23 @@ html {
     .post-curso {
         font-size: .9em !important;
     }
+
+    .divHome {
+        display: inline !important;
+        margin-left: 0 !important;
+    }
+
+    .divSolicitacaoAmizade {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 2% !important;
+        position: relative !important;
+    }
+
+    .divSolicitacaoAmizadePerfil {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
 }
 
 @media(max-width: 385px) {
@@ -201,7 +218,6 @@ a {
 
 main {
     height: 100%;
-    background-color: #fafafa;
 }
 
 .divPost {
@@ -470,4 +486,69 @@ div.divPicPostagem.comentario {
     background-color: #bebebe;
     height: 2px;
     border-radius: 100px;
+}
+
+.divHome {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row-reverse;
+}
+
+.divSolicitacaoAmizadePerfil {
+    width: 300px;
+    height: 120px;
+    background-color: white;
+    margin: 0;
+    border-radius: 24px;
+    margin-top: 2%;
+    display: flex;
+}
+
+.divSolicitacaoAmizade {
+    position: absolute;
+    margin-top: 2%;
+}
+
+.post-nome.amizade {
+    font-size: 20px;
+    margin: 0;
+    height: 40px;
+}
+
+.mensagem.amizade {
+    font-size: 14px;
+    margin: 0;
+    color: #757575;
+    height: 30%;
+}
+
+.divPicPostagem.amigo {
+    width: 60px;
+    height: 60px;
+    padding: 4px;
+}
+
+
+
+.btnAceitar, .btnRecusar {
+    border-style: solid !important;
+    border-radius: 24px !important;
+    border-width: 1px !important;
+    width: 100px !important;
+    text-align: center !important;
+}
+
+.btnAceitar {
+    background-color: red !important;
+    color: white !important;
+    font-weight: 500 !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-color: red !important;
+}
+
+.btnAceitarRecusar {
+    width: 80%;
+    display: flex;
+    gap: 10px;
 }
