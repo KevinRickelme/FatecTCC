@@ -1,4 +1,4 @@
-﻿using ProjetoFatec.Application.ViewModels;
+﻿using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace ProjetoFatec.Application.Interfaces
 {
     public interface IFeedService
     {
-        bool Add(FeedViewModel Feed);
+        bool Add(FeedDTO Feed);
         Task<Feed> GetFeed(int IdPerfil);
 
-        Task<FeedViewModel> GetFeedViewModel(int IdPerfil);
+        Task<FeedDTO> GetFeedViewModel(int IdPerfil);
 
     }
 }

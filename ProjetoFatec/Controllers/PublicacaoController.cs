@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Utils;
@@ -33,7 +33,7 @@ namespace ProjetoFatec.Controllers
             try
             {
                 var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
-                var perfil = _perfilService.GetPerfilSemAmigo(usuario).Result;
+                var perfil = _perfilService.GetPerfilWithoutNavigation(usuario).Result;
                 var form = Request.Form;
 
                 var publicacao = PopularPublicacao(form, perfil, imagem);
@@ -50,9 +50,9 @@ namespace ProjetoFatec.Controllers
             }
         }
 
-        private PublicacaoViewModel PopularPublicacao(IFormCollection form, Perfil perfil, IFormFile imagem)
+        private PublicacaoDTO PopularPublicacao(IFormCollection form, Perfil perfil, IFormFile imagem)
         {
-            PublicacaoViewModel pb = new PublicacaoViewModel();
+            PublicacaoDTO pb = new PublicacaoDTO();
             pb.DataCriacao = DateTime.Now;
             pb.Legenda = form["textoPublicacao"];
             pb.Perfil = perfil;

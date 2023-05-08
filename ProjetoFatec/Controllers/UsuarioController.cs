@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Enums;
 using ProjetoFatec.Domain.Interfaces;
@@ -45,7 +45,7 @@ namespace ProjetoFatec.Controllers
         [Authorize]
         public async Task<IActionResult> Cadastro()
         {
-            UsuarioViewModel usuario = new UsuarioViewModel();
+            UsuarioDTO usuario = new UsuarioDTO();
             usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
 
@@ -83,7 +83,7 @@ namespace ProjetoFatec.Controllers
         public async Task<IActionResult> Cadastrar()
         {
             try {
-                UsuarioViewModel usuario = new UsuarioViewModel();
+                UsuarioDTO usuario = new UsuarioDTO();
                 usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
                 if(_usuarioService.PrimeiroAcesso(usuario))
@@ -91,7 +91,7 @@ namespace ProjetoFatec.Controllers
                 string EmailUsuario = ClaimUtils.GetClaimInfo(User, "emailaddress");
                 if(!(_usuarioService.TemPerfilCriado(usuario)))
                 {
-                    PerfilViewModel pf = CriarPerfil(Request.Form, EmailUsuario);
+                    PerfilDTO pf = CriarPerfil(Request.Form, EmailUsuario);
                     _perfilService.Add(pf);
                     pf = _perfilService.GetPerfilViewModel(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result;
                     pf.Feed = SalvarFeed(_perfilService.GetPerfil(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result.Id).Result;
@@ -113,7 +113,7 @@ namespace ProjetoFatec.Controllers
 
         private async Task<Feed> SalvarFeed(int IdPerfil)
         {
-            FeedViewModel feed = new FeedViewModel()
+            FeedDTO feed = new FeedDTO()
             {
                 IdPerfil = IdPerfil
             };
@@ -121,9 +121,9 @@ namespace ProjetoFatec.Controllers
             return await _feedService.GetFeed(IdPerfil);
         }
 
-        private PerfilViewModel CriarPerfil(IFormCollection formularioCadastro, string emailUsuario)
+        private PerfilDTO CriarPerfil(IFormCollection formularioCadastro, string emailUsuario)
         {
-            PerfilViewModel perfil = new PerfilViewModel()
+            PerfilDTO perfil = new PerfilDTO()
             {
                 Nome = formularioCadastro["PrimeiroNome"],
                 Sobrenome = formularioCadastro["Sobrenome"],

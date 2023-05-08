@@ -1,4 +1,4 @@
-﻿using ProjetoFatec.Application.ViewModels;
+﻿using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,13 @@ namespace ProjetoFatec.Application.Interfaces
 {
     public interface IPerfilService
     {
-        Task<Perfil?> GetPerfil(UsuarioViewModel usuario);
+        Task<Perfil?> GetPerfil(UsuarioDTO usuario);
         Task<Perfil?> GetPerfil(int idPerfil);
-        Task<PerfilViewModel?> GetPerfilViewModel(int idPerfil);
-        Task<PerfilViewModel?> GetPerfilViewModel(UsuarioViewModel usuario);
-        bool Add(PerfilViewModel perfil);
-        bool Update(PerfilViewModel perfil);
-        Task<Perfil?> GetPerfilSemAmigo(UsuarioViewModel usuario);
+        Task<PerfilDTO?> GetPerfilViewModel(int idPerfil);
+        Task<PerfilDTO?> GetPerfilViewModel(UsuarioDTO usuario);
+        bool Add(PerfilDTO perfil);
+        bool Update(PerfilDTO perfil);
+        Task<Perfil?> GetPerfilWithoutNavigation(UsuarioDTO usuario);
+        Task<List<PerfilDTO>> GetPerfisByName(string nome);
     }
 }

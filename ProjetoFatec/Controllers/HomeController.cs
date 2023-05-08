@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFatec.Application.Interfaces;
 using ProjetoFatec.Application.Services;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Utils;
@@ -35,7 +35,7 @@ namespace ProjetoFatec.Controllers
         {
             if (!string.IsNullOrEmpty(erro))
                 ViewBag.Erro = erro;
-            UsuarioViewModel usuario = new UsuarioViewModel();
+            UsuarioDTO usuario = new UsuarioDTO();
             usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
             ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));

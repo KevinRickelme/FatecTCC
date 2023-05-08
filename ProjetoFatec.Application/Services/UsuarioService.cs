@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using System;
@@ -21,26 +21,26 @@ namespace ProjetoFatec.Application.Services
             _mapper = mapper;
         }
 
-        public void Add(UsuarioViewModel usuario)
+        public void Add(UsuarioDTO usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             _usuarioRepository.Add(mapUsuario);
         }
 
-        public async Task<UsuarioViewModel?> GetUsuarioViewModel(string email)
+        public async Task<UsuarioDTO?> GetUsuarioViewModel(string email)
         {
             var result = await _usuarioRepository.GetUsuario(email);
-            return _mapper.Map<UsuarioViewModel>(result);
+            return _mapper.Map<UsuarioDTO>(result);
         }
 
-        public bool PrimeiroAcesso(UsuarioViewModel usuario)
+        public bool PrimeiroAcesso(UsuarioDTO usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             var result = _usuarioRepository.PrimeiroAcesso(mapUsuario);
             return result;
         }
 
-        public bool TemPerfilCriado(UsuarioViewModel usuario)
+        public bool TemPerfilCriado(UsuarioDTO usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             var result = _usuarioRepository.TemPerfilCriado(mapUsuario);

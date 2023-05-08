@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoFatec.Application.ViewModels
+namespace ProjetoFatec.Application.DTOs
 {
-    public class PerfilViewModel
+    public class PerfilDTO
     {
         public ICollection<Amigo> Amigos { get; set; }
         public ICollection<Perfil> PerfisDeAmigos { get; set; }

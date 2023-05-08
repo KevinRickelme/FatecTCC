@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Utils;
 
@@ -60,6 +60,15 @@ namespace ProjetoFatec.MVC.Controllers
             bool sucesso = acao == 1 ? _amigoService.AceitarSolicitacao(idSolicitante, idSolicitado) : _amigoService.RecusarSolicitacao(idSolicitante, idSolicitado);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Route("/Perfil/{nome}")]
+        [HttpPost]
+        public async Task<IActionResult> ResultadoPesquisa(string nome)
+        {
+            ViewData["PerfilUsuario"] = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
+            var listaPerfis = await _perfilService.GetPerfisByName(nome);
+            return View(listaPerfis);
         }
 
     }

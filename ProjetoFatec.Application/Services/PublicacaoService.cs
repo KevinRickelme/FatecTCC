@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 
@@ -17,13 +17,13 @@ namespace ProjetoFatec.Application.Services
             _publicacaoRepository = publicacaoRepository;
         }
 
-        public bool Add(PublicacaoViewModel publicacao)
+        public bool Add(PublicacaoDTO publicacao)
         {
             var mapPublicacao = _mapper.Map<Publicacao>(publicacao);
             return _publicacaoRepository.Add(mapPublicacao);
         }
 
-        public async Task<List<Publicacao?>> GetPublicacoes(UsuarioViewModel usuario)
+        public async Task<List<Publicacao?>> GetPublicacoes(UsuarioDTO usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             var result = await _publicacaoRepository.GetPublicacoes(mapUsuario);

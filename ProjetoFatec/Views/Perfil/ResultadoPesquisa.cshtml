@@ -1,0 +1,12 @@
+﻿@using ProjetoFatec.Application.DTOs
+@model List<PerfilDTO>;
+
+
+    @{
+        foreach(var perfil in Model)
+        {
+            <a>@perfil.Nome</a>
+            <a>@perfil.Sobrenome</a>
+            <a>@perfil.Amigos.Count</a>
+        }
+    }

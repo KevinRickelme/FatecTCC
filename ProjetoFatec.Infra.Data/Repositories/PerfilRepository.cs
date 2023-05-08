@@ -62,9 +62,23 @@ namespace ProjetoFatec.Infra.Data.Repositories
             return perf;
         }
 
-        public async Task<Perfil?> GetPerfilSemAmigo(Usuario usuario)
+        public async Task<Perfil?> GetPerfilWithoutNavigation(Usuario usuario)
         {
             return await _context.Perfis.FirstOrDefaultAsync(p => p.Usuario.Id == (usuario.Id)); ;
+        }
+
+        public async Task<List<Perfil>> GetPerfisByName(string nome)
+        {
+            var lista = await _context.Perfis.Include("Amigos").Where(p => p.Nome.Contains(nome)).ToListAsync();
+            
+            foreach(var perfil in lista)
+                perfil.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perfil.Id || a.IdPerfilSolicitante == perfil.Id) && a.Status == StatusAmizadeEnum.Ativo).ToList();
+
+            return lista;
+        }
+        public async Task<List<Perfil>> GetPerfisByFullName(string[] nome)
+        {
+            return await _context.Perfis.Include("Amigos").Where(p => p.Nome.Contains(nome[0]) && p.Sobrenome.Contains(nome[1])).ToListAsync();
         }
     }
 }

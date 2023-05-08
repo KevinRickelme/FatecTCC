@@ -23,6 +23,7 @@ namespace ProjetoFatec.Domain.Entities
         public int? IdFotoPerfil { get; set; }
 
         public string? Biografia { get; private set; }
+        public string? Sobre { get; private set; }
         public int SemestreAtual { get; private set; }
 
         public ICollection<Publicacao> Publicacoes {get;set;}
@@ -35,9 +36,9 @@ namespace ProjetoFatec.Domain.Entities
         public int? IdFeed { get; set; }
         public ICollection<Amigo> Amigos { get; set; }
 
-        public Perfil(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual)
+        public Perfil(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual, string? sobre)
         {
-            ValidateDomain(nome, sobrenome, telefone, dataNascimento, sexo, nomeCurso, biografia, semestreAtual);
+            ValidateDomain(nome, sobrenome, telefone, dataNascimento, sexo, nomeCurso, biografia, semestreAtual, sobre);
             Nome = nome;
             Sobrenome = sobrenome;
             Telefone = telefone;
@@ -46,9 +47,10 @@ namespace ProjetoFatec.Domain.Entities
             NomeCurso = nomeCurso;
             Biografia = biografia;
             SemestreAtual = semestreAtual;
+            Sobre = sobre;
         }
 
-        public Perfil(int id, string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual)
+        public Perfil(int id, string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual, string? sobre)
          {
             DomainExceptionValidation.When(id == 0, "Perfil inválido ou excluído");
             Id = id;
@@ -62,13 +64,18 @@ namespace ProjetoFatec.Domain.Entities
             SemestreAtual = semestreAtual;
         }
 
-        private void ValidateDomain(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string? nomeCurso, string? biografia, int semestreAtual)
+        private void ValidateDomain(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string? nomeCurso, string? biografia, int semestreAtual, string? sobre)
         {
             DomainExceptionValidation.When(String.IsNullOrEmpty(nome), "Nome é obrigatório");
             DomainExceptionValidation.When(String.IsNullOrEmpty(sobrenome), "Sobrenome é obrigatório");
             DomainExceptionValidation.When(String.IsNullOrEmpty(telefone), "Telefone é obrigatório");
             DomainExceptionValidation.When(String.IsNullOrEmpty(nomeCurso), "Nome do curso é obrigatório");
-            DomainExceptionValidation.When(semestreAtual == null, "É necessário informar um semestre");
+            if (biografia != null)
+                DomainExceptionValidation.When(biografia.Split(' ').ToArray().Length > 50, "Nome do curso é obrigatório");
+            if(sobre != null)
+                DomainExceptionValidation.When(sobre.Split(' ').ToArray().Length > 300, "Nome do curso é obrigatório");
+            DomainExceptionValidation.When(semestreAtual <= 0, "O semestre precisa ser maior do que zero");
+            DomainExceptionValidation.When(semestreAtual > 6, "Cursos tecnólogos ofereridos pela FATEC possuem no máximo 6 semestres");
 
             Telefone = Regex.Replace(telefone, "[^0-9]+", "");
 

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,10 @@ namespace ProjetoFatec.Application.Mappings
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Publicacao, PublicacaoViewModel>();
-            CreateMap<Perfil, PerfilViewModel>();
-            CreateMap<Usuario, UsuarioViewModel>();
-            CreateMap<Feed, FeedViewModel>();
+            CreateMap<Publicacao, PublicacaoDTO>();
+            CreateMap<Perfil, PerfilDTO>();
+            CreateMap<Usuario, UsuarioDTO>();
+            CreateMap<Feed, FeedDTO>();
         }
     }
 }

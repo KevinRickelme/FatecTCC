@@ -88,8 +88,7 @@ span {
 
 .botao-menus:hover {
     color: #9B3737;
-    font-size: 1.1em;
-    transition: 0.5s;
+    font-weight: 500;
 }
 
 .menus-items {

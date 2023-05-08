@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoFatec.Application.ViewModels
+namespace ProjetoFatec.Application.DTOs
 {
-    public class UsuarioViewModel
+    public class UsuarioDTO
     {
         public int Id { get; set; }
         public string Email { get; set; }

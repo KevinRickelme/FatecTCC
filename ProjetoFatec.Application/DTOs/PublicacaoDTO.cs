@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace ProjetoFatec.Application.ViewModels
+namespace ProjetoFatec.Application.DTOs
 {
-    public class PublicacaoViewModel
+    public class PublicacaoDTO
     {
         public Perfil Perfil { get; set; }
         public string Legenda { get; set; }

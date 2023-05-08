@@ -14,6 +14,8 @@ namespace ProjetoFatec.Domain.Interfaces
         Task<Perfil?> GetPerfil(int id);
         bool Add(Perfil perfil);
         bool Update(Perfil perfil);
-        Task<Perfil?> GetPerfilSemAmigo(Usuario usuario);
+        Task<Perfil?> GetPerfilWithoutNavigation(Usuario usuario);
+        Task<List<Perfil>> GetPerfisByName(string nome);
+        Task<List<Perfil>> GetPerfisByFullName(string[] arrayNome);
     }
 }

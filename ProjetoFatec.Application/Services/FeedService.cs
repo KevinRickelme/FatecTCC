@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProjetoFatec.Application.Interfaces;
-using ProjetoFatec.Application.ViewModels;
+using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using System;
@@ -21,7 +21,7 @@ namespace ProjetoFatec.Application.Services
             _mapper = mapper;
             _feedRepository = feedRepository;
         }
-        public bool Add(FeedViewModel feed)
+        public bool Add(FeedDTO feed)
         {
             var mapFeed = _mapper.Map<Feed>(feed);
             return _feedRepository.Add(mapFeed);
@@ -32,10 +32,10 @@ namespace ProjetoFatec.Application.Services
             return await _feedRepository.GetFeed(IdPerfil);
         }
 
-        public async Task<FeedViewModel> GetFeedViewModel(int IdPerfil)
+        public async Task<FeedDTO> GetFeedViewModel(int IdPerfil)
         {
             var result = _feedRepository.GetFeed(IdPerfil);
-            return _mapper.Map<FeedViewModel>(result);
+            return _mapper.Map<FeedDTO>(result);
         }
     }
 }
