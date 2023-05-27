@@ -18,13 +18,16 @@ namespace ProjetoFatec.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IPublicacaoService _publicacaoService;
         private readonly IPerfilService _perfilService;
+        private readonly IComentarioService _comentarioService;
 
-        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService)
+
+        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService, IComentarioService comentarioService)
         {
             _logger = logger;
             _usuarioService = usuarioService;
             _publicacaoService = publicacaoService;
             _perfilService = perfilService;
+            _comentarioService = comentarioService;
         }
 
 
@@ -33,7 +36,8 @@ namespace ProjetoFatec.Controllers
             try
             {
                 var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
-                var perfil = _perfilService.GetPerfilWithoutNavigation(usuario).Result;
+                var perfil = _perfilService.GetPerfil(usuario).Result;
+                perfil.Usuario = _usuarioService.GetUsuario(usuario.Email).Result;
                 var form = Request.Form;
 
                 var publicacao = PopularPublicacao(form, perfil, imagem);
@@ -77,5 +81,41 @@ namespace ProjetoFatec.Controllers
                 return null;
             }
         }
+
+        public IActionResult ShowpopUp(int id)
+        {
+            var publicacao = _publicacaoService.GetPublicacao(id);
+
+            //specify the name or path of the partial view
+            return PartialView("_partialModalPublicacao", publicacao.Comentarios);
+        }
+        public IActionResult ShowpopUp2(int id)
+        {
+            var publicacao = _publicacaoService.GetPublicacao(id);
+
+            //specify the name or path of the partial view
+            return PartialView("_partialModalPublicacao", publicacao.Comentarios);
+        }
+
+        [HttpPost]
+        public IActionResult PublicarComentario(string textoPublicacao, int IdPublicacao)
+        {
+            var publicacao = _publicacaoService.GetPublicacao(IdPublicacao);
+            var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
+            var perfil = _perfilService.GetPerfil(usuario).Result;
+
+            ComentarioDTO comentarioDTO = new()
+            {
+                IdPublicacao = IdPublicacao,
+                IdPerfil = perfil.Id,
+                Descricao = textoPublicacao,
+                DataComentario = DateTime.Now
+            };
+
+            var sucesso = _comentarioService.Add(comentarioDTO);
+            return RedirectToAction("Index","Home", new {@sucesso = "Comentário adicionado"});
+        }
     }
+
+
 }

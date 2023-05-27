@@ -52,7 +52,10 @@ namespace ProjetoFatec.Infra.Data.Migrations
             modelBuilder.Entity("ProjetoFatec.Domain.Entities.Comentario", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("DataComentario")
                         .HasColumnType("datetime2");
@@ -68,6 +71,10 @@ namespace ProjetoFatec.Infra.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdPerfil");
+
+                    b.HasIndex("IdPublicacao");
 
                     b.ToTable("Comentarios");
                 });
@@ -276,13 +283,13 @@ namespace ProjetoFatec.Infra.Data.Migrations
                 {
                     b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "Perfil")
                         .WithMany("Comentarios")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdPerfil")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ProjetoFatec.Domain.Entities.Publicacao", "Publicacao")
                         .WithMany("Comentarios")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("IdPublicacao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -9,12 +9,16 @@ namespace ProjetoFatec.Application.Services
     public class PublicacaoService : IPublicacaoService
     {
         private IPublicacaoRepository _publicacaoRepository;
+        private IPerfilRepository _perfilRepository;
         private IMapper _mapper;
+        private IComentarioRepository _comentarioRepository;
 
-        public PublicacaoService(IMapper mapper, IPublicacaoRepository publicacaoRepository)
+        public PublicacaoService(IMapper mapper, IPublicacaoRepository publicacaoRepository, IPerfilRepository perfilRepository, IComentarioRepository comentarioRepository)
         {
             _mapper = mapper;
             _publicacaoRepository = publicacaoRepository;
+            _perfilRepository = perfilRepository;
+            _comentarioRepository = comentarioRepository;
         }
 
         public bool Add(PublicacaoDTO publicacao)
@@ -27,7 +31,26 @@ namespace ProjetoFatec.Application.Services
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             var result = await _publicacaoRepository.GetPublicacoes(mapUsuario);
+
+
+
             return _mapper.Map<List<Publicacao?>>(result);
+        }
+
+        public Publicacao GetPublicacao(int idPublicacao)
+        {
+            var result = _publicacaoRepository.GetPublicacao(idPublicacao);
+            result.Comentarios = _comentarioRepository.GetComentarios(idPublicacao);
+                if (result.Comentarios != null)
+                {
+                    foreach (var comentario in result.Comentarios)
+                    {
+                        comentario.Perfil = _perfilRepository.GetPerfil(comentario.IdPerfil).Result;
+                    }
+                }
+
+
+            return result;
         }
     }
 }

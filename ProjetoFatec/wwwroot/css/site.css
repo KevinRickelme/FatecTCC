@@ -129,3 +129,57 @@ span {
     color: #9B3737;
     transition: 0.5s;
 }
+
+
+.divPostagem.comentario {
+    background-color: #f9f9f9;
+    height:100px;
+}
+
+.pic-post.comentario{
+    margin-top:20% !important;
+}
+
+.post-conteudo.comentario{
+    font-size:0.8em;
+}
+
+.divPoste.comentario{
+    margin-top: 0 !important;
+}
+
+.inputTxtPublicacao.comentario {
+    background-color: #f9f9f9;
+    height: 45px;
+}
+
+.inputTxtPublicacao {
+    background-color: #FCFCFC;
+}
+
+.btnPublicar {
+    background-color: White;
+    color: #9B3737;
+    font-weight: 500;
+    border-style: solid;
+    border-width: 1px;
+    border-color: red;
+    width: 10em;
+    border-radius: 50px;
+}
+
+    .btnPublicar:hover {
+        background-color: #9B3737;
+        color: white;
+        border-color: #9B3737;
+    }
+    .btnPublicar:active {
+        background-color: #913333 !important;
+        color: white !important;
+        border-color: #9B3737 !important;
+    }
+
+
+.inputTxtPublicacao:focus {
+    box-shadow: 0 0 0 0.1rem rgba(155, 55, 55, 50%);
+}

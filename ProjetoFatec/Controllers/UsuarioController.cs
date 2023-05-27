@@ -36,10 +36,11 @@ namespace ProjetoFatec.Controllers
             else
                 return View();
         }
-
+        [HttpGet]
         public IActionResult Sair()
         {
             HttpContext.SignOutAsync();
+            ClaimUtils.RemoveClaims(User);
             return RedirectToAction("Index");
         }
         [Authorize]
@@ -93,11 +94,13 @@ namespace ProjetoFatec.Controllers
                 {
                     PerfilDTO pf = CriarPerfil(Request.Form, EmailUsuario);
                     _perfilService.Add(pf);
+                    
                     pf = _perfilService.GetPerfilViewModel(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result;
                     pf.Feed = SalvarFeed(_perfilService.GetPerfil(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result.Id).Result;
-                    
+                    _usuarioService.AtualizarIdPerfil(usuario.Email, pf.Id);
+
                     //pf.Id = _perfilService.GetPerfil(_usuarioService.GetUsuarioViewModel(EmailUsuario).Result).Result.Id;
-                    
+
                 }
                 return RedirectToAction("Index","Home");
             }
@@ -132,7 +135,9 @@ namespace ProjetoFatec.Controllers
                 DataNascimento = Convert.ToDateTime(formularioCadastro["DataNascimento"]),
                 Sexo = formularioCadastro["Sexo"] == "Feminino" ? SexoEnum.Feminino : SexoEnum.Masculino,
                 NomeCurso = formularioCadastro["NomeCurso"],
-                SemestreAtual = int.Parse(formularioCadastro["SemestreAtual"])
+                SemestreAtual = int.Parse(formularioCadastro["SemestreAtual"]),
+                Biografia = "",
+                Sobre = ""
             };
             return perfil;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ProjetoFatec.Application.Interfaces;
 using ProjetoFatec.Application.Services;
 using ProjetoFatec.Domain.Interfaces;
@@ -13,11 +14,12 @@ namespace ProjetoFatec.Infra.IoC
     {
         public static IServiceCollection AddInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(options => 
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("Database"), 
-                    b=> b.MigrationsAssembly(typeof(ApplicationContext)
+                    configuration.GetConnectionString("Database"),
+                    b => b.MigrationsAssembly(typeof(ApplicationContext)
                         .Assembly.FullName)));
+                
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
@@ -33,6 +35,9 @@ namespace ProjetoFatec.Infra.IoC
 
             services.AddScoped<IAmigoRepository, AmigoRepository>();
             services.AddScoped<IAmigoService, AmigoService>();
+
+            services.AddScoped<IComentarioRepository, ComentarioRepository>();
+            services.AddScoped<IComentarioService, ComentarioService>();
 
             return services;
         }

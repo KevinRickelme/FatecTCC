@@ -9,5 +9,7 @@ namespace ProjetoFatec.Domain.Interfaces
         bool PrimeiroAcesso(Usuario cvm);
         Task<Usuario?> GetUsuario(string email);
         bool TemPerfilCriado(Usuario cvm);
+        void Update(Usuario usuario);
+        Task<Usuario?> GetUsuarioAsNoTracking(string email);
     }
 }

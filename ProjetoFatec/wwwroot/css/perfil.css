@@ -19,12 +19,12 @@ body {
 
 .divPerfilMaior {
     width: 100%;
-    height: 200px;
 }
 
 .perfilMaior {
     align-items: center;
     justify-content: center;
+    height: 200px;
 }
 
 .divPicPostagem.perfil {

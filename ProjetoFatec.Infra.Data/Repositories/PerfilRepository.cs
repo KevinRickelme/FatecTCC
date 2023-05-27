@@ -29,7 +29,9 @@ namespace ProjetoFatec.Infra.Data.Repositories
         public bool Update(Perfil perfil)
         {
             _context.Perfis.Update(perfil);
+
             _context.SaveChanges();
+            
             return true;
         }
 
@@ -69,16 +71,16 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<List<Perfil>> GetPerfisByName(string nome)
         {
-            var lista = await _context.Perfis.Include("Amigos").Where(p => p.Nome.Contains(nome)).ToListAsync();
+            var lista = await _context.Perfis.Include("Amigos").Include("Usuario").Where(p => p.Nome.Contains(nome)).ToListAsync();
             
             foreach(var perfil in lista)
-                perfil.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perfil.Id || a.IdPerfilSolicitante == perfil.Id) && a.Status == StatusAmizadeEnum.Ativo).ToList();
+                perfil.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perfil.Id || a.IdPerfilSolicitante == perfil.Id) && a.Status != StatusAmizadeEnum.Removido).ToList();
 
             return lista;
         }
         public async Task<List<Perfil>> GetPerfisByFullName(string[] nome)
         {
-            return await _context.Perfis.Include("Amigos").Where(p => p.Nome.Contains(nome[0]) && p.Sobrenome.Contains(nome[1])).ToListAsync();
+            return await _context.Perfis.Include("Amigos").Include("Usuario").Where(p => p.Nome.Contains(nome[0]) && p.Sobrenome.Contains(nome[1])).ToListAsync();
         }
     }
 }

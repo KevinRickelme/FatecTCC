@@ -1,0 +1,69 @@
+﻿<!-- Modal "Visualização de colaborador"-->
+@{
+    var x = "batatatatata";
+}
+
+
+<div class="modal modal-3 fade" id="modalPostagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-solicitacoes" role="document">
+        <div class="modal-content pl-5 pr-5 pt-5">
+            <div class="modal-header">
+
+
+                <div class="row">
+                    <div class="col mt-3">
+                        <div class="page-title">
+                            <h4> Visualizar Colaborador</h4>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body center-block">
+                <div class="row">
+                    <div class="col-md">
+                        <label for="labelNomeModalVisualizar">Colaborador</label>
+                        <input class="form-control" id="inputNomeModalVisualizar" name="NomeModalVisualizar" type="text" disabled readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <label for="labelCPFModalVisualizar">CPF</label>
+                        <input class="form-control" id="inputCPFModalVisualizar" name="CPFModalVisualizar" type="text" disabled readonly>
+                    </div>
+                    <div class="col-md">
+                        <label for="labelSindicatoModalVisualizar">Sindicato</label>
+                        <input class="form-control" id="inputCPFModalVisualizar" name="SindicatoModalVisualizar" type="text" disabled readonly>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md">
+                        <label for="labelEmpresaModalVisualizar">Empresa</label>
+                        <input class="form-control" id="inputEmpresaModalVisualizar" name="EmpresaModalVisualizar" type="text" disabled readonly>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-md">
+                        <label for="labelJornadaModalVisualizar">Jornada</label>
+                        <input class="form-control" id="inputJornadaModalVisualizar" name="JornadaModalVisualizar" type="text" disabled readonly>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col ml-1" style="margin-top: 22px">
+                        <button type="button" style="width: 220px;" data-dismiss="modal" class="btn btn-primary ml-2 p-3 float-right">
+                            Fechar
+                        </button>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

@@ -36,6 +36,7 @@ namespace ProjetoFatec.Domain.Entities
         public int? IdFeed { get; set; }
         public ICollection<Amigo> Amigos { get; set; }
 
+        public Perfil() { }
         public Perfil(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual, string? sobre)
         {
             ValidateDomain(nome, sobrenome, telefone, dataNascimento, sexo, nomeCurso, biografia, semestreAtual, sobre);
@@ -50,19 +51,6 @@ namespace ProjetoFatec.Domain.Entities
             Sobre = sobre;
         }
 
-        public Perfil(int id, string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string nomeCurso, string? biografia, int semestreAtual, string? sobre)
-         {
-            DomainExceptionValidation.When(id == 0, "Perfil inválido ou excluído");
-            Id = id;
-            Nome = nome;
-            Sobrenome = sobrenome;
-            Telefone = telefone;
-            DataNascimento = dataNascimento;
-            Sexo = sexo;
-            NomeCurso = nomeCurso;
-            Biografia = biografia;
-            SemestreAtual = semestreAtual;
-        }
 
         private void ValidateDomain(string nome, string sobrenome, string telefone, DateTime dataNascimento, SexoEnum sexo, string? nomeCurso, string? biografia, int semestreAtual, string? sobre)
         {

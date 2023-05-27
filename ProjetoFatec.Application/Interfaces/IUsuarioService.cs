@@ -11,9 +11,12 @@ namespace ProjetoFatec.Application.Interfaces
     public interface IUsuarioService
     {
         void Add(UsuarioDTO cvm);
+        void Update(UsuarioDTO usuario);
         bool PrimeiroAcesso(UsuarioDTO cvm);
         Task<UsuarioDTO?> GetUsuarioViewModel(string email);
         Task<Usuario> GetUsuario(string email);
         bool TemPerfilCriado(UsuarioDTO cvm);
+        void AtualizarIdPerfil(string usuario, int IdPerfil);
+        Task<Usuario> GetUsuarioAsNoTracking(string email);
     }
 }

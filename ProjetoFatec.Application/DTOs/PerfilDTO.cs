@@ -12,6 +12,9 @@ namespace ProjetoFatec.Application.DTOs
 {
     public class PerfilDTO
     {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public ICollection<Amigo> Amigos { get; set; }
         public ICollection<Perfil> PerfisDeAmigos { get; set; }
         public Usuario Usuario { get; set; }
@@ -22,11 +25,14 @@ namespace ProjetoFatec.Application.DTOs
         [Required(ErrorMessage ="DDD/Telefone é obrigatório")]
         public string Telefone { get; set; } //ex. 11900000000
         [Required(ErrorMessage = "Data de nascimento é obrigatório")]
+        [NotMapped]
+        public string DDD { get; set; }
         public DateTime DataNascimento { get; set; }
         [Required(ErrorMessage = "Sexo é obrigatório")]
         public SexoEnum Sexo { get; set; }
         [Required(ErrorMessage ="Curso é obrigatório")]
         public string NomeCurso { get; set; }
+        public string? Sobre { get; set; }
         
         public FotoPerfil? FotoPerfil { get; set; }
         public string? Biografia { get; set; }

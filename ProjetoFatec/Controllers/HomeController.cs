@@ -31,10 +31,12 @@ namespace ProjetoFatec.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> Index(string? erro)
+        public async Task<IActionResult> Index(string? erro, string? sucesso)
         {
             if (!string.IsNullOrEmpty(erro))
                 ViewBag.Erro = erro;
+            if (!string.IsNullOrEmpty(sucesso))
+                ViewBag.Sucesso = sucesso;
             UsuarioDTO usuario = new UsuarioDTO();
             usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 

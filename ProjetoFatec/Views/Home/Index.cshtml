@@ -6,13 +6,13 @@
     publicacoes = ViewData["Publicacoes"] as List<Publicacao>;
     
 }
-
+<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="container divHome">
 <div class="container divHomePrincipal">
     <div class="container-fluid divPost justify-content-between">
         <div class="col divPic">
-            <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="./imgs/kevin.jpg">
+                    <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="./imgs/perfil.png">
         </div>
         <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
             Criar publicação
@@ -53,6 +53,15 @@
     </div>
 }
 
+@if (ViewBag.Sucesso != null)
+{
+    <div class="alert alert-success  container divHomePrincipal" role="alert">
+        @ViewBag.Sucesso
+    </div>
+}
+
+
+
 <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -69,7 +78,7 @@
                         <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=postagem></textarea><span asp-validation-for="postagem"></span>
                             </div>
                         <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
-                        <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone' >
+                        <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone'style="display: none;" >
 
                             <legend class="visually-hidden">Image uploader</legend>
 
@@ -109,7 +118,7 @@
                     </div>
                     <div class="row divPostagemInfo">
                         <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
-                        <a class="post-curso row">@pub.Perfil.NomeCurso, @pub.Perfil.SemestreAtual</a>
+                            <a class="post-curso row">@pub.Perfil.NomeCurso • @pub.Perfil.SemestreAtual</a>
                             @{
                                 var hora = DateTime.Now - pub.DataCriacao;
                                 if (hora.Days < 1)
@@ -178,13 +187,12 @@
                         <a class="btn post-btnLike col">
                             <span class=" fa-regular fa-heart"></span> Gostei
                         </a>
-                        <a class="btn post-btnComentar col"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                            <a class="btn post-btnComentar col" onclick="Details(@pub.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
                         <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                     </div>
                 </div>
 
             </div>
-
 
     </div>
     }
@@ -193,3 +201,37 @@ else{
     <a>Não existem postagens :(</a>
 }
 </div>
+
+<div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comentários</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <script type="text/javascript">
+        function Details(id) {
+            $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#modalPublicacao").modal("show");
+        }
+    </script>
+
+

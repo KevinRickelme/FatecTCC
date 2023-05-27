@@ -1,0 +1,144 @@
+﻿.div-formulario-cadastro.configuracoes
+{
+    height: 80em !important;
+}
+.inputBio, .inputSobre{
+    height:100px !important;
+}
+
+
+@media(max-width: 1093px) {
+    .form-label {
+        font-size: 15px !important;
+    }
+}
+
+@media(max-width:1025px) {
+    html {
+        font-size: 20px !important;
+    }
+
+    .div-formulario-cadastro {
+        width: 100%;
+    }
+
+    .mainDiv {
+        width: 100% !important;
+    }
+}
+
+@media(max-width: 500px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+.mainDiv {
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    width: 80% !important;
+    height: 100% !important;
+    padding: 0;
+    padding-top: 3%;
+    font-size: 0.8em;
+}
+
+.textos-cadastro {
+    width: 80%;
+}
+
+.titulo-cadastro {
+    margin: 0 auto;
+}
+
+.subtitulo-cadastro {
+    text-align: center;
+    font-size: 2em !important;
+    margin-top: 0 !important;
+}
+
+.legenda-cadastro {
+    margin-top: 1em;
+    font-size: 1.5em;
+    line-height: 1;
+    font-weight: 350;
+}
+
+.input {
+    border-style: none;
+    height: 3em;
+    background-color: #ebebeb !important;
+}
+
+.form-cadastro {
+    text-align: left;
+    margin-left: 3em !important;
+    margin-right: 3em !important;
+}
+
+    .form-cadastro label {
+        font-size: 1.2em;
+        color: #8E8E8E;
+    }
+
+    .form-cadastro div {
+        margin-top: 2em;
+    }
+
+.div-formulario-cadastro {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3em;
+}
+
+.labelLegendas {
+    color: #c0c0c0 !important;
+    font-size: 1.3em !important;
+}
+
+.labelLegendas1 {
+    color: #c0c0c0 !important;
+    font-size: 1em !important;
+}
+
+.form-nome {
+    display: flex;
+}
+
+.inputEmail {
+    background-color: #E0E0E0 !important;
+}
+
+.divtelefone {
+    margin-top: -2em !important;
+}
+
+label {
+    font-size: 20px !important;
+}
+
+#botaoCadastrar {
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    color: #9B3737;
+    font-size: 15px;
+    padding: 0;
+    width: 274px;
+    height: 40px;
+    align-items: center;
+    border-radius: 25px;
+    background-color: transparent;
+    border-color: #9B3737;
+}
+
+    #botaoCadastrar:hover {
+        width: 300px;
+        background-color: rgba(155, 55, 55, 15%);
+        border-color: red;
+        color: #9B3737;
+        transition: 0.5s;
+    }

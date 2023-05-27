@@ -17,6 +17,7 @@ namespace ProjetoFatec.Application.Mappings
             CreateMap<Perfil, PerfilDTO>();
             CreateMap<Usuario, UsuarioDTO>();
             CreateMap<Feed, FeedDTO>();
+            CreateMap<Comentario, ComentarioDTO>();
         }
     }
 }

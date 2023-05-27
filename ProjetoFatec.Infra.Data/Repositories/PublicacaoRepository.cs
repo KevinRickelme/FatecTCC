@@ -34,5 +34,10 @@ namespace ProjetoFatec.Infra.Data.Repositories
                 return null;
             }
         }
+
+        public Publicacao GetPublicacao(int id)
+        {
+            return _context.Publicacoes.Where(p => p.Id == id).Include("Comentarios").FirstOrDefault();
+        }
     }
 }

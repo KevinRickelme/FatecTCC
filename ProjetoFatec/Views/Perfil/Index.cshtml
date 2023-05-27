@@ -20,7 +20,7 @@
                 <div class="col divPostagemInfo perfil">
                     <a class="post-nome perfil row">@Model.Nome @Model.Sobrenome</a>
                     <a class="post-amigos perfil row">@quantidadeAmigos amigos</a>
-                    <a class="post-bio perfil row">Estudante do sexto semestre, apaixonado por astronomia e jogos.  </a>
+                    <a class="post-bio perfil row">@Model.Biografia</a>
                     <div class="divBtnConectar">
                         @if(!ViewBag.MeuPerfil)
                         {
@@ -73,7 +73,7 @@
                 <div class="container-fluid divSobrePrincipal">
                   <div class="container-fluid col-6 divSobre perfilInfos"  style="background-color:white;">
                     <a class="sobre">Sobre</a>
-                    <p class="nomeSobre">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in urna lacinia ipsum malesuada vulputate ut at orci. Nunc blandit euismod lectus, eget varius urna interdum sit amet. Donec dapibus cursus ullamcorper. Nam volutpat at lacus ac consectetur. Nunc non pulvinar orci. Proin sapien elit, mattis dapibus metus in, sodales sagittis quam.</p>
+                    <p class="nomeSobre">@Model.Sobre</p>
                   </div> 
                 </div>
                 <div class="container-fluid divAmigosPrincipal">
@@ -86,7 +86,7 @@
                         <div class="container-fluid col AmigoExibicao perfilInfos"  style="background-color:white;">
                             <div class="col-2 divImagemAmigo perfilInfo">
                                 <a href="@Url.Action("Index","Perfil", new{@id = amigo.Id})">
-                                    <img class="img-fluid imagem-amigos perfilInfo" id="dropdownBotao" src="~/imgs/kevin.jpg">
+                                    <img class="img-fluid imagem-amigos perfilInfo" id="dropdownBotao" src="~/imgs/perfil.png">
                                     <p class="nomeAmigo">@amigo.Nome @amigo.Sobrenome</p>
                                 </a>
                             </div>
@@ -106,7 +106,7 @@
                     <div class="container divHomePrincipal">
                       <div class="container-fluid divPost justify-content-between">
                           <div class="col divPic">
-                        <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="~/imgs/kevin.jpg">
+                        <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="~/imgs/perfil.png">
                           </div>
                           <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
                               Criar publicação
@@ -249,7 +249,7 @@
                                 <a class="btn post-btnLike col">
                                     <span class=" fa-regular fa-heart"></span> Gostei
                                 </a>
-                                <a class="btn post-btnComentar col"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                                <a class="btn post-btnComentar col" onclick="Details(@pub.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
                                 <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                             </div>
                         </div>
@@ -269,7 +269,36 @@
               </div>
 
           </div>
-                    
-            
-        
+
+          <div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comentários</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <script type="text/javascript">
+        function Details(id) {
+            $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            $("#modalPublicacao").modal("show");
+        }
+    </script>
         

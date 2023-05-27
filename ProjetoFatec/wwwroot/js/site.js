@@ -366,3 +366,49 @@ console.clear();
 
 })();
 
+
+$('#modalPublicacao').on('show.bs.modal', function (e) {
+    var Nome = $(e.relatedTarget).data('item-nome');
+    var CPF = $(e.relatedTarget).data('item-cpf');
+    var Sindicato = $(e.relatedTarget).data('item-sindicato');
+    var sindicatoNome = "x";
+    var Jornada = $(e.relatedTarget).data('item-jornada');
+    var Empresa = $(e.relatedTarget).data('item-empresa');
+
+    switch (Sindicato) {
+        case 1:
+            sindicatoNome = "SINDPD SP";
+            break;
+        case 2:
+            sindicatoNome = "SINDPD RJ";
+            break;
+        case 3:
+            sindicatoNome = "SINDPD RS";
+            break;
+        case 4:
+            sindicatoNome = "SINDPD MG";
+            break;
+        case 5:
+            sindicatoNome = "SINDPD MS";
+            break;
+        case 6:
+            sindicatoNome = "SINDPD BA"
+                ;
+            break;
+        case 7:
+            sindicatoNome = "SINDPD CE"
+                ;
+            break;
+        case 8:
+            sindicatoNome = "SINDPD PB"
+                ;
+            break;
+
+    }
+
+    $(e.currentTarget).find('input[name="NomeModalVisualizar"]').val(Nome);
+    $(e.currentTarget).find('input[name="CPFModalVisualizar"]').val(CPF);
+    $(e.currentTarget).find('input[name="SindicatoModalVisualizar"]').val(sindicatoNome);
+    $(e.currentTarget).find('input[name="EmpresaModalVisualizar"]').val(Empresa);
+    $(e.currentTarget).find('input[name="JornadaModalVisualizar"]').val(Jornada);
+});

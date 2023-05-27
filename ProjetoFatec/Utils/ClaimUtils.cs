@@ -72,5 +72,24 @@ namespace ProjetoFatec.Utils
             }
         }
 
+        internal static void RemoveClaims(ClaimsPrincipal User)
+        {
+            try
+            {
+                var user = User as ClaimsPrincipal;
+                var identity = user.Identity as ClaimsIdentity;
+                var claim = (from c in user.Claims
+                             select c).ToList();
+
+                foreach(var clm in claim)
+                    identity.RemoveClaim(clm);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

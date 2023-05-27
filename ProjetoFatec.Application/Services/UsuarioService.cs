@@ -26,6 +26,11 @@ namespace ProjetoFatec.Application.Services
             var mapUsuario = _mapper.Map<Usuario>(usuario);
             _usuarioRepository.Add(mapUsuario);
         }
+        public void Update(UsuarioDTO usuario)
+        {
+            var mapUsuario = _mapper.Map<Usuario>(usuario);
+            _usuarioRepository.Update(mapUsuario);
+        }
 
         public async Task<UsuarioDTO?> GetUsuarioViewModel(string email)
         {
@@ -51,6 +56,19 @@ namespace ProjetoFatec.Application.Services
         {
             var result = await _usuarioRepository.GetUsuario(email);
             return _mapper.Map<Usuario>(result);
+        }
+
+        public async Task<Usuario> GetUsuarioAsNoTracking(string email)
+        {
+            var result = await _usuarioRepository.GetUsuarioAsNoTracking(email);
+            return _mapper.Map<Usuario>(result);
+        }
+
+        public void AtualizarIdPerfil(string usuario, int IdPerfil)
+        {
+            var usuarioDTO = GetUsuario(usuario).Result;
+            usuarioDTO.IdPerfil = IdPerfil;
+            _usuarioRepository.Update(usuarioDTO);
         }
     }
 }

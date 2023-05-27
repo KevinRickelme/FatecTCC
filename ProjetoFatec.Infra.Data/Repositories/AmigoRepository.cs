@@ -52,7 +52,9 @@ namespace ProjetoFatec.Infra.Data.Repositories
             Amigo Amigos = _context.Amigos.Where(a => a.IdPerfilSolicitante == IdPerfilSolicitante && a.IdPerfilSolicitado == IdPerfilSolicitado).FirstOrDefault();
             Amigos.Status = StatusAmizadeEnum.Ativo;
             _context.Amigos.Update(Amigos);
-            return _context.SaveChanges() == 1 ? true : false;
+            bool resultado = _context.SaveChangesAsync().Result == 1 ? true : false;
+            _context.Entry(Amigos).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            return resultado;
         }
         public bool RecusarSolicitacao(int IdPerfilSolicitante, int IdPerfilSolicitado)
         {

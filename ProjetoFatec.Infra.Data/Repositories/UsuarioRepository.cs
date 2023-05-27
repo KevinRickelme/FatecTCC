@@ -19,11 +19,23 @@ namespace ProjetoFatec.Infra.Data.Repositories
         {
             _context.Login.Add(usuario);
             _context.SaveChanges();
+            _context.Dispose();
+        }
+        public void Update(Usuario usuario)
+        {
+            _context.Login.Update(usuario);
+            _context.SaveChanges();
+            _context.Dispose();
         }
 
         public async Task<Usuario?> GetUsuario(string email)
         {
-            return await _context.Login.Include("Perfil").FirstOrDefaultAsync(u=> u.Email == email);
+            return await _context.Login.Include("Perfil").FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<Usuario?> GetUsuarioAsNoTracking(string email)
+        {
+            return await _context.Login.Include("Perfil").AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public bool PrimeiroAcesso(Usuario cvm)
