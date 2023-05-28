@@ -23,8 +23,6 @@ namespace ProjetoFatec.Application.Services
         public int Add(ComentarioDTO comentarioDTO)
         {
             var mapComentario = _mapper.Map<Comentario>(comentarioDTO);
-            mapComentario.Perfil = null;
-            mapComentario.Publicacao = null;
             return _comentarioRepository.Add(mapComentario);
         }
     }

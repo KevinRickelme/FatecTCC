@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoFatec.Infra.Data.Context;
 
@@ -11,9 +12,10 @@ using ProjetoFatec.Infra.Data.Context;
 namespace ProjetoFatec.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230527200440_CurtidaDePublicacaoes")]
+    partial class CurtidaDePublicacaoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,11 +98,12 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Property<int>("IdPublicacao")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PublicacaoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPerfil");
-
-                    b.HasIndex("IdPublicacao");
+                    b.HasIndex("PublicacaoId");
 
                     b.ToTable("Curtidas");
                 });
@@ -326,21 +329,9 @@ namespace ProjetoFatec.Infra.Data.Migrations
 
             modelBuilder.Entity("ProjetoFatec.Domain.Entities.Curtida", b =>
                 {
-                    b.HasOne("ProjetoFatec.Domain.Entities.Perfil", "Perfil")
+                    b.HasOne("ProjetoFatec.Domain.Entities.Publicacao", null)
                         .WithMany("Curtidas")
-                        .HasForeignKey("IdPerfil")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ProjetoFatec.Domain.Entities.Publicacao", "Publicacao")
-                        .WithMany("Curtidas")
-                        .HasForeignKey("IdPublicacao")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Perfil");
-
-                    b.Navigation("Publicacao");
+                        .HasForeignKey("PublicacaoId");
                 });
 
             modelBuilder.Entity("ProjetoFatec.Domain.Entities.Perfil", b =>
@@ -400,8 +391,6 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Navigation("Amigos");
 
                     b.Navigation("Comentarios");
-
-                    b.Navigation("Curtidas");
 
                     b.Navigation("Publicacoes");
                 });

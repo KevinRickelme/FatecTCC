@@ -29,6 +29,7 @@ namespace ProjetoFatec.Domain.Entities
         public ICollection<Publicacao> Publicacoes {get;set;}
 
         public ICollection<Comentario> Comentarios { get; set; }
+        public ICollection<Curtida> Curtidas { get; set; }
         [NotMapped]
         public List<Perfil> PerfisDeAmigos { get; set; }
 

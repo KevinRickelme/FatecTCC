@@ -42,7 +42,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
                         
                 }
             }
-            feed.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == feed.IdPerfil || IdAmigos.Contains(p.IdPerfil)).Include(nameof(Perfil)).Include("Comentarios").OrderByDescending(p=>p.DataCriacao).ToList();
+            feed.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == feed.IdPerfil || IdAmigos.Contains(p.IdPerfil)).Include(nameof(Perfil)).Include("Comentarios").Include("Curtidas").OrderByDescending(p=>p.DataCriacao).ToList();
 
             return feed; 
         }

@@ -16,6 +16,7 @@ namespace ProjetoFatec.Application.DTOs
         public string Legenda { get; set; }
         public DateTime DataCriacao { get; set; }
         public List<Comentario>? Comentario { get; set; }
+        public List<CurtidaDTO>? Curtida { get; set; }
         public string? CaminhoFoto { get; set; }
         [NotMapped]
         public IFormFile? imagem { get; set; }

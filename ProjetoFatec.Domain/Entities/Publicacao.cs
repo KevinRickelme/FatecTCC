@@ -14,6 +14,7 @@ namespace ProjetoFatec.Domain.Entities
         public DateTime DataCriacao { get; private set; }
 
         public ICollection<Comentario>? Comentarios { get; set; }
+        public ICollection<Curtida>? Curtidas { get; set; }
 
         public string? CaminhoFoto { get; private set; }
 

@@ -21,6 +21,7 @@ namespace ProjetoFatec.Infra.Data.Context
         public DbSet<Feed> Feeds { get; set; }
         public DbSet<Comentario> Comentarios { get; set; }
         public DbSet<Amigo> Amigos { get; set; }
+        public DbSet<Curtida> Curtidas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

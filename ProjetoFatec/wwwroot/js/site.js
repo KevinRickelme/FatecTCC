@@ -412,3 +412,4 @@ $('#modalPublicacao').on('show.bs.modal', function (e) {
     $(e.currentTarget).find('input[name="EmpresaModalVisualizar"]').val(Empresa);
     $(e.currentTarget).find('input[name="JornadaModalVisualizar"]').val(Jornada);
 });
+

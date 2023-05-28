@@ -45,7 +45,8 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<Perfil?> GetPerfil(int id)
         {
-            Perfil perf = await _context.Perfis.Include("Usuario").Include("Publicacoes").FirstOrDefaultAsync(p => p.Id == id);
+            Perfil perf = await _context.Perfis.Include("Usuario").FirstOrDefaultAsync(p => p.Id == id);
+            perf.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == perf.Id).Include(nameof(Perfil)).Include("Comentarios").Include("Curtidas").OrderByDescending(p => p.DataCriacao).ToList();
             if (perf != null) {
                 perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id) && a.Status != StatusAmizadeEnum.Removido).ToList();
                 if (perf.Amigos != null || perf.Amigos.Count == 0) {

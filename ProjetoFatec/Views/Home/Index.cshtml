@@ -110,7 +110,7 @@
 </div>
 @if(publicacoes != null  || publicacoes.Count != 0){
     @foreach(var pub in publicacoes){
-    <div class="container divHomePrincipalPostagens">
+    <div class="container divHomePrincipalPostagens" id="@pub.Id">
             <div class="container-fluid divPoste" style="background-color:white;">
                 <div class="row-4 divPostagem" href="#">
                     <div class="col-1 divPicPostagem">
@@ -180,13 +180,27 @@
                         {
                         <img src="@pub.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
                         }<br/>
-                    <a class="post-qtdLike col"><span class=" fa-regular fa-heart"></span> 0 Likes</a>
-
-                    <hr/>
+                        @if (!pub.Curtidas.Any(c => c.IdPerfil == perfil.Id))
+                        {
+                            <span class=" fa-regular fa-heart"> </span><a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                        }
+                        else
+                        {
+                            <span class=" fa-solid fa-heart"> </span><a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                        }
+                        <hr/>
                     <div class="botoesPost row">
-                        <a class="btn post-btnLike col">
-                            <span class=" fa-regular fa-heart"></span> Gostei
-                        </a>
+                        @if(!pub.Curtidas.Any(c=>c.IdPerfil == perfil.Id)){
+                            <a class="btn post-btnLike col" id="curtir"  onclick="Curtir(@pub.Id)">
+                                    <span class=" fa-regular fa-heart"></span> Gostei
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn post-btnLike col" onclick="Curtir(@pub.Id)">
+                                <span class=" fa-solid fa-heart"></span> Descurtir
+                            </a>
+                        }
                             <a class="btn post-btnComentar col" onclick="Details(@pub.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
                         <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                     </div>
@@ -233,5 +247,54 @@ else{
             $("#modalPublicacao").modal("show");
         }
     </script>
+    <script type="text/javascript">
+
+    function Curtir(id) {
+        $.post("@Url.Action("CurtirPublicacao","Publicacao")/" + id,
+            function (data) {
+                if(data == -1){
+                    document.getElementById(id).children[0].children[1].children[2].classList.remove("fa-solid");
+                    document.getElementById(id).children[0].children[1].children[2].classList.add("fa-regular");
+                    
+                    let valorElems = document.getElementById(id).children[0].children[1].childElementCount;
+                    if (valorElems == 8)
+                        document.getElementById(id).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                        else
+                        document.getElementById(id).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                    let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
+                    if(valorElems == 8){
+                        let valor = document.getElementById(id).children[0].children[1].children[4].innerHTML;
+                        document.getElementById(id).children[0].children[1].children[4].innerHTML = " " + --valor;
+                    }
+                    else{
+                        let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
+                        document.getElementById(id).children[0].children[1].children[3].innerHTML = " " + --valor;
+                    }
+
+                }
+                else
+                {
+                    document.getElementById(id).children[0].children[1].children[2].classList.remove("fa-regular");
+                    document.getElementById(id).children[0].children[1].children[2].classList.add("fa-solid");
+                    let valorElems = document.getElementById(id).children[0].children[1].childElementCount;
+                    if (valorElems == 8)
+                        document.getElementById(id).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                    else
+                        document.getElementById(id).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                    let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
+                    if (valorElems == 8) {
+                        let valor = document.getElementById(id).children[0].children[1].children[4].innerHTML;
+                        document.getElementById(id).children[0].children[1].children[4].innerHTML = " " + ++valor;
+                    }
+                    else {
+                        let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
+                        document.getElementById(id).children[0].children[1].children[3].innerHTML = " " + ++valor;
+                    }
+                }
+            });
+
+    }
+    </script>
+
 
 

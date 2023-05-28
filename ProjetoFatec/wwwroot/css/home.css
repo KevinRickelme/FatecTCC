@@ -574,3 +574,23 @@ div.divPicPostagem.comentario {
 .post-conteudo.comentario {
     margin-top: -10%;
 }
+
+
+.pic-compartilhado {
+    width: 32px;
+    height: 32px;
+}
+
+.post-nome.compartilhado {
+    font-size: 15px;
+    font-weight: 480;
+    height: 100%;
+    margin-top: 1%;
+    color: #a7a7a7;
+}
+
+.compartilhado {
+    margin-left: 2%;
+    display: flex;
+    margin-top: 2%;
+}

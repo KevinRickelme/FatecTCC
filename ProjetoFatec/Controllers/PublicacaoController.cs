@@ -19,15 +19,16 @@ namespace ProjetoFatec.Controllers
         private readonly IPublicacaoService _publicacaoService;
         private readonly IPerfilService _perfilService;
         private readonly IComentarioService _comentarioService;
+        private readonly ICurtidaService _curtidaService;
 
-
-        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService, IComentarioService comentarioService)
+        public PublicacaoController(ILogger<PublicacaoController> logger, IUsuarioService usuarioService, IPublicacaoService publicacaoService, IPerfilService perfilService, IComentarioService comentarioService, ICurtidaService curtidaService)
         {
             _logger = logger;
             _usuarioService = usuarioService;
             _publicacaoService = publicacaoService;
             _perfilService = perfilService;
             _comentarioService = comentarioService;
+            _curtidaService = curtidaService;
         }
 
 
@@ -86,6 +87,7 @@ namespace ProjetoFatec.Controllers
         {
             var publicacao = _publicacaoService.GetPublicacao(id);
 
+            ViewBag.IdPublicacao = publicacao.Id;
             //specify the name or path of the partial view
             return PartialView("_partialModalPublicacao", publicacao.Comentarios);
         }
@@ -100,20 +102,33 @@ namespace ProjetoFatec.Controllers
         [HttpPost]
         public IActionResult PublicarComentario(string textoPublicacao, int IdPublicacao)
         {
-            var publicacao = _publicacaoService.GetPublicacao(IdPublicacao);
+            //var publicacao = _publicacaoService.GetPublicacao(IdPublicacao);
             var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
-            var perfil = _perfilService.GetPerfil(usuario).Result;
+            //var perfil = _perfilService.GetPerfil(usuario).Result;
 
             ComentarioDTO comentarioDTO = new()
             {
                 IdPublicacao = IdPublicacao,
-                IdPerfil = perfil.Id,
+                IdPerfil = (_usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result).IdPerfil,
                 Descricao = textoPublicacao,
                 DataComentario = DateTime.Now
             };
 
             var sucesso = _comentarioService.Add(comentarioDTO);
             return RedirectToAction("Index","Home", new {@sucesso = "Comentário adicionado"});
+        }
+
+        public int CurtirPublicacao(int id)
+        {
+            CurtidaDTO curtidaDTO = new()
+            {
+                IdPerfil = (_usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result).IdPerfil,
+                IdPublicacao = id,
+                DataCurtida = DateTime.Now
+            };
+
+
+            return _curtidaService.Add(curtidaDTO);
         }
     }
 

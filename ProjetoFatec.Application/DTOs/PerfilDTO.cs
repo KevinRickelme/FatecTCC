@@ -45,6 +45,9 @@ namespace ProjetoFatec.Application.DTOs
         public int? IdFotoPerfil { get; set; }
 
         [NotMapped]
+        public ICollection<int> PublicacoesCurtidas { get; set; }
+
+        [NotMapped]
         public ICollection<Publicacao> Publicacoes { get; set; }
         [NotMapped]
         public ICollection<Comentario> Comentarios { get; set; }

@@ -18,10 +18,6 @@ namespace ProjetoFatec.Infra.Data.Repositories
         }
         public int Add(Comentario comentario)
         {
-
-            //ao salvar um comentário, está perdendo os amigos.
-            comentario.Perfil = null;
-            comentario.Publicacao = null;
             _context.Comentarios.Add(comentario);
             IQueryable query = _context.Amigos.AsQueryable();
             IQueryable query2 = _context.Comentarios.AsQueryable();

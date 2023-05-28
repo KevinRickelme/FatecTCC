@@ -39,6 +39,9 @@ namespace ProjetoFatec.Infra.IoC
             services.AddScoped<IComentarioRepository, ComentarioRepository>();
             services.AddScoped<IComentarioService, ComentarioService>();
 
+            services.AddScoped<ICurtidaRepository, CurtidaRepository>();
+            services.AddScoped<ICurtidaService, CurtidaService>();
+
             return services;
         }
     }
