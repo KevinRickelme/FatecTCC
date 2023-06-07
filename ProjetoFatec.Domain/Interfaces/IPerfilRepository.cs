@@ -17,5 +17,7 @@ namespace ProjetoFatec.Domain.Interfaces
         Task<Perfil?> GetPerfilWithoutNavigation(Usuario usuario);
         Task<List<Perfil>> GetPerfisByName(string nome);
         Task<List<Perfil>> GetPerfisByFullName(string[] arrayNome);
+        Task<List<Perfil>> GetPerfisAmigosById(int Id);
+        
     }
 }

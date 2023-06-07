@@ -13,77 +13,87 @@
 }
 <!-- aqui começa o código -->
 <div class="container divPerfilMaior">
-              <div class="row-4 divPostagem perfilMaior" href="#">
-                <div class="col-2 divPicPostagem perfil">
-                        <img class="img-fluid profile-pic pic-post col pic-postagem perfil" id="dropdownBotao" src="~/imgs/perfil.png">
-                </div>
-                <div class="col divPostagemInfo perfil">
-                    <a class="post-nome perfil row">@Model.Nome @Model.Sobrenome</a>
-                    <a class="post-amigos perfil row">@quantidadeAmigos amigos</a>
-                    <a class="post-bio perfil row">@Model.Biografia</a>
-                    <div class="divBtnConectar">
-                        @if(!ViewBag.MeuPerfil)
-                        {
-                            if(!Model.Amigos.Where(a=>a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil).Any()){
-                                <form asp-action="PedidoAmizade" asp-controller="Perfil" method="post">
-                                    <input type="hidden" id="id" name="id" value="@Model.Usuario.Perfil.Id" runat="server"/>
-                                    <button class="btn row btnConectar" name="id">Conectar</button>
-                                </form>
-                            }
-                            else
-                            {
-                                if (Model.Amigos.Where(a=>(a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil) && a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
-                                {
-                                    <button disabled class="btn row btnPendente">Pendente</button>
-                                }
-                                else
-                                {
-                                <form asp-action="DesfazerPedidoAmizade" asp-controller="Perfil" method="post">
-                                    <input type="hidden" id="id" name="id" value="@Model.Usuario.Perfil.Id" runat="server" />
-                                    <button class="btn row btnConectado" name="id">Desconectar</button>
-                                </form>
-                                }
-                            }
-                        }
-
-
-                      
-                    </div>
-                    
-                    </div>
-                    </div>
-                    
-        
-                
-        
+    <div class="row-4 divPostagem perfilMaior" href="#">
+        @if (ViewBag.MeuPerfil)
+        {
+            <div class="col-2 divPicPostagem perfil">
+                <img class="img-fluid profile-pic pic-post col pic-postagem perfil" id="dropdownBotao" src="~/imgs/perfil.png">
             </div>
-        
-            <div class="row-4 container divPerfil">
-              <div class="container perfilInfosPrincipal">
-                <div class="container-fluid CursoSemestre">
-                  <div class="container-fluid col-4 divCurso perfilInfos"  style="background-color:white;">
-                    <a class="curso">Curso</a>
-                    <p class="nomeCurso">@Model.NomeCurso</p>
-                  </div>
-                  <div class="container-fluid row divSemestre perfilInfos"  style="background-color:white;">
-                    <a class="semestre">Semestre</a>
-                    <p class="nomeSemestre">@Model.SemestreAtual</p>
-                  </div>  
-                </div>
-                <div class="container-fluid divSobrePrincipal">
-                  <div class="container-fluid col-6 divSobre perfilInfos"  style="background-color:white;">
-                    <a class="sobre">Sobre</a>
-                    <p class="nomeSobre">@Model.Sobre</p>
-                  </div> 
-                </div>
-                <div class="container-fluid divAmigosPrincipal">
-                  <div class="container-fluid col divAmigos perfilInfos"  style="background-color:white;">
-                    <a class="amigos">Amigos</a>
-                    <a class="quantidade-amigos row">@quantidadeAmigos amigos</a>
-                    <div class="divAmigoExibicao">
-                    @foreach(var amigo in Model.PerfisDeAmigos)
-                    {                    
-                        <div class="container-fluid col AmigoExibicao perfilInfos"  style="background-color:white;">
+        }
+        else
+        {
+            <div class="col-2 divPicPostagem perfil">
+                <img class="img-fluid profile-pic pic-post col pic-postagem perfil" id="dropdownBotao" src="~/imgs/perfil.png">
+            </div>
+        }
+        <div class="col divPostagemInfo perfil">
+            <a class="post-nome perfil row">@Model.Nome @Model.Sobrenome</a>
+            <a class="post-amigos perfil row">@quantidadeAmigos amigos</a>
+            <a class="post-bio perfil row">@Model.Biografia</a>
+            <div class="divBtnConectar">
+                @if (!ViewBag.MeuPerfil)
+                {
+                    if (!Model.Amigos.Where(a => a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil).Any())
+                    {
+                        <form asp-action="PedidoAmizade" asp-controller="Perfil" method="post">
+                            <input type="hidden" id="id" name="id" value="@Model.Usuario.Perfil.Id" runat="server" />
+                            <button class="btn row btnConectar" name="id">Conectar</button>
+                        </form>
+                    }
+                    else
+                    {
+                        if (Model.Amigos.Where(a => (a.IdPerfilSolicitado == ViewBag.IdPerfil || a.IdPerfilSolicitante == ViewBag.IdPerfil) && a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
+                        {
+                            <button disabled class="btn row btnPendente">Pendente</button>
+                        }
+                        else
+                        {
+                            <form asp-action="DesfazerPedidoAmizade" asp-controller="Perfil" method="post">
+                                <input type="hidden" id="id" name="id" value="@Model.Usuario.Perfil.Id" runat="server" />
+                                <button class="btn row btnConectado" name="id">Desconectar</button>
+                            </form>
+                        }
+                    }
+                }
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="row-4 container divPerfil">
+    <div class="container perfilInfosPrincipal">
+        <div class="container-fluid CursoSemestre">
+            <div class="container-fluid col-4 divCurso perfilInfos" style="background-color:white;">
+                <a class="curso">Curso</a>
+                <p class="nomeCurso">@Model.NomeCurso</p>
+            </div>
+            <div class="container-fluid row divSemestre perfilInfos" style="background-color:white;">
+                <a class="semestre">Semestre</a>
+                <p class="nomeSemestre">@Model.SemestreAtual</p>
+            </div>
+        </div>
+        <div class="container-fluid divSobrePrincipal">
+            <div class="container-fluid col-6 divSobre perfilInfos" style="background-color:white;">
+                <a class="sobre">Sobre</a>
+                <p class="nomeSobre">@Model.Sobre</p>
+            </div>
+        </div>
+        <div class="container-fluid divAmigosPrincipal">
+            <div class="container-fluid col divAmigos perfilInfos" style="background-color:white;">
+                <a class="amigos">Amigos</a>
+                <a class="quantidade-amigos row">@quantidadeAmigos amigos</a>
+                <div class="divAmigoExibicao">
+                    @foreach (var amigo in Model.PerfisDeAmigos)
+                    {
+                        <div class="container-fluid col AmigoExibicao perfilInfos" style="background-color:white;">
                             <div class="col-2 divImagemAmigo perfilInfo">
                                 <a href="@Url.Action("Index","Perfil", new{@id = amigo.Id})">
                                     <img class="img-fluid imagem-amigos perfilInfo" id="dropdownBotao" src="~/imgs/perfil.png">
@@ -91,81 +101,81 @@
                                 </a>
                             </div>
                         </div>
-                        
+
                     }
 
-                    </div>
-                  </div> 
-                </div>  
-              </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-              
-              <div class="row-4 container divPostagens">
-                  @if(ViewBag.MeuPerfil)
-                  {
-                    <div class="container divHomePrincipal">
-                      <div class="container-fluid divPost justify-content-between">
-                          <div class="col divPic">
+
+    <div class="row-4 container divPostagens">
+        @if (ViewBag.MeuPerfil)
+        {
+            <div class="container divHomePrincipal">
+                <div class="container-fluid divPost justify-content-between">
+                    <div class="col divPic">
                         <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="~/imgs/perfil.png">
-                          </div>
-                          <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
-                              Criar publicação
-                          </a>
-                      </div>
-                      </div>
+                    </div>
+                    <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
+                        Criar publicação
+                    </a>
+                </div>
+            </div>
 
-                    <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+            <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
 
-                                    <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
-                                        <div class="modal-body">
-
-                                            <div class="mb-3">
+                                    <div class="mb-3">
                                         <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=@post.postagem></textarea><span asp-validation-for="@post.postagem"></span>
-                                            </div>
-                                            <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
-                                            <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone'>
+                                    </div>
+                                    <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
+                                    <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone'>
 
-                                                <legend class="visually-hidden">Image uploader</legend>
+                                        <legend class="visually-hidden">Image uploader</legend>
 
-                                                <svg class="upload_svg" width="60" height="60" aria-hidden="true">
-                                                    <use href="#icon-imageUpload"></use>
-                                                </svg>
+                                        <svg class="upload_svg" width="60" height="60" aria-hidden="true">
+                                            <use href="#icon-imageUpload"></use>
+                                        </svg>
 
-                                                <p class="small my-2">Arraste &amp; solte imagens dentro deste quadro<br><i>ou</i></p>
-                                                <input id="formFile" class="form-control input position-absolute invisible" type="file" name="imagem" accept="image/jpeg, image/png, image/svg+xml" />
-                                                <label class="btn btn-upload mb-3" for="formFile" asp-for="@post.imagem">Escolha o arquivo de imagem</label>
+                                        <p class="small my-2">Arraste &amp; solte imagens dentro deste quadro<br><i>ou</i></p>
+                                        <input id="formFile" class="form-control input position-absolute invisible" type="file" name="imagem" accept="image/jpeg, image/png, image/svg+xml" />
+                                        <label class="btn btn-upload mb-3" for="formFile" asp-for="@post.imagem">Escolha o arquivo de imagem</label>
 
-                                                <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+                                        <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
 
-                                            </fieldset>
-
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary btnPublicar">Publicar</button>
-                                        </div>
-                                    </form>
+                                    </fieldset>
 
 
                                 </div>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btnPublicar">Publicar</button>
+                                </div>
+                            </form>
+
+
                         </div>
                     </div>
-                  }
-                  <div class="textoPublicacoes">
-                    <p class="publicacoes">Publicações</p>
-                  </div>
+                </div>
+            </div>
+        }
+        <div class="textoPublicacoes">
+            <p class="publicacoes">Publicações</p>
+        </div>
         @if (Model.Publicacoes != null || Model.Publicacoes.Count != 0)
         {
             var i = 0;
-            @foreach (var pub in Model.Publicacoes.OrderByDescending(p=>p.DataCriacao))
+            @foreach (var pub in Model.Publicacoes.OrderByDescending(p => p.DataCriacao))
             {
                 string IdFormatado = pub.Compartilhado ? (Convert.ToString(pub.PublicacaoOriginal.Id) + "a" + ++i) : Convert.ToString(pub.Id);
                 <div class="container divHomePrincipalPostagens" id="@IdFormatado">
@@ -402,12 +412,12 @@
             <a>Não existem postagens :(</a>
         }
 
-                          
-              </div>
 
-          </div>
+    </div>
 
-          <div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+</div>
+
+<div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -428,16 +438,16 @@
 
 
 
-    <script type="text/javascript">
-        function Details(id) {
-            $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
-                function (data) {
-                    $('.modal-body').html(data);
-                });
+<script type="text/javascript">
+    function Details(id) {
+        $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
+            function (data) {
+                $('.modal-body').html(data);
+            });
 
-            $("#modalPublicacao").modal("show");
-        }
-    </script>
+        $("#modalPublicacao").modal("show");
+    }
+</script>
 
 <script type="text/javascript">
 

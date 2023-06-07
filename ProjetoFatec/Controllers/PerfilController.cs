@@ -73,6 +73,16 @@ namespace ProjetoFatec.MVC.Controllers
             return View(listaPerfis);
         }
 
+        [Route("/Perfil/MeusAmigos")]
+        [HttpGet]
+        public async Task<IActionResult> MeusAmigos()
+        {
+            var perfil = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
+            ViewData["PerfilUsuario"] = perfil;
+            var listaPerfis = await _perfilService.GetPerfisAmigosById(perfil.Id);
+            return View(listaPerfis);
+        }
+
         [Route("/Configuracoes")]
         [HttpGet]
         public async Task<IActionResult> Configuracoes(string? mensagem)

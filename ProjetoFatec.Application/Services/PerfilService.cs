@@ -67,11 +67,17 @@ namespace ProjetoFatec.Application.Services
             List<Perfil> result;
             if (ArrayNome.Length < 2)
                 result = await _perfilRepository.GetPerfisByName(nome);
-            else 
+            else
             {
                 var nomeComposto = ArrayNome.Length;
                 result = await _perfilRepository.GetPerfisByFullName(ArrayNome);
             }
+            return _mapper.Map<List<PerfilDTO>>(result);
+        }
+
+        public async Task<List<PerfilDTO>> GetPerfisAmigosById(int Id)
+        {
+            List<Perfil> result = await _perfilRepository.GetPerfisAmigosById(Id);
             return _mapper.Map<List<PerfilDTO>>(result);
         }
     }

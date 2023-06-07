@@ -93,5 +93,17 @@ namespace ProjetoFatec.Infra.Data.Repositories
         {
             return await _context.Perfis.Include("Amigos").Include("Usuario").Where(p => p.Nome.Contains(nome[0]) && p.Sobrenome.Contains(nome[1])).ToListAsync();
         }
+
+        public async Task<List<Perfil>> GetPerfisAmigosById(int Id)
+        {
+            var res = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitante where am.IdPerfilSolicitado == Id select pf).Include("Usuario").ToList();
+
+            var res2 = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitado where am.IdPerfilSolicitado == Id select pf).Include("Usuario").ToList();
+
+            foreach (var pf in res2)
+                res.Add(pf);
+
+            return res;
+        }
     }
 }

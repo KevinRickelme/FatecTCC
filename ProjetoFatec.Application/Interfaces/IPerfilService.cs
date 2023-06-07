@@ -18,5 +18,6 @@ namespace ProjetoFatec.Application.Interfaces
         bool Update(PerfilDTO perfil);
         Task<Perfil?> GetPerfilWithoutNavigation(UsuarioDTO usuario);
         Task<List<PerfilDTO>> GetPerfisByName(string nome);
+        Task<List<PerfilDTO>> GetPerfisAmigosById(int Id);
     }
 }
