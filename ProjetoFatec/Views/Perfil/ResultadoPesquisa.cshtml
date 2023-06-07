@@ -16,7 +16,7 @@
             <div class="col divPostagemInfo perfil">
                     <a class="post-nome perfil row" href="@Url.Action("Index","Perfil", new{@id = perfil.Usuario.Perfil.Id})">@perfil.Nome @perfil.Sobrenome</a>
                 <a class="post-amigos perfil row">@perfil.Amigos.Where(a=>a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Ativo).Count() amigos</a>
-                <a class="post-bio perfil row">Estudante do sexto semestre, apaixonado por astronomia e jogos.  </a>
+                <a class="post-bio perfil row">@perfil.Biografia  </a>
                 <div class="divBtnConectar">
                     @if (MeuPerfil.Id != perfil.Usuario.Perfil.Id)
                     {

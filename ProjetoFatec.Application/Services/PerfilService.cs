@@ -37,7 +37,7 @@ namespace ProjetoFatec.Application.Services
         }
         public async Task<Perfil?> GetPerfil(int idPerfil)
         {
-            var result = await _perfilRepository.GetPerfil(idPerfil);
+            var result = _perfilRepository.GetPerfil(idPerfil);
             return _mapper.Map<Perfil>(result);
         }
 
@@ -50,7 +50,7 @@ namespace ProjetoFatec.Application.Services
 
         public async Task<PerfilDTO?> GetPerfilViewModel(int idPerfil)
         {
-            var result = await _perfilRepository.GetPerfil(idPerfil);
+            var result = _perfilRepository.GetPerfil(idPerfil);
             return _mapper.Map<PerfilDTO>(result);
         }
 

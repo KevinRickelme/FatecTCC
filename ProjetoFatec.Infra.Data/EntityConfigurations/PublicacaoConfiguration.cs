@@ -17,6 +17,7 @@ namespace ProjetoFatec.Infra.Data.EntityConfigurations
             modelBuilder.HasMany(p => p.Comentarios).WithOne(c => c.Publicacao).HasForeignKey(p => p.IdPublicacao).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.HasMany(p => p.Curtidas).WithOne(c => c.Publicacao).HasForeignKey(p => p.IdPublicacao).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.HasOne(p=>p.Perfil).WithMany(p=>p.Publicacoes).HasForeignKey(p=>p.IdPerfil).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.HasOne(p => p.PublicacaoOriginal).WithMany().HasForeignKey(p => p.IdPublicacaoOriginal).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

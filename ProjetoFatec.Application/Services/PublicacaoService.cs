@@ -45,7 +45,7 @@ namespace ProjetoFatec.Application.Services
                 {
                     foreach (var comentario in result.Comentarios)
                     {
-                        comentario.Perfil = _perfilRepository.GetPerfil(comentario.IdPerfil).Result;
+                        comentario.Perfil = _perfilRepository.GetPerfil(comentario.IdPerfil);
                     }
                 }
 

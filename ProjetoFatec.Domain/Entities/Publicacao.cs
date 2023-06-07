@@ -8,8 +8,11 @@ namespace ProjetoFatec.Domain.Entities
     {
         public Perfil? Perfil { get; set; }
         public int IdPerfil { get; set; }
-
-
+        public bool Compartilhado { get; set; }
+        public Perfil? PerfilQueCompartilhou { get; set; }
+        public int? IdPerfilQueCompartilhou { get; set; }
+        public int? IdPublicacaoOriginal { get; set; }
+        public Publicacao? PublicacaoOriginal { get; set; }
         public string Legenda { get; private set; }
         public DateTime DataCriacao { get; private set; }
 

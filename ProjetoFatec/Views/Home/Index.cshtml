@@ -109,29 +109,42 @@
 
 </div>
 @if(publicacoes != null  || publicacoes.Count != 0){
+        var i = 0;
     @foreach(var pub in publicacoes){
-    <div class="container divHomePrincipalPostagens" id="@pub.Id">
-            <div class="container-fluid divPoste" style="background-color:white;">
-                <div class="row-4 divPostagem" href="#">
+           
+            string IdFormatado = pub.Compartilhado ? (Convert.ToString(pub.PublicacaoOriginal.Id) + "a" + ++i) : Convert.ToString(pub.Id);
+            <div class="container divHomePrincipalPostagens" id="@IdFormatado">
+                <div class="container-fluid divPoste" style="background-color:white;">
+                    @if (pub.Compartilhado)
+                    {
+                        <div class="compartilhado">
+                            <img class="img-fluid profile-pic pic-post col pic-compartilhado col-2" id="dropdownBotao" src="./imgs/perfil.png">
+
+                            <div class="post-nome compartilhado col-10"><a href="@Url.Action("Index","Perfil", new{@id = pub.IdPerfilQueCompartilhou})">@pub.PerfilQueCompartilhou.Nome @pub.PerfilQueCompartilhou.Sobrenome &nbsp;</a> compartilhou essa publicação</div>
+
+                        </div>
+                        <hr>
+                    
+                    <div class="row-4 divPostagem" href="#">
                     <div class="col-1 divPicPostagem">
                         <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/perfil.png">
                     </div>
                     <div class="row divPostagemInfo">
-                        <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
-                            <a class="post-curso row">@pub.Perfil.NomeCurso • @pub.Perfil.SemestreAtual</a>
+                        <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.PublicacaoOriginal.Perfil.Id})">@pub.PublicacaoOriginal.Perfil.Nome @pub.PublicacaoOriginal.Perfil.Sobrenome</a>
+                                <a class="post-curso row">@pub.PublicacaoOriginal.Perfil.NomeCurso • @pub.PublicacaoOriginal.Perfil.SemestreAtual</a>
                             @{
-                                var hora = DateTime.Now - pub.DataCriacao;
+                                    var hora = DateTime.Now - pub.PublicacaoOriginal.DataCriacao;
                                 if (hora.Days < 1)
                                 {
                                     if(hora.Hours >= 1)
                                     {
                                         if (hora.Hours == 1)
                                         {
-                                            <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Hours) hora atrás </a>
+                                            <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) hora atrás </a>
                                         }
                                         else
                                         {
-                                            <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Hours) horas atrás </a>
+                                                <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) horas atrás </a>
                                         }
                                     }
                                     else
@@ -139,7 +152,7 @@
                                         if (hora.Minutes == 1)
                                         {
                                             <a class="post-tempo row">@(
-                                                  (DateTime.Now - pub.DataCriacao).Minutes
+                                                    (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Minutes
                                                   ) minuto atrás </a>
                                         }
                                         else
@@ -147,13 +160,13 @@
                                             if (hora.Minutes < 1)
                                             {
                                                 <a class="post-tempo row">@(
-                                                      (DateTime.Now - pub.DataCriacao).Seconds
+                                                        (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Seconds
                                                       ) segundos atrás </a>
                                             }
                                             else
                                             {
                                                 <a class="post-tempo row">@(
-                                                      (DateTime.Now - pub.DataCriacao).Minutes
+                                                        (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Minutes
                                                       ) minutos atrás </a>
                                             }
                                         }
@@ -161,13 +174,13 @@
                                 }
                                 else
                                 {
-                                    if ((DateTime.Now - pub.DataCriacao).Days == 1)
+                                        if ((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days == 1)
                                     {
-                                        <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Days) dia atrás </a>
+                                        <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days) dia atrás </a>
                                     }
                                     else
                                     {
-                                        <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Days) dias atrás </a>
+                                            <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days) dias atrás </a>
                                     }
                                 }
                             }
@@ -175,37 +188,149 @@
                     </div>
                 </div>
                 <div class="row-col-4 divPostagemInfos">
-                    <p class="post-conteudo row">@pub.Legenda</p>
-                    @if(pub.CaminhoFoto != null)
+                            <p class="post-conteudo row">@pub.PublicacaoOriginal.Legenda</p>
+                    @if(pub.PublicacaoOriginal.CaminhoFoto != null)
                         {
-                        <img src="@pub.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
+                                <img src="@pub.PublicacaoOriginal.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
                         }<br/>
-                        @if (!pub.Curtidas.Any(c => c.IdPerfil == perfil.Id))
+                            @if (!pub.PublicacaoOriginal.Curtidas.Any(c => c.IdPerfil == perfil.Id))
                         {
-                            <span class=" fa-regular fa-heart"> </span><a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                                <span class=" fa-regular fa-heart"> </span>
+
+                                <a class="post-qtdLike col" id="qtdLikes"> @pub.PublicacaoOriginal.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
                         }
                         else
                         {
-                            <span class=" fa-solid fa-heart"> </span><a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                                <span class=" fa-solid fa-heart"> </span>
+
+                                <a class="post-qtdLike col" id="qtdLikes"> @pub.PublicacaoOriginal.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
                         }
                         <hr/>
                     <div class="botoesPost row">
-                        @if(!pub.Curtidas.Any(c=>c.IdPerfil == perfil.Id)){
-                            <a class="btn post-btnLike col" id="curtir"  onclick="Curtir(@pub.Id)">
+                                @if (!pub.PublicacaoOriginal.Curtidas.Any(c => c.IdPerfil == perfil.Id))
+                                {
+                                    <a class="btn post-btnLike col" id="curtir" onclick="Curtir('@IdFormatado')">
                                     <span class=" fa-regular fa-heart"></span> Gostei
                             </a>
                         }
                         else
                         {
-                            <a class="btn post-btnLike col" onclick="Curtir(@pub.Id)">
+                                    <a class="btn post-btnLike col" onclick="Curtir('@IdFormatado')">
                                 <span class=" fa-solid fa-heart"></span> Descurtir
                             </a>
                         }
-                            <a class="btn post-btnComentar col" onclick="Details(@pub.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
-                        <a class="btn post-btnCompartilhar col"><span class=" fa-solid fa-share"></span> Compartilhar</a>
+                                <a class="btn post-btnComentar col" onclick="Details(@pub.PublicacaoOriginal.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                                <a class="btn post-btnCompartilhar col" href="@Url.Action("CompartilharPublicacao","Publicacao", new{@id = IdFormatado})"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                     </div>
-                </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row-4 divPostagem" href="#">
+                            <div class="col-1 divPicPostagem">
+                                <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/perfil.png">
+                            </div>
+                            <div class="row divPostagemInfo">
+                                <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
+                                <a class="post-curso row">@pub.Perfil.NomeCurso • @pub.Perfil.SemestreAtual</a>
+                                @{
+                                    var hora = DateTime.Now - pub.DataCriacao;
+                                    if (hora.Days < 1)
+                                    {
+                                        if (hora.Hours >= 1)
+                                        {
+                                            if (hora.Hours == 1)
+                                            {
+                                                <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Hours) hora atrás </a>
+                                            }
+                                            else
+                                            {
+                                                <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Hours) horas atrás </a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (hora.Minutes == 1)
+                                            {
+                                                <a class="post-tempo row">
+                                                    @(
+                                                    (DateTime.Now - pub.DataCriacao).Minutes
+                                                        ) minuto atrás
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                if (hora.Minutes < 1)
+                                                {
+                                                    <a class="post-tempo row">
+                                                        @(
+                                                        (DateTime.Now - pub.DataCriacao).Seconds
+                                                            ) segundos atrás
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="post-tempo row">
+                                                        @(
+                                                        (DateTime.Now - pub.DataCriacao).Minutes
+                                                            ) minutos atrás
+                                                    </a>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((DateTime.Now - pub.DataCriacao).Days == 1)
+                                        {
+                                            <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Days) dia atrás </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="post-tempo row">@((DateTime.Now - pub.DataCriacao).Days) dias atrás </a>
+                                        }
+                                    }
+                                }
 
+                            </div>
+                        </div>
+                        <div class="row-col-4 divPostagemInfos">
+                            <p class="post-conteudo row">@pub.Legenda</p>
+                            @if (pub.CaminhoFoto != null)
+                            {
+                                <img src="@pub.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
+                            }<br />
+                            @if (!pub.Curtidas.Any(c => c.IdPerfil == perfil.Id))
+                            {
+                                <span class=" fa-regular fa-heart"> </span>
+
+                                <a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                            }
+                            else
+                            {
+                                <span class=" fa-solid fa-heart"> </span>
+
+                                <a class="post-qtdLike col" id="qtdLikes"> @pub.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
+                            }
+                            <hr />
+                            <div class="botoesPost row">
+                                @if (!pub.Curtidas.Any(c => c.IdPerfil == perfil.Id))
+                                {
+                                    <a class="btn post-btnLike col" id="curtir" onclick="Curtir('@pub.Id')">
+                                        <span class=" fa-regular fa-heart"></span> Gostei
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn post-btnLike col" onclick="Curtir('@pub.Id')">
+                                        <span class=" fa-solid fa-heart"></span> Descurtir
+                                    </a>
+                                }
+                                <a class="btn post-btnComentar col" onclick="Details(@pub.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
+                                <a class="btn post-btnCompartilhar col" href="@Url.Action("CompartilharPublicacao","Publicacao", new{@id = pub.Id})"><span class=" fa-solid fa-share"></span> Compartilhar</a>
+                            </div>
+                        </div>
+                    }
             </div>
 
     </div>
@@ -233,62 +358,126 @@ else{
     </div>
 </div>
 
+<div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Comentários</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-
-    <script type="text/javascript">
-        function Details(id) {
-            $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
-                function (data) {
-                    $('.modal-body').html(data);
-                });
-
-            $("#modalPublicacao").modal("show");
-        }
-    </script>
-    <script type="text/javascript">
-
-    function Curtir(id) {
-        $.post("@Url.Action("CurtirPublicacao","Publicacao")/" + id,
+<script type="text/javascript">
+    function Details(id) {
+        $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
             function (data) {
+                $('.modal-body').html(data);
+            });
+
+        $("#modalPublicacao").modal("show");
+    }
+</script>
+
+
+    <script type="text/javascript">
+
+    function Curtir(value) {
+
+        $.post("@Url.Action("CurtirPublicacao","Publicacao")/" + value,
+            function (data) {
+                var idOriginal =0;
+
                 if(data == -1){
-                    document.getElementById(id).children[0].children[1].children[2].classList.remove("fa-solid");
-                    document.getElementById(id).children[0].children[1].children[2].classList.add("fa-regular");
-                    
-                    let valorElems = document.getElementById(id).children[0].children[1].childElementCount;
-                    if (valorElems == 8)
-                        document.getElementById(id).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                    if (value.indexOf('a') > -1) {
+                        idOriginal = value.substring(0, value.indexOf('a'));
+                        document.getElementById(value).children[0].children[3].children[2].classList.remove("fa-solid");
+                        document.getElementById(value).children[0].children[3].children[2].classList.add("fa-regular");
+
+                        let valorElems = document.getElementById(value).children[0].children[3].childElementCount;
+                        if (valorElems == 8)
+                            document.getElementById(value).children[0].children[3].children[7].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
                         else
-                        document.getElementById(id).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
-                    let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
-                    if(valorElems == 8){
-                        let valor = document.getElementById(id).children[0].children[1].children[4].innerHTML;
-                        document.getElementById(id).children[0].children[1].children[4].innerHTML = " " + --valor;
+                            document.getElementById(value).children[0].children[3].children[6].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                        let valor = document.getElementById(value).children[0].children[3].children[3].innerHTML;
+                        if (valorElems == 8) {
+                            let valor = document.getElementById(value).children[0].children[3].children[4].innerHTML;
+                            document.getElementById(value).children[0].children[3].children[4].innerHTML = " " + --valor;
+                        }
+                        else {
+                            let valor = document.getElementById(value).children[0].children[3].children[3].innerHTML;
+                            document.getElementById(value).children[0].children[3].children[3].innerHTML = " " + --valor;
+                        }                        
                     }
                     else{
-                        let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
-                        document.getElementById(id).children[0].children[1].children[3].innerHTML = " " + --valor;
+                        document.getElementById(value).children[0].children[1].children[2].classList.remove("fa-solid");
+                        document.getElementById(value).children[0].children[1].children[2].classList.add("fa-regular");
+                    
+                        let valorElems = document.getElementById(value).children[0].children[1].childElementCount;
+                        if (valorElems == 8)
+                            document.getElementById(value).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                            else
+                            document.getElementById(value).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
+                        let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
+                        if(valorElems == 8){
+                            let valor = document.getElementById(value).children[0].children[1].children[4].innerHTML;
+                            document.getElementById(value).children[0].children[1].children[4].innerHTML = " " + --valor;
+                        }
+                        else{
+                            let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
+                            document.getElementById(value).children[0].children[1].children[3].innerHTML = " " + --valor;
+                        }
                     }
-
                 }
                 else
                 {
-                    document.getElementById(id).children[0].children[1].children[2].classList.remove("fa-regular");
-                    document.getElementById(id).children[0].children[1].children[2].classList.add("fa-solid");
-                    let valorElems = document.getElementById(id).children[0].children[1].childElementCount;
-                    if (valorElems == 8)
-                        document.getElementById(id).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
-                    else
-                        document.getElementById(id).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
-                    let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
-                    if (valorElems == 8) {
-                        let valor = document.getElementById(id).children[0].children[1].children[4].innerHTML;
-                        document.getElementById(id).children[0].children[1].children[4].innerHTML = " " + ++valor;
+                    if (value.indexOf('a') > -1) 
+                    {
+                        idOriginal = value.substring(0, value.indexOf('a'));
+                        document.getElementById(value).children[0].children[3].children[2].classList.remove("fa-regular");
+                        document.getElementById(value).children[0].children[3].children[2].classList.add("fa-solid");
+                        let valorElems = document.getElementById(value).children[0].children[3].childElementCount;
+                        if (valorElems == 8)
+                            document.getElementById(value).children[0].children[3].children[7].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                        else
+                            document.getElementById(value).children[0].children[3].children[6].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                        let valor = document.getElementById(value).children[0].children[3].children[3].innerHTML;
+                        if (valorElems == 8) {
+                            let valor = document.getElementById(value).children[0].children[3].children[4].innerHTML;
+                            document.getElementById(value).children[0].children[3].children[4].innerHTML = " " + ++valor;
+                        }
+                        else {
+                            let valor = document.getElementById(value).children[0].children[3].children[3].innerHTML;
+                            document.getElementById(value).children[0].children[3].children[3].innerHTML = " " + ++valor;
+                        }
                     }
-                    else {
-                        let valor = document.getElementById(id).children[0].children[1].children[3].innerHTML;
-                        document.getElementById(id).children[0].children[1].children[3].innerHTML = " " + ++valor;
+                    else 
+                    { 
+                        document.getElementById(value).children[0].children[1].children[2].classList.remove("fa-regular");
+                        document.getElementById(value).children[0].children[1].children[2].classList.add("fa-solid");
+                        let valorElems = document.getElementById(value).children[0].children[1].childElementCount;
+                        if (valorElems == 8)
+                            document.getElementById(value).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                        else
+                            document.getElementById(value).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-solid fa-heart\"></span> Descurtir";
+                        let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
+                        if (valorElems == 8) {
+                            let valor = document.getElementById(value).children[0].children[1].children[4].innerHTML;
+                            document.getElementById(value).children[0].children[1].children[4].innerHTML = " " + ++valor;
+                        }
+                        else {
+                            let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
+                            document.getElementById(value).children[0].children[1].children[3].innerHTML = " " + ++valor;
+                        }
                     }
                 }
             });

@@ -26,7 +26,8 @@ namespace ProjetoFatec.Domain.Entities
         public string? Sobre { get; private set; }
         public int SemestreAtual { get; private set; }
 
-        public ICollection<Publicacao> Publicacoes {get;set;}
+        public ICollection<Publicacao> Publicacoes { get; set; }
+        public ICollection<Publicacao> PublicacoesCompartilhadas { get; set; }
 
         public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<Curtida> Curtidas { get; set; }

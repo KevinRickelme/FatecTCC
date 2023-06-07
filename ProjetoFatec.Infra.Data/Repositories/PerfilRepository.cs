@@ -38,15 +38,23 @@ namespace ProjetoFatec.Infra.Data.Repositories
         public async Task<Perfil?> GetPerfil(Usuario usuario)
         {
             Perfil perf = await _context.Perfis.FirstOrDefaultAsync(p => p.Usuario.Id == (usuario.Id));
-            perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perf.Id || a.IdPerfilSolicitante == perf.Id) && a.Status != StatusAmizadeEnum.Removido).ToList();
+            //perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == perf.Id || a.IdPerfilSolicitante == perf.Id) && a.Status != StatusAmizadeEnum.Removido).ToList();
 
             return perf;
         }
 
-        public async Task<Perfil?> GetPerfil(int id)
+        public Perfil? GetPerfil(int id)
         {
-            Perfil perf = await _context.Perfis.Include("Usuario").FirstOrDefaultAsync(p => p.Id == id);
-            perf.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == perf.Id).Include(nameof(Perfil)).Include("Comentarios").Include("Curtidas").OrderByDescending(p => p.DataCriacao).ToList();
+            Perfil? perf = _context.Perfis.Include("Usuario").
+                FirstOrDefault(p => p.Id == id);
+
+            perf.Publicacoes = _context.Publicacoes.Where(p => (p.IdPerfil == perf.Id && p.Compartilhado != true)|| p.IdPerfilQueCompartilhou == perf.Id)
+                .Include(nameof(Perfil)).Include("PublicacaoOriginal").Include(p=> p.PublicacaoOriginal.Curtidas)
+                .Include(p=>p.PublicacaoOriginal.Comentarios).Include(p => p.PublicacaoOriginal.Perfil).Include("Comentarios").Include("Curtidas")
+                .Include("PerfilQueCompartilhou").OrderByDescending(p => p.DataCriacao)
+                .ToList();
+            
+
             if (perf != null) {
                 perf.Amigos = _context.Amigos.Include("PerfilSolicitante").Where(a => (a.IdPerfilSolicitado == id || a.IdPerfilSolicitante == id) && a.Status != StatusAmizadeEnum.Removido).ToList();
                 if (perf.Amigos != null || perf.Amigos.Count == 0) {
@@ -59,11 +67,13 @@ namespace ProjetoFatec.Infra.Data.Repositories
                         else
                             if(am.Status == StatusAmizadeEnum.Ativo)
                                 perf.PerfisDeAmigos.Add(_context.Perfis.Where(p => p.Id == am.IdPerfilSolicitante && am.Status == StatusAmizadeEnum.Ativo).First());
+                        _context.Entry(am).Reload();
                     }
                 }
             }
             return perf;
         }
+
 
         public async Task<Perfil?> GetPerfilWithoutNavigation(Usuario usuario)
         {

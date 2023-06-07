@@ -22,7 +22,8 @@ namespace ProjetoFatec.Infra.Data.EntityConfigurations
             modelBuilder.Property(p => p.Sobre);
             modelBuilder.Property(p => p.Sobre);
 
-            modelBuilder.HasMany(p => p.Publicacoes).WithOne(p => p.Perfil).HasForeignKey(p=>p.Id);
+            modelBuilder.HasMany(p => p.Publicacoes).WithOne(p => p.Perfil).HasForeignKey(p => p.Id);
+            modelBuilder.HasMany(p => p.PublicacoesCompartilhadas).WithOne(p => p.PerfilQueCompartilhou).HasForeignKey(p => p.IdPerfilQueCompartilhou).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.HasMany(p => p.Comentarios).WithOne(p => p.Perfil).HasForeignKey(p => p.IdPerfil).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.HasMany(p => p.Curtidas).WithOne(p => p.Perfil).HasForeignKey(p => p.IdPerfil).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.HasOne(p => p.Usuario).WithOne(u => u.Perfil).HasForeignKey<Perfil>(u=>u.IdUsuario);

@@ -28,7 +28,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
         {
             Feed feed = _context.Feeds.Where(f => f.IdPerfil == IdPerfil).Include(p=>p.Perfil).FirstOrDefaultAsync().Result;
             feed.Perfil = _context.Perfis.Include("Amigos").FirstOrDefaultAsync(p => p.Id == IdPerfil).Result;
-            feed.Perfil.Amigos = _context.Amigos.Where(a => a.IdPerfilSolicitado == IdPerfil || a.IdPerfilSolicitante == IdPerfil).ToList();
+            feed.Perfil.Amigos = _context.Amigos.Where(a => a.IdPerfilSolicitado == IdPerfil || a.IdPerfilSolicitante == IdPerfil).Include("PerfilSolicitante").ToList();
             List<int> IdAmigos = new();
             if(feed.Perfil.Amigos != null) {
                 foreach (var id in feed.Perfil.Amigos)
@@ -42,7 +42,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
                         
                 }
             }
-            feed.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == feed.IdPerfil || IdAmigos.Contains(p.IdPerfil)).Include(nameof(Perfil)).Include("Comentarios").Include("Curtidas").OrderByDescending(p=>p.DataCriacao).ToList();
+            feed.Publicacoes = _context.Publicacoes.Where(p => p.IdPerfil == feed.IdPerfil || IdAmigos.Contains(p.IdPerfil) || p.IdPerfilQueCompartilhou == feed.IdPerfil).Include("PublicacaoOriginal").Include(f => f.PublicacaoOriginal.Perfil).Include(f => f.PublicacaoOriginal.Curtidas).Include(f => f.PublicacaoOriginal.Comentarios).Include(nameof(Perfil)).Include("Comentarios").Include("Curtidas").Include("PerfilQueCompartilhou").OrderByDescending(p=>p.DataCriacao).ToList();
 
             return feed; 
         }

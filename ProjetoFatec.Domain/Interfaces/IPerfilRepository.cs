@@ -11,7 +11,7 @@ namespace ProjetoFatec.Domain.Interfaces
     public interface IPerfilRepository
     {
         Task<Perfil?> GetPerfil(Usuario usuario);
-        Task<Perfil?> GetPerfil(int id);
+        Perfil? GetPerfil(int id);
         bool Add(Perfil perfil);
         bool Update(Perfil perfil);
         Task<Perfil?> GetPerfilWithoutNavigation(Usuario usuario);

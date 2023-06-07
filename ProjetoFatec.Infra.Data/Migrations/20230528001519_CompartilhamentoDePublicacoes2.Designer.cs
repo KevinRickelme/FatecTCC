@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoFatec.Infra.Data.Context;
 
@@ -11,9 +12,10 @@ using ProjetoFatec.Infra.Data.Context;
 namespace ProjetoFatec.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230528001519_CompartilhamentoDePublicacoes2")]
+    partial class CompartilhamentoDePublicacoes2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,9 +256,6 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.Property<int?>("IdPerfilQueCompartilhou")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdPublicacaoOriginal")
-                        .HasColumnType("int");
-
                     b.Property<string>("Legenda")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -268,8 +267,6 @@ namespace ProjetoFatec.Infra.Data.Migrations
                     b.HasIndex("IdPerfil");
 
                     b.HasIndex("IdPerfilQueCompartilhou");
-
-                    b.HasIndex("IdPublicacaoOriginal");
 
                     b.ToTable("Publicacoes");
                 });
@@ -396,16 +393,9 @@ namespace ProjetoFatec.Infra.Data.Migrations
                         .HasForeignKey("IdPerfilQueCompartilhou")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("ProjetoFatec.Domain.Entities.Publicacao", "PublicacaoOriginal")
-                        .WithMany()
-                        .HasForeignKey("IdPublicacaoOriginal")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("Perfil");
 
                     b.Navigation("PerfilQueCompartilhou");
-
-                    b.Navigation("PublicacaoOriginal");
                 });
 
             modelBuilder.Entity("ProjetoFatec.Domain.Entities.Feed", b =>

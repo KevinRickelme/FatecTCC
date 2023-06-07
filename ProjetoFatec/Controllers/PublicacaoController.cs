@@ -8,6 +8,7 @@ using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Utils;
 using ProjetoFatec.ViewModels;
 using static System.Net.Mime.MediaTypeNames;
+using System.Drawing;
 
 namespace ProjetoFatec.Controllers
 {
@@ -62,6 +63,7 @@ namespace ProjetoFatec.Controllers
             pb.Legenda = form["textoPublicacao"];
             pb.Perfil = perfil;
             pb.CaminhoFoto = SalvarImagem(imagem, perfil.Id).Result;
+            pb.Compartilhado = false;
             return pb;
         }
 
@@ -118,17 +120,58 @@ namespace ProjetoFatec.Controllers
             return RedirectToAction("Index","Home", new {@sucesso = "Comentário adicionado"});
         }
 
-        public int CurtirPublicacao(int id)
+        public int CurtirPublicacao(string id)
         {
+            int IdOriginal;
+            if (id.Contains('a'))
+            {
+                IdOriginal = Convert.ToInt32(id.Substring(0, id.IndexOf('a')));
+            }
+            else
+                IdOriginal = Convert.ToInt32(id);
+
             CurtidaDTO curtidaDTO = new()
             {
                 IdPerfil = (_usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result).IdPerfil,
-                IdPublicacao = id,
+                IdPublicacao = IdOriginal,
                 DataCurtida = DateTime.Now
             };
 
 
             return _curtidaService.Add(curtidaDTO);
+        }
+        public IActionResult CompartilharPublicacao(string id)
+        {
+            
+            int IdOriginal;
+            if (id.Contains('a'))
+            {
+                IdOriginal = Convert.ToInt32(id.Substring(0, id.IndexOf('a')));
+            }
+            else
+                IdOriginal = Convert.ToInt32(id);
+
+
+            var usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
+            var perfil = _perfilService.GetPerfil(usuario).Result;
+            perfil.Usuario = _usuarioService.GetUsuario(usuario.Email).Result;
+
+
+            PublicacaoDTO pb = new PublicacaoDTO()
+            {
+                DataCriacao = DateTime.Now,
+                Legenda = "",
+                Perfil = perfil,
+                CaminhoFoto = null,
+                Compartilhado = true,
+                IdPerfilQueCompartilhou = perfil.Id,
+                IdPublicacaoOriginal = IdOriginal   
+            };
+        
+
+
+            _publicacaoService.Add(pb);
+            return RedirectToAction("Index", "Home");
         }
     }
 

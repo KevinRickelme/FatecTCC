@@ -18,7 +18,10 @@ namespace ProjetoFatec.Application.DTOs
         public List<Comentario>? Comentario { get; set; }
         public List<CurtidaDTO>? Curtida { get; set; }
         public string? CaminhoFoto { get; set; }
+        public bool Compartilhado { get; set; }
         [NotMapped]
         public IFormFile? imagem { get; set; }
+        public int? IdPerfilQueCompartilhou { get; set; }
+        public int? IdPublicacaoOriginal { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
         {
             try
             {
-                return await _context.Publicacoes.Where(p => p.Perfil.Usuario.Id == usuario.Id).OrderByDescending(p => p.DataCriacao).ToListAsync();
+                return await _context.Publicacoes.Where(p => p.Perfil.Usuario.Id == usuario.Id).Include("PublicacaoOriginal").OrderByDescending(p => p.DataCriacao).ToListAsync();
 
             }
             catch (Exception ex)
