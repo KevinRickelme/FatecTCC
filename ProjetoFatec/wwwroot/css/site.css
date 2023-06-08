@@ -24,6 +24,10 @@ html {
     .linhaMenu {
         display: none;
     }
+    .search-area {
+        display: flex;
+        justify-content: center !important;
+    }
 }
 
 @media(max-width: 533.34px) {
@@ -182,4 +186,14 @@ span {
 
 .inputTxtPublicacao:focus {
     box-shadow: 0 0 0 0.1rem rgba(155, 55, 55, 50%);
+}
+
+.pic-post {
+    width:80px !important;
+    height:80px !important;
+}
+
+.pic-compartilhado{
+    width:32px !important;
+    height:32px !important;
 }

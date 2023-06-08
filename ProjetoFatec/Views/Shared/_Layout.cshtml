@@ -1,5 +1,7 @@
 ﻿@{
     var perfil = ViewData["PerfilUsuario"] as Perfil;
+    var valor = perfil.IdFotoPerfil == null ? false : true;
+    string caminhoFotoPerfilLogado = valor == true ? "/imgs/perfil/" + perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
 }
 
 <!DOCTYPE html>
@@ -60,7 +62,7 @@
                                     <button type="button" data-bs-toggle="dropdown" class="btn btn-profile btn-profile-pic border-0">Olá, <strong>@perfil.Nome.Split()[0]</strong>!</button>
                                     <a class="btn dropdown-toggle-split btn-profile-pic border-0" data-bs-toggle="dropdown" aria-expanded="false">
                                         <div class="profile-pic">
-                                            <img class="img-fluid profile-pic" id="dropdownBotao" src="~/imgs/perfil.png">
+                                            <img class="img-fluid profile-pic" id="dropdownBotao" src="@caminhoFotoPerfilLogado">
                                         </div>
                                     </a>
                                     <ul class="dropdown-menu slideIn animate">

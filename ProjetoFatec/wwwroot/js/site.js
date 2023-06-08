@@ -413,3 +413,6 @@ $('#modalPublicacao').on('show.bs.modal', function (e) {
     $(e.currentTarget).find('input[name="JornadaModalVisualizar"]').val(Jornada);
 });
 
+$("#formFileImagemPerfil").change(function () {
+    $("#formImagemPerfil").submit();
+});

@@ -9,9 +9,11 @@
     
     foreach(var perfil in Model)
         {
+                                        var valor1 = perfil.Usuario.Perfil.IdFotoPerfil == null ? false : true;
+                            string caminho1 = valor1 == true ? "/imgs/perfil/" + perfil.Usuario.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
         <div class="row-4 divPostagem perfilMaior" href="#">
             <div class="col-2 divPicPostagem perfil">
-                <img class="img-fluid profile-pic pic-post col pic-postagem perfil" id="dropdownBotao" src="~/imgs/perfil.png">
+                    <img class="img-fluid profile-pic pic-post col pic-postagem perfil imgPerfilNova" id="dropdownBotao" src="@caminho1">
             </div>
             <div class="col divPostagemInfo perfil">
                     <a class="post-nome perfil row" href="@Url.Action("Index","Perfil", new{@id = perfil.Usuario.Perfil.Id})">@perfil.Nome @perfil.Sobrenome</a>

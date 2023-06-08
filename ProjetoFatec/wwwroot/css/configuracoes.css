@@ -33,6 +33,19 @@
     }
 }
 
+@media (max-width: 768px) {
+    .container-fluid, .container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .div-formulario-cadastro.configuracoes{
+        height:100% !important;
+    }
+    .mainDiv.configuracoes{
+        width:100% !important;
+    }
+}
+
 .mainDiv {
     margin: 0 auto;
     text-align: center;

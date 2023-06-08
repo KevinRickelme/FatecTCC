@@ -4,6 +4,8 @@
     var perfil = ViewData["PerfilUsuario"] as Perfil;
     List<Publicacao> publicacoes = new List<Publicacao>();
     publicacoes = ViewData["Publicacoes"] as List<Publicacao>;
+    var valor = perfil.IdFotoPerfil == null ? false : true;
+    string caminhoFotoPerfilLogado = valor == true ? "/imgs/perfil/" + perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
     
 }
 <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -12,7 +14,7 @@
 <div class="container divHomePrincipal">
     <div class="container-fluid divPost justify-content-between">
         <div class="col divPic">
-                    <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="./imgs/perfil.png">
+                    <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="@caminhoFotoPerfilLogado">
         </div>
         <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
             Criar publicação
@@ -24,10 +26,12 @@
             
             <div class="divSolicitacaoAmizade">
                 @foreach (var amigo in perfil.Amigos.Where(a => a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente && a.IdPerfilSolicitado == perfil.Id).ToList()){
+                    valor = amigo.PerfilSolicitante.IdFotoPerfil == null ? false : true;
+                    string caminho = valor == true ? "/imgs/perfil/" + amigo.PerfilSolicitante.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
                 <form asp-action="RespostaPedidoAmizade" method="post" asp-controller="Perfil">
                     <div class="divSolicitacaoAmizadePerfil">
                         <div class="col-1 divPicPostagem amigo">
-                            <img class="img-fluid profile-pic pic-post col pic-postagem amigo" id="dropdownBotao" src="./imgs/perfil.png">
+                            <img class="img-fluid profile-pic pic-post col pic-postagem amigo" id="dropdownBotao" src="@caminho">
                         </div>
                         <div class="col divPostagemInfo amigo">
                             <a class="post-nome amizade row" href="#">@amigo.PerfilSolicitante.Nome @amigo.PerfilSolicitante.Sobrenome</a>
@@ -117,8 +121,10 @@
                 <div class="container-fluid divPoste" style="background-color:white;">
                     @if (pub.Compartilhado)
                     {
+                        valor = pub.PerfilQueCompartilhou.IdFotoPerfil == null ? false : true;
+                        string caminho = valor == true ? "/imgs/perfil/" + pub.PerfilQueCompartilhou.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
                         <div class="compartilhado">
-                            <img class="img-fluid profile-pic pic-post col pic-compartilhado col-2" id="dropdownBotao" src="./imgs/perfil.png">
+                            <img class="img-fluid profile-pic pic-post col pic-compartilhado col-2" id="dropdownBotao" src="@caminho">
 
                             <div class="post-nome compartilhado col-10"><a href="@Url.Action("Index","Perfil", new{@id = pub.IdPerfilQueCompartilhou})">@pub.PerfilQueCompartilhou.Nome @pub.PerfilQueCompartilhou.Sobrenome &nbsp;</a> compartilhou essa publicação</div>
 
@@ -127,7 +133,11 @@
                     
                     <div class="row-4 divPostagem" href="#">
                     <div class="col-1 divPicPostagem">
-                        <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/perfil.png">
+                        @{
+                            var valor1 = pub.PublicacaoOriginal.Perfil.IdFotoPerfil == null ? false : true;
+                                    string caminho1 = valor1 == true ? "/imgs/perfil/" + pub.PublicacaoOriginal.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
+                        }
+                        <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
                     </div>
                     <div class="row divPostagemInfo">
                         <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.PublicacaoOriginal.Perfil.Id})">@pub.PublicacaoOriginal.Perfil.Nome @pub.PublicacaoOriginal.Perfil.Sobrenome</a>
@@ -226,9 +236,14 @@
                     }
                     else
                     {
+                        
+                            var valor1 = pub.Perfil.IdFotoPerfil == null ? false : true;
+                        string caminho1 = valor1 == true ? "/imgs/perfil/" + pub.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
+                        
+
                         <div class="row-4 divPostagem" href="#">
                             <div class="col-1 divPicPostagem">
-                                <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="./imgs/perfil.png">
+                                <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
                             </div>
                             <div class="row divPostagemInfo">
                                 <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>

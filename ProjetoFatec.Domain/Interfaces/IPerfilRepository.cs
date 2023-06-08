@@ -18,6 +18,6 @@ namespace ProjetoFatec.Domain.Interfaces
         Task<List<Perfil>> GetPerfisByName(string nome);
         Task<List<Perfil>> GetPerfisByFullName(string[] arrayNome);
         Task<List<Perfil>> GetPerfisAmigosById(int Id);
-        
+        Task<int> SalvarFotoPerfil(FotoPerfil fp);
     }
 }

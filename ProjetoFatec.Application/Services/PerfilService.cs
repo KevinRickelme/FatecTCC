@@ -29,6 +29,11 @@ namespace ProjetoFatec.Application.Services
             return _perfilRepository.Update(mapPerfil);
         }
 
+        public bool Update(Perfil perfil)
+        {
+            return _perfilRepository.Update(perfil);
+        }
+
         public async Task<Perfil?> GetPerfil(UsuarioDTO usuario)
         {
             var mapUsuario = _mapper.Map<Usuario>(usuario);
@@ -79,6 +84,11 @@ namespace ProjetoFatec.Application.Services
         {
             List<Perfil> result = await _perfilRepository.GetPerfisAmigosById(Id);
             return _mapper.Map<List<PerfilDTO>>(result);
+        }
+
+        public async Task<int> SalvarFotoPerfil(FotoPerfil fp)
+        {
+            return await _perfilRepository.SalvarFotoPerfil(fp);
         }
     }
 }

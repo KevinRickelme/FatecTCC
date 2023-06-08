@@ -16,8 +16,10 @@ namespace ProjetoFatec.Application.Interfaces
         Task<PerfilDTO?> GetPerfilViewModel(UsuarioDTO usuario);
         bool Add(PerfilDTO perfil);
         bool Update(PerfilDTO perfil);
+        bool Update(Perfil perfil);
         Task<Perfil?> GetPerfilWithoutNavigation(UsuarioDTO usuario);
         Task<List<PerfilDTO>> GetPerfisByName(string nome);
         Task<List<PerfilDTO>> GetPerfisAmigosById(int Id);
+        Task<int> SalvarFotoPerfil(FotoPerfil fp);
     }
 }

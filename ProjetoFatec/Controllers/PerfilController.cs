@@ -4,6 +4,7 @@ using ProjetoFatec.Application.Interfaces;
 using ProjetoFatec.Application.DTOs;
 using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Utils;
+using ProjetoFatec.MVC.ViewModels;
 
 namespace ProjetoFatec.MVC.Controllers
 {
@@ -23,6 +24,7 @@ namespace ProjetoFatec.MVC.Controllers
         {
             var perfil = _perfilService.GetPerfilViewModel(id).Result;
             var MeuPerfil = _usuarioService.GetUsuario(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result.Perfil;
+            ViewBag.IdFotoPerfil = MeuPerfil.IdFotoPerfil;
             ViewData["PerfilUsuario"] = MeuPerfil;
             var xxx = MeuPerfil.Id;
             ViewBag.IdPerfil = xxx;
@@ -103,6 +105,46 @@ namespace ProjetoFatec.MVC.Controllers
             perfilDTO.Usuario = _usuarioService.GetUsuarioAsNoTracking(perfilDTO.Email).Result;
             _perfilService.Update(perfilDTO);
             return RedirectToAction("Configuracoes", new {@mensagem = "Alterações salvas com sucesso!"});
+        }
+        [Route("/AdicionarImagem")]
+        [HttpPost]
+        public async Task<IActionResult> AdicionarImagem([FromForm] ImagemPerfilViewModel ipvm)
+        {
+            var ImagemDoPerfil = Request.Form["imagemPerfil"];
+            var usuario = _usuarioService.GetUsuarioAsNoTracking(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
+            var perfil = _perfilService.GetPerfil(usuario.IdPerfil).Result;
+            FotoPerfil fp = new FotoPerfil()
+            {
+                CaminhoFoto = SalvarImagem(ipvm.imagemPerfil, perfil.Id).Result,
+                IdPerfil = perfil.Id,
+                Perfil = perfil
+            };
+            int idFotoPerfil = await _perfilService.SalvarFotoPerfil(fp);
+            perfil.IdFotoPerfil = idFotoPerfil;
+            
+            _perfilService.Update(perfil);
+            //perfilDTO.Usuario = _usuarioService.GetUsuarioAsNoTracking(perfilDTO.Email).Result;
+
+            return RedirectToAction(nameof(Index), new {@id = perfil.Id });
+        }
+
+
+        private async Task<string> SalvarImagem(IFormFile imagem, int idPerfil)
+        {
+            if (imagem != null)
+            {
+                var caminho = Path.Combine("wwwroot/imgs/perfil/" + idPerfil + "ImagemPerfil.png");
+                using (FileStream stream = new FileStream(caminho, FileMode.Create))
+                {
+                    await imagem.CopyToAsync(stream);
+                    stream.Close();
+                }
+                return caminho;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
