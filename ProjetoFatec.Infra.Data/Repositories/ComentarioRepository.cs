@@ -1,4 +1,5 @@
-﻿using ProjetoFatec.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Infra.Data.Context;
 using System;
@@ -27,6 +28,23 @@ namespace ProjetoFatec.Infra.Data.Repositories
         public ICollection<Comentario?> GetComentarios(int idPublicacao) 
         {
             return _context.Comentarios.Where(c => c.IdPublicacao == idPublicacao).ToList();
+        }
+
+        public int RemoveAll(int idPublicacao)
+        {
+            var comentarios = _context.Comentarios.Include("Perfil").Include(p=>p.Perfil.Amigos).Where(c => c.IdPublicacao == idPublicacao).ToList();
+
+            foreach (var list in comentarios)
+            {
+                _context.Entry(list.Perfil).Reload();
+                foreach (var am in list.Perfil.Amigos)
+                {
+                    _context.Entry(am).Reload();
+                }
+            }
+
+            _context.Comentarios.RemoveRange(comentarios);
+            return _context.SaveChanges();
         }
     }
 }

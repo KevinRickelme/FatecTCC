@@ -140,6 +140,20 @@ namespace ProjetoFatec.Controllers
 
             return _curtidaService.Add(curtidaDTO);
         }
+
+        public IActionResult Excluir(int idPublicacao)
+        {
+            int IdOriginal = Convert.ToInt32(idPublicacao);
+
+            _curtidaService.RemoveAll(IdOriginal);
+            _comentarioService.RemoveAll(IdOriginal);
+            _publicacaoService.Remove(IdOriginal);
+
+            return RedirectToAction("Index", "Home", new { @sucesso = "Publicação Removida" });
+
+
+            
+        }
         public IActionResult CompartilharPublicacao(string id)
         {
             

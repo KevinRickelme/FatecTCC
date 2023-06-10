@@ -76,7 +76,35 @@ namespace ProjetoFatec.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult Chat()
+        {
+            UsuarioDTO usuario = new UsuarioDTO();
+            usuario.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
 
+            ViewBag.Nome = (ClaimUtils.GetClaimInfo(User, "name"));
+            ViewBag.PrimeiroNome = (ClaimUtils.GetClaimInfo(User, "name")).Split()[0];
+            ViewBag.Email = ClaimUtils.GetClaimInfo(User, "emailaddress");
+
+
+            if (_usuarioService.PrimeiroAcesso(usuario))
+            {
+                return RedirectToAction("Cadastro", "Usuario");
+            }
+            else
+            {
+                usuario = _usuarioService.GetUsuarioViewModel(usuario.Email).Result;
+                if (!(_usuarioService.TemPerfilCriado(usuario)))
+                {
+                    return RedirectToAction("Cadastro", "Usuario");
+                }
+                usuario = _usuarioService.GetUsuarioViewModel(ClaimUtils.GetClaimInfo(User, "emailaddress")).Result;
+                var perfil = _perfilService.GetPerfil(usuario).Result;
+                ViewData["PerfilUsuario"] = perfil;
+                var Feed = _feedService.GetFeed(perfil.Id).Result;
+                ViewData["Publicacoes"] = Feed.Publicacoes;
+                return View();
+            }
+        }
 
     }
 }

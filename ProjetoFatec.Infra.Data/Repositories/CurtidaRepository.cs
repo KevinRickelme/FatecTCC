@@ -1,4 +1,5 @@
-﻿using ProjetoFatec.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoFatec.Domain.Entities;
 using ProjetoFatec.Domain.Interfaces;
 using ProjetoFatec.Infra.Data.Context;
 using System;
@@ -34,6 +35,22 @@ namespace ProjetoFatec.Infra.Data.Repositories
         public int Delete(Curtida curtida)
         {
             _context.Curtidas.Remove(curtida);
+            return _context.SaveChanges();
+        }
+
+        public int RemoveAll(int idPublicacao)
+        {
+            var curtidas = _context.Curtidas.Include("Perfil").Include(p => p.Perfil.Amigos).Where(c => c.IdPublicacao == idPublicacao).ToList();
+
+            foreach (var list in curtidas)
+            {
+                _context.Entry(list.Perfil).Reload();
+                foreach (var am in list.Perfil.Amigos)
+                {
+                    _context.Entry(am).Reload();
+                }
+            }
+            _context.Curtidas.RemoveRange(curtidas);
             return _context.SaveChanges();
         }
     }

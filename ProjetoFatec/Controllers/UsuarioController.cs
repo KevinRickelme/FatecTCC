@@ -141,5 +141,15 @@ namespace ProjetoFatec.Controllers
             };
             return perfil;
         }
+
+
+        public IActionResult Sobre()
+        {
+            return View();
+        }
+        public IActionResult Contato()
+        {
+            return View();
+        }
     }
 }

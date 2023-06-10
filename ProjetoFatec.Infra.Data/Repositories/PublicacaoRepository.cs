@@ -39,5 +39,23 @@ namespace ProjetoFatec.Infra.Data.Repositories
         {
             return _context.Publicacoes.Where(p => p.Id == id).Include("Comentarios").FirstOrDefault();
         }
+
+        public int RemovePublicacao(int idOriginal)
+        {
+            var listaPublicacaoRemover = _context.Publicacoes.Include("Perfil").Include(p => p.Perfil.Amigos).Where(p => p.Id == idOriginal).ToList();
+            var lista2 = _context.Publicacoes.Include("Perfil").Include(p => p.Perfil.Amigos).Where(p => p.IdPublicacaoOriginal == idOriginal).ToList();
+            foreach(var it in lista2)
+                listaPublicacaoRemover.Add(it);
+            foreach(var list in listaPublicacaoRemover)
+            {
+                _context.Entry(list.Perfil).Reload();
+                foreach(var am in list.Perfil.Amigos)
+                {
+                    _context.Entry(am).Reload();
+                }
+            }
+            _context.Publicacoes.RemoveRange(listaPublicacaoRemover);
+            return _context.SaveChanges();
+        }
     }
 }

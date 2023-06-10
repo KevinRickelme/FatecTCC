@@ -11,5 +11,6 @@ namespace ProjetoFatec.Domain.Interfaces
     {
         int Add(Curtida curtida);
         int Delete(Curtida curtida);
+        int RemoveAll(int idPublicacao);
     }
 }

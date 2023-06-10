@@ -11,5 +11,6 @@ namespace ProjetoFatec.Application.Interfaces
     public interface IComentarioService
     {
         int Add(ComentarioDTO comentarioDTO);
+        int RemoveAll(int idPublicacao);
     }
 }

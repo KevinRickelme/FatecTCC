@@ -6,116 +6,119 @@
     publicacoes = ViewData["Publicacoes"] as List<Publicacao>;
     var valor = perfil.IdFotoPerfil == null ? false : true;
     string caminhoFotoPerfilLogado = valor == true ? "/imgs/perfil/" + perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
-    
+
 }
 <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="container divHome">
-<div class="container divHomePrincipal">
-    <div class="container-fluid divPost justify-content-between">
-        <div class="col divPic">
+        <div class="container divHomePrincipal">
+            <div class="container-fluid divPost justify-content-between">
+                <div class="col divPic">
                     <img class="img-fluid profile-pic pic-post" id="dropdownBotao" src="@caminhoFotoPerfilLogado">
+                </div>
+                <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
+                    Criar publicação
+                </a>
+            </div>
         </div>
-        <a class="row divPostar" href="#" data-bs-toggle="modal" data-bs-target="#modalPostagem">
-            Criar publicação
-        </a>
-    </div>
-</div>
-@if(perfil.Amigos.Where(a=>a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
-{
-            
+        @if (perfil.Amigos.Where(a => a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
+        {
+
             <div class="divSolicitacaoAmizade">
-                @foreach (var amigo in perfil.Amigos.Where(a => a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente && a.IdPerfilSolicitado == perfil.Id).ToList()){
+                @foreach (var amigo in perfil.Amigos.Where(a => a.Status == ProjetoFatec.Domain.Enums.StatusAmizadeEnum.Pendente && a.IdPerfilSolicitado == perfil.Id).ToList())
+                {
                     valor = amigo.PerfilSolicitante.IdFotoPerfil == null ? false : true;
                     string caminho = valor == true ? "/imgs/perfil/" + amigo.PerfilSolicitante.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
-                <form asp-action="RespostaPedidoAmizade" method="post" asp-controller="Perfil">
-                    <div class="divSolicitacaoAmizadePerfil">
-                        <div class="col-1 divPicPostagem amigo">
-                            <img class="img-fluid profile-pic pic-post col pic-postagem amigo" id="dropdownBotao" src="@caminho">
-                        </div>
-                        <div class="col divPostagemInfo amigo">
-                            <a class="post-nome amizade row" href="#">@amigo.PerfilSolicitante.Nome @amigo.PerfilSolicitante.Sobrenome</a>
-                            <a class="mensagem amizade row">Gostaria de se conectar com você</a>
-                            <div class="btnAceitarRecusar">
-                                    <input type="hidden" name="idSolicitante" value="@amigo.IdPerfilSolicitante"/>
+                    <form asp-action="RespostaPedidoAmizade" method="post" asp-controller="Perfil">
+                        <div class="divSolicitacaoAmizadePerfil">
+                            <div class="col-1 divPicPostagem amigo">
+                                <img class="img-fluid profile-pic pic-post col pic-postagem amigo" id="dropdownBotao" src="@caminho">
+                            </div>
+                            <div class="col divPostagemInfo amigo">
+                                <a class="post-nome amizade row" href="#">@amigo.PerfilSolicitante.Nome @amigo.PerfilSolicitante.Sobrenome</a>
+                                <a class="mensagem amizade row">Gostaria de se conectar com você</a>
+                                <div class="btnAceitarRecusar">
+                                    <input type="hidden" name="idSolicitante" value="@amigo.IdPerfilSolicitante" />
                                     <input type="hidden" name="idSolicitado" value="@amigo.IdPerfilSolicitado" />
                                     <button class="btn btn-default btnAceitar" name="acao" value="1">Aceitar</button>
                                     <button class="btn btn-default btnRecusar" name="acao" value="0">Recusar</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                 }
             </div>
-           
-}
 
-@if (ViewBag.Erro != null)
-{
-    <div class="alert alert-danger  container divHomePrincipal" role="alert">
-        @ViewBag.Erro
-    </div>
-}
+        }
 
-@if (ViewBag.Sucesso != null)
-{
-    <div class="alert alert-success  container divHomePrincipal" role="alert">
-        @ViewBag.Sucesso
-    </div>
-}
+        @if (ViewBag.Erro != null)
+        {
+            <div class="alert alert-danger  container divHomePrincipal" role="alert">
+                @ViewBag.Erro
+            </div>
+        }
+
+        @if (ViewBag.Sucesso != null)
+        {
+            <div class="alert alert-success  container divHomePrincipal" role="alert">
+                @ViewBag.Sucesso
+            </div>
+        }
 
 
 
-<div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+        <div class="container-fluid modal fade modal-publicar" id="modalPostagem" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Criar publicação</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-            <div class="modal-body">
-
-                <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
-                
-                            <div class="mb-3">
-                        <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=postagem></textarea><span asp-validation-for="postagem"></span>
+
+                        <form asp-action="PublicarPostagem" asp-controller="Publicacao" method="post" enctype="multipart/form-data">
+                            <div class="modal-body">
+
+                                <div class="mb-3">
+                                    <textarea class="form-control txtPublicacao input inputTxtPublicacao" rows="3" id="message-text" name="textoPublicacao" placeholder="No que você está pensando?" asp-for=postagem></textarea><span asp-validation-for="postagem"></span>
+                                </div>
+                                <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
+                                <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone' style="display: none;">
+
+                                    <legend class="visually-hidden">Image uploader</legend>
+
+                                    <svg class="upload_svg" width="60" height="60" aria-hidden="true">
+                                        <use href="#icon-imageUpload"></use>
+                                    </svg>
+
+                                    <p class="small my-2">Arraste &amp; solte imagens dentro deste quadro<br><i>ou</i></p>
+                                    <input id="formFile" class="form-control input position-absolute invisible" type="file" name="imagem" accept="image/jpeg, image/png, image/svg+xml" />
+                                    <label class="btn btn-upload mb-3" for="formFile" asp-for="imagem">Escolha o arquivo de imagem</label>
+
+                                    <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+
+                                </fieldset>
+
+
                             </div>
-                        <a class="fa-solid fa-image fa-2xl img-upload" id="btnShowUpload" style="color: #9b3737; width: 100px;" href="#"></a>
-                        <fieldset class="upload_dropZone text-center mb-3 p-4" id='upload_dropzone'style="display: none;" >
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btnPublicar">Publicar</button>
+                            </div>
+                        </form>
 
-                            <legend class="visually-hidden">Image uploader</legend>
 
-                            <svg class="upload_svg" width="60" height="60" aria-hidden="true">
-                                <use href="#icon-imageUpload"></use>
-                            </svg>
-
-                            <p class="small my-2">Arraste &amp; solte imagens dentro deste quadro<br><i>ou</i></p>
-                            <input id="formFile" class="form-control input position-absolute invisible" type="file" name="imagem" accept="image/jpeg, image/png, image/svg+xml" />
-                            <label class="btn btn-upload mb-3" for="formFile" asp-for="imagem">Escolha o arquivo de imagem</label>
-
-                            <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
-
-                        </fieldset>
-                
-                          
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary btnPublicar">Publicar</button>
-                    </div>
-                    </form>
-                        
-                    
-                </div>
                 </div>
             </div>
-</div>
+        </div>
 
-</div>
-@if(publicacoes != null  || publicacoes.Count != 0){
+    </div>
+    @if (publicacoes != null || publicacoes.Count != 0)
+    {
         var i = 0;
-    @foreach(var pub in publicacoes){
-           
+        @foreach (var pub in publicacoes)
+        {
+
             string IdFormatado = pub.Compartilhado ? (Convert.ToString(pub.PublicacaoOriginal.Id) + "a" + ++i) : Convert.ToString(pub.Id);
             <div class="container divHomePrincipalPostagens" id="@IdFormatado">
                 <div class="container-fluid divPoste" style="background-color:white;">
@@ -130,122 +133,128 @@
 
                         </div>
                         <hr>
-                    
-                    <div class="row-4 divPostagem" href="#">
-                    <div class="col-1 divPicPostagem">
-                        @{
-                            var valor1 = pub.PublicacaoOriginal.Perfil.IdFotoPerfil == null ? false : true;
+
+                        <div class="row-4 divPostagem" href="#">
+                            <div class="col-1 divPicPostagem">
+                                @{
+                                    var valor1 = pub.PublicacaoOriginal.Perfil.IdFotoPerfil == null ? false : true;
                                     string caminho1 = valor1 == true ? "/imgs/perfil/" + pub.PublicacaoOriginal.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
-                        }
-                        <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
-                    </div>
-                    <div class="row divPostagemInfo">
-                        <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.PublicacaoOriginal.Perfil.Id})">@pub.PublicacaoOriginal.Perfil.Nome @pub.PublicacaoOriginal.Perfil.Sobrenome</a>
+                                }
+                                <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
+                            </div>
+                            <div class="row col-10 divPostagemInfo">
+                                <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.PublicacaoOriginal.Perfil.Id})">@pub.PublicacaoOriginal.Perfil.Nome @pub.PublicacaoOriginal.Perfil.Sobrenome</a>
                                 <a class="post-curso row">@pub.PublicacaoOriginal.Perfil.NomeCurso • @pub.PublicacaoOriginal.Perfil.SemestreAtual</a>
-                            @{
+                                @{
                                     var hora = DateTime.Now - pub.PublicacaoOriginal.DataCriacao;
-                                if (hora.Days < 1)
-                                {
-                                    if(hora.Hours >= 1)
+                                    if (hora.Days < 1)
                                     {
-                                        if (hora.Hours == 1)
+                                        if (hora.Hours >= 1)
                                         {
-                                            <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) hora atrás </a>
-                                        }
-                                        else
-                                        {
-                                                <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) horas atrás </a>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (hora.Minutes == 1)
-                                        {
-                                            <a class="post-tempo row">@(
-                                                    (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Minutes
-                                                  ) minuto atrás </a>
-                                        }
-                                        else
-                                        {
-                                            if (hora.Minutes < 1)
+                                            if (hora.Hours == 1)
                                             {
-                                                <a class="post-tempo row">@(
-                                                        (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Seconds
-                                                      ) segundos atrás </a>
+                                                <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) hora atrás </a>
                                             }
                                             else
                                             {
-                                                <a class="post-tempo row">@(
+                                                <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Hours) horas atrás </a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (hora.Minutes == 1)
+                                            {
+                                                <a class="post-tempo row">
+                                                    @(
+                                                    (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Minutes
+                                                        ) minuto atrás
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                if (hora.Minutes < 1)
+                                                {
+                                                    <a class="post-tempo row">
+                                                        @(
+                                                        (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Seconds
+                                                            ) segundos atrás
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="post-tempo row">
+                                                        @(
                                                         (DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Minutes
-                                                      ) minutos atrás </a>
+                                                            ) minutos atrás
+                                                    </a>
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                else
-                                {
-                                        if ((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days == 1)
-                                    {
-                                        <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days) dia atrás </a>
-                                    }
                                     else
                                     {
+                                        if ((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days == 1)
+                                        {
+                                            <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days) dia atrás </a>
+                                        }
+                                        else
+                                        {
                                             <a class="post-tempo row">@((DateTime.Now - pub.PublicacaoOriginal.DataCriacao).Days) dias atrás </a>
+                                        }
                                     }
                                 }
-                            }
-                        
-                    </div>
-                </div>
-                <div class="row-col-4 divPostagemInfos">
+
+                            </div>
+                        </div>
+                        <div class="row-col-4 divPostagemInfos">
                             <p class="post-conteudo row">@pub.PublicacaoOriginal.Legenda</p>
-                    @if(pub.PublicacaoOriginal.CaminhoFoto != null)
-                        {
+                            @if (pub.PublicacaoOriginal.CaminhoFoto != null)
+                            {
                                 <img src="@pub.PublicacaoOriginal.CaminhoFoto.Remove(0,8)" class="img img-fluid mx-auto d-block img-post" />
-                        }<br/>
+                            }<br />
                             @if (!pub.PublicacaoOriginal.Curtidas.Any(c => c.IdPerfil == perfil.Id))
-                        {
+                            {
                                 <span class=" fa-regular fa-heart"> </span>
 
                                 <a class="post-qtdLike col" id="qtdLikes"> @pub.PublicacaoOriginal.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
-                        }
-                        else
-                        {
+                            }
+                            else
+                            {
                                 <span class=" fa-solid fa-heart"> </span>
 
                                 <a class="post-qtdLike col" id="qtdLikes"> @pub.PublicacaoOriginal.Curtidas.Count()</a> <a class="post-qtdLike col">Likes</a>
-                        }
-                        <hr/>
-                    <div class="botoesPost row">
+                            }
+                            <hr />
+                            <div class="botoesPost row">
                                 @if (!pub.PublicacaoOriginal.Curtidas.Any(c => c.IdPerfil == perfil.Id))
                                 {
                                     <a class="btn post-btnLike col" id="curtir" onclick="Curtir('@IdFormatado')">
-                                    <span class=" fa-regular fa-heart"></span> Gostei
-                            </a>
-                        }
-                        else
-                        {
+                                        <span class=" fa-regular fa-heart"></span> Gostei
+                                    </a>
+                                }
+                                else
+                                {
                                     <a class="btn post-btnLike col" onclick="Curtir('@IdFormatado')">
-                                <span class=" fa-solid fa-heart"></span> Descurtir
-                            </a>
-                        }
+                                        <span class=" fa-solid fa-heart"></span> Descurtir
+                                    </a>
+                                }
                                 <a class="btn post-btnComentar col" onclick="Details(@pub.PublicacaoOriginal.Id)"> <span class=" fa-regular fa-comment"></span> Comentar</a>
                                 <a class="btn post-btnCompartilhar col" href="@Url.Action("CompartilharPublicacao","Publicacao", new{@id = IdFormatado})"><span class=" fa-solid fa-share"></span> Compartilhar</a>
-                    </div>
+                            </div>
                         </div>
                     }
                     else
                     {
-                        
-                            var valor1 = pub.Perfil.IdFotoPerfil == null ? false : true;
+
+                        var valor1 = pub.Perfil.IdFotoPerfil == null ? false : true;
                         string caminho1 = valor1 == true ? "/imgs/perfil/" + pub.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
-                        
+
 
                         <div class="row-4 divPostagem" href="#">
                             <div class="col-1 divPicPostagem">
                                 <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
                             </div>
-                            <div class="row divPostagemInfo">
+                            <div class="row col-10 divPostagemInfo">
                                 <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
                                 <a class="post-curso row">@pub.Perfil.NomeCurso • @pub.Perfil.SemestreAtual</a>
                                 @{
@@ -308,6 +317,15 @@
                                 }
 
                             </div>
+                            @if (pub.Perfil.Id == perfil.Id || perfil.Usuario.Privilegio == ProjetoFatec.Domain.Enums.PrivilegioEnum.Administrativo)
+                            {
+                                <div class="dropdown">
+                                    <a class="btn dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                    <div class="dropdown-menu" style="margin-left:-100px" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalConfirmacao" onclick="set_value(@pub.Id)">Remover publicação</a>
+                                    </div>
+                                </div>
+                            }
                         </div>
                         <div class="row-col-4 divPostagemInfos">
                             <p class="post-conteudo row">@pub.Legenda</p>
@@ -345,15 +363,40 @@
                                 <a class="btn post-btnCompartilhar col" href="@Url.Action("CompartilharPublicacao","Publicacao", new{@id = pub.Id})"><span class=" fa-solid fa-share"></span> Compartilhar</a>
                             </div>
                         </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalConfirmacao" tabindex="-1" role="dialog" aria-labelledby="modalConfirmacaoLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Atenção!</h5>
+                                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Você deseja realmente excluir esta publicação?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btnPendente" data-dismiss="modal">Cancelar</button>
+                                        <form asp-action="Excluir" asp-controller="Publicacao">
+                                            <input hidden value="" name="idPublicacao" id="idPublicacao" />
+                                            <button type="submit" style="border-style:none" class="btnConectado">Sim</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     }
-            </div>
+                </div>
 
-    </div>
+            </div>
+        }
     }
-}
-else{
-    <a>Não existem postagens :(</a>
-}
+    else
+    {
+        <a>Não existem postagens :(</a>
+    }
 </div>
 
 <div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
@@ -363,56 +406,54 @@ else{
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Comentários</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-
-                <div class="modal-body">
-                </div>
+            <div class="modal-body comentario">
             </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid modal fade modal-publicar" id="modalPublicacao" tabindex="-1" aria-labelledby="modalPostagem" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Comentários</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
 
 
-                <div class="modal-body">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+<script type="text/javascript">
+    function set_value(id) {
+        document.getElementById('idPublicacao').value = id;
+        
+    }
+</script>
 
 
 <script type="text/javascript">
     function Details(id) {
         $.get("@Url.Action("ShowpopUp","Publicacao")/" + id,
             function (data) {
-                $('.modal-body').html(data);
+                $('.modal-body.comentario').html(data);
             });
 
         $("#modalPublicacao").modal("show");
     }
 </script>
 
+<script type="text/javascript">
+    function Excluir(id) {
+        $.post("@Url.Action("Excluir","Publicacao")/" + id,
+        function(data) {
+            $('.modal-body.comentario').html(data);
+        });
 
-    <script type="text/javascript">
+        $("#modalPublicacao").modal("show");
+    }
+</script>
+
+<script type="text/javascript">
 
     function Curtir(value) {
 
         $.post("@Url.Action("CurtirPublicacao","Publicacao")/" + value,
             function (data) {
-                var idOriginal =0;
+                var idOriginal = 0;
 
-                if(data == -1){
+                if (data == -1) {
                     if (value.indexOf('a') > -1) {
                         idOriginal = value.substring(0, value.indexOf('a'));
                         document.getElementById(value).children[0].children[3].children[2].classList.remove("fa-solid");
@@ -431,32 +472,30 @@ else{
                         else {
                             let valor = document.getElementById(value).children[0].children[3].children[3].innerHTML;
                             document.getElementById(value).children[0].children[3].children[3].innerHTML = " " + --valor;
-                        }                        
+                        }
                     }
-                    else{
+                    else {
                         document.getElementById(value).children[0].children[1].children[2].classList.remove("fa-solid");
                         document.getElementById(value).children[0].children[1].children[2].classList.add("fa-regular");
-                    
+
                         let valorElems = document.getElementById(value).children[0].children[1].childElementCount;
                         if (valorElems == 8)
                             document.getElementById(value).children[0].children[1].children[7].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
-                            else
+                        else
                             document.getElementById(value).children[0].children[1].children[6].children[0].innerHTML = "<span class=\" fa-regular fa-heart\"></span> Gostei";
                         let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
-                        if(valorElems == 8){
+                        if (valorElems == 8) {
                             let valor = document.getElementById(value).children[0].children[1].children[4].innerHTML;
                             document.getElementById(value).children[0].children[1].children[4].innerHTML = " " + --valor;
                         }
-                        else{
+                        else {
                             let valor = document.getElementById(value).children[0].children[1].children[3].innerHTML;
                             document.getElementById(value).children[0].children[1].children[3].innerHTML = " " + --valor;
                         }
                     }
                 }
-                else
-                {
-                    if (value.indexOf('a') > -1) 
-                    {
+                else {
+                    if (value.indexOf('a') > -1) {
                         idOriginal = value.substring(0, value.indexOf('a'));
                         document.getElementById(value).children[0].children[3].children[2].classList.remove("fa-regular");
                         document.getElementById(value).children[0].children[3].children[2].classList.add("fa-solid");
@@ -475,8 +514,7 @@ else{
                             document.getElementById(value).children[0].children[3].children[3].innerHTML = " " + ++valor;
                         }
                     }
-                    else 
-                    { 
+                    else {
                         document.getElementById(value).children[0].children[1].children[2].classList.remove("fa-regular");
                         document.getElementById(value).children[0].children[1].children[2].classList.add("fa-solid");
                         let valorElems = document.getElementById(value).children[0].children[1].childElementCount;
@@ -498,7 +536,7 @@ else{
             });
 
     }
-    </script>
+</script>
 
 
 

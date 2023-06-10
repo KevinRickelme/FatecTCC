@@ -12,5 +12,6 @@ namespace ProjetoFatec.Application.Interfaces
     {
         int Add(CurtidaDTO curtida);
         int Delete(CurtidaDTO curtida);
+        int RemoveAll(int idPublicacao);
     }
 }

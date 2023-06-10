@@ -8,5 +8,6 @@ namespace ProjetoFatec.Domain.Interfaces
         bool Add(Publicacao pb);
         Task<List<Publicacao?>> GetPublicacoes(Usuario usuario);
         Publicacao GetPublicacao(int id);
+        int RemovePublicacao(int idOriginal);
     }
 }

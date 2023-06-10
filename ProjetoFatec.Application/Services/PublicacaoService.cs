@@ -52,5 +52,10 @@ namespace ProjetoFatec.Application.Services
 
             return result;
         }
+
+        public int Remove(int idOriginal)
+        {
+            return _publicacaoRepository.RemovePublicacao(idOriginal);
+        }
     }
 }

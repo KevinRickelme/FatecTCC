@@ -11,5 +11,6 @@ namespace ProjetoFatec.Domain.Interfaces
     {
         int Add(Comentario comentario);
         ICollection<Comentario?> GetComentarios(int idPublicacao);
+        int RemoveAll(int idPublicacao);
     }
 }

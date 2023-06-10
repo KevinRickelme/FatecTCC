@@ -28,6 +28,13 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public bool Update(Perfil perfil)
         {
+            foreach (var amigos in perfil.Amigos)
+                _context.Entry(amigos).Reload();
+
+            perfil.FotoPerfil = _context.FotoPerfis.Where(fp => fp.IdPerfil == perfil.Id).OrderBy(fp=>fp.Id).LastOrDefault();
+            if(perfil.FotoPerfil != null)
+                _context.Entry(perfil.FotoPerfil).Reload();
+            //_context.Entry(perfil).Reload();
             _context.Perfis.Update(perfil);
 
             _context.SaveChanges();
@@ -96,9 +103,9 @@ namespace ProjetoFatec.Infra.Data.Repositories
 
         public async Task<List<Perfil>> GetPerfisAmigosById(int Id)
         {
-            var res = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitante where am.IdPerfilSolicitado == Id select pf).Include("Usuario").ToList();
+            var res = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitante where am.IdPerfilSolicitado == Id && am.IdPerfilSolicitado != am.IdPerfilSolicitante && am.Status == StatusAmizadeEnum.Ativo select pf).Include("Usuario").ToList();
 
-            var res2 = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitado where am.IdPerfilSolicitante == Id select pf).Include("Usuario").ToList();
+            var res2 = (from pf in _context.Perfis join am in _context.Amigos on pf.Id equals am.IdPerfilSolicitado where am.IdPerfilSolicitante == Id && am.IdPerfilSolicitado != am.IdPerfilSolicitante && am.Status == StatusAmizadeEnum.Ativo select pf).Include("Usuario").ToList();
 
             foreach (var pf in res2)
                 res.Add(pf);
@@ -109,6 +116,7 @@ namespace ProjetoFatec.Infra.Data.Repositories
         public async Task<int> SalvarFotoPerfil(FotoPerfil fp)
         {
             var amigos = fp.Perfil.Amigos.ToList();
+            _context.Entry(fp.Perfil).Reload();
             foreach (var am in amigos)
                 _context.Entry(am).Reload();
             _context.FotoPerfis.Add(fp);

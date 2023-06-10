@@ -133,7 +133,7 @@ a {
 }
 
 
-.dropdown-menu {
+.dropdown-menu.slideIn {
     text-align: center;
     width: 100%;
     border-end-start-radius: 25px;
@@ -593,4 +593,25 @@ div.divPicPostagem.comentario {
     margin-left: 2%;
     display: flex;
     margin-top: 2%;
+}
+
+.btnConectado {
+    background-color: #9B3737;
+    color: white;
+    font-weight: 500;
+    border-style: solid;
+    border-width: 1px;
+    width: 10em;
+    border-radius: 50px;
+}
+
+.btnPendente {
+    background-color: #757575;
+    color: white;
+    font-weight: 300;
+    border-style: solid;
+    border-color: #757575;
+    border-width: 1px;
+    width: 10em;
+    border-radius: 50px;
 }

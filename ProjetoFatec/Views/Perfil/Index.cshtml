@@ -319,7 +319,7 @@
                                 <div class="col-1 divPicPostagem">
                                     <img class="img-fluid profile-pic pic-post col pic-postagem" id="dropdownBotao" src="@caminho1">
                                 </div>
-                                <div class="row divPostagemInfo">
+                                <div class="row col-10 divPostagemInfo">
                                     <a class="post-nome row" href="@Url.Action("Index","Perfil", new{@id = pub.Perfil.Id})">@pub.Perfil.Nome @pub.Perfil.Sobrenome</a>
                                     <a class="post-curso row">@pub.Perfil.NomeCurso • @pub.Perfil.SemestreAtual</a>
                                     @{
@@ -382,6 +382,15 @@
                                     }
 
                                 </div>
+                                @if (pub.Perfil.Id == Model.Id)
+                                {
+                                    <div class="dropdown">
+                                        <a class="btn dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                        <div class="dropdown-menu" style="margin-left:-100px" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Remover publicação</a>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <div class="row-col-4 divPostagemInfos">
                                 <p class="post-conteudo row">@pub.Legenda</p>

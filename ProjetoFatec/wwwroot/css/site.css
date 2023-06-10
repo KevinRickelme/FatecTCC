@@ -14,6 +14,9 @@ html {
     width: 92% !important;
 }
 
+.containerPrincipal{
+    min-height:1920px;
+}
 
 .container-fluid {
     width: 100%;
@@ -196,4 +199,18 @@ span {
 .pic-compartilhado{
     width:32px !important;
     height:32px !important;
+}
+
+.btnConectado {
+    background-color: #9B3737;
+    color: white;
+    font-weight: 500;
+    border-style: solid;
+    border-width: 1px;
+    width: 10em;
+    border-radius: 50px;
+}
+
+.div-formulario-cadastro.login{
+    height:320px;
 }

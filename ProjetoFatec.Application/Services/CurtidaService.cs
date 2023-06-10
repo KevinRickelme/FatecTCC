@@ -32,5 +32,10 @@ namespace ProjetoFatec.Application.Services
             var curtida = _mapper.Map<Curtida>(curtidaDTO);
             return _curtidaRepository.Delete(curtida);
         }
+
+        public int RemoveAll(int idPublicacao)
+        {
+            return _curtidaRepository.RemoveAll(idPublicacao);
+        }
     }
 }
