@@ -1,0 +1,111 @@
+﻿@using SI3.Application.DTOs;
+@model PerfilDTO;
+@{
+    var PrimeiroNome = Model.Nome;
+    var EmailUsuario = Model.Usuario.Email;
+}
+@section styles{
+    <link rel="stylesheet" href="~/css/configuracoes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user-body.css" asp-append-version="true" />
+
+
+}
+
+<div class="container-fluid mainDiv configuracoes">
+    <div class="container-fluid textos-cadastro">
+        <p class="home-title titulo-cadastro">
+            Olá, <strong>@PrimeiroNome</strong>!
+        </p>
+        <p class="home-title subtitulo-cadastro">
+            Essas são as informações de seu perfil.
+        </p>
+        <p class="legenda legenda-cadastro">
+            Para alterar, clique no campo e coloque a informação desejada.a
+        </p>
+        @if(!string.IsNullOrEmpty(ViewBag.Sucesso)){
+            <div class="alert alert-success" role="alert" style="margin-top:2%">
+              @ViewBag.Sucesso
+            </div>
+        }
+    </div>
+
+    <div class="container-fluid div-formulario-cadastro configuracoes">
+        <form class="row g-3 form-cadastro" action="Configuracoes" method="post">
+            <input type="hidden" id="id" name="id" value="@Model.Id" runat="server" />
+            <div class="col-md-6">
+                <label for="label labelPrimeiroNome" class="form-label">Primeiro Nome*</label>
+                <input asp-for=@Model.Nome type="text" class="form-control input inputPrimeiroNome" id="inputPrimeiroNome" name="Nome" placeholder="João" required>
+            </div>
+            <div class="col-md-6">
+                <label for="label labelSobreNome" class="form-label">Sobrenome</label>
+                <input asp-for=@Model.Sobrenome type="text" class="form-control input" id="input inputSobrenome" name="Sobrenome" placeholder="da Silva" required>
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Email</label>
+                <input asp-for=@Model.Email type="text" class="form-control input inputEmail" id="inputAddress" name="Email" value="@EmailUsuario" readonly style="color:dimgray">
+            </div>
+            <div class="col-md-4">
+                <label for="label labelTelefone" class="form-label" required>Telefone</label>
+                <div class="row divtelefone">
+                    <div class="col-4">
+                        <input asp-for=@Model.DDD type="text" class="form-control input inputDDD" id="inputDDD" name="DDD" placeholder="11" required maxlength="2">
+                    </div>
+                    <div class="col-8">
+                        <input asp-for=@Model.Telefone type ="text" class="form-control input inputTelefone" id="inputTelefone" name="Telefone" placeholder="912345678" maxlength="9">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <label for="label labelDataNascimento" class="form-label" required>Data de Nascimento*</label>
+                <input asp-for=@Model.DataNascimento type="date" class="form-control input" id="inputDataNascimento" name="DataNascimento">
+            </div>
+            <div class="col-md-3">
+                <label for="label labelSexo" class="form-label" required>Sexo* </label>
+                <select id="inputCurso" class="form-select input inputSexo" name="Sexo" asp-for="@Model.Sexo">
+                    <option selected disabled>Selecione...</option>
+                    <option value="@SI3.Domain.Enums.SexoEnum.Masculino">Masculino</option>
+                    <option value="@SI3.Domain.Enums.SexoEnum.Feminino">Feminino</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label for="label labelCurso" class="form-label">Curso</label>
+                <select id="inputCurso" class="form-select input inputCurso" name="NomeCurso" asp-for="@Model.NomeCurso">
+                    <option selected disabled>Selecione...</option>
+                    <option>Análise e Desenvolvimento de Sistemas</option>
+                    <option>Comércio Exterior</option>
+                    <option>Gestão da Produção Industrial</option>
+                    <option>Gestão Empresarial</option>
+                    <option>Logística</option>
+                    <option>Logística Aeroportuária</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="label labelSemestreAtual" class="form-label">Semestre Atual*</label>
+                <input type="text" class="form-control input inputSemestreAtual" id="inputSemestreAtual" name="SemestreAtual" placeholder="5" asp-for="@Model.SemestreAtual">
+            </div>
+
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Biografia</label>
+                <textarea asp-for="@Model.Biografia" type="text" class="form-control input inputBio" id="inputBio" placeholder="Em poucas palavras, quem é você? O que gosta de fazer?"></textarea>
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Sobre</label>
+                <textarea asp-for="@Model.Sobre" type="text" class="form-control input inputSobre" id="inputSobre" placeholder="Conte mais detalhadamente quem é você"></textarea>
+            </div>
+
+            <div class=" legendas-cadastro">
+                <label for="label labelLegendas" class="form-label labelLegendas">Legenda</label><br>
+                <label for="label labelLegendas1" class="form-label labelLegendas1">* Obrigatório</label>
+            </div>
+
+
+            <div class="col-12 d-flex justify-content-center">
+                <!--<a href="./HomeLayout.html" class="btn btn-primary botaoLogin" id="botaoCadastrar">Continuar</a>-->
+
+                <button type="submit" class="btn btn-primary botaoLogin" id="botaoCadastrar">Continuar</button>
+
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@using SI3.Application.DTOs
+@model List<PerfilDTO>;
+@section styles{
+    <link rel="stylesheet" href="~/css/perfil.css" asp-append-version="true" />
+}
+<div class="container divPerfilMaior" style="height=100% !important">
+@{
+    var MeuPerfil = ViewData["PerfilUsuario"] as Perfil;
+    
+    foreach(var perfil in Model)
+        {
+                                        var valor1 = perfil.Usuario.Perfil.IdFotoPerfil == null ? false : true;
+                            string caminho1 = valor1 == true ? "/imgs/perfil/" + perfil.Usuario.Perfil.Id + "ImagemPerfil.png" : "/imgs/perfil/perfil.png";
+        <div class="row-4 divPostagem perfilMaior" href="#">
+            <div class="col-2 divPicPostagem perfil">
+                    <img class="img-fluid profile-pic pic-post col pic-postagem perfil imgPerfilNova" id="dropdownBotao" src="@caminho1">
+            </div>
+            <div class="col divPostagemInfo perfil">
+                    <a class="post-nome perfil row" href="@Url.Action("Index","Perfil", new{@id = perfil.Usuario.Perfil.Id})">@perfil.Nome @perfil.Sobrenome</a>
+                <a class="post-amigos perfil row">@perfil.Amigos.Where(a=>a.Status == SI3.Domain.Enums.StatusAmizadeEnum.Ativo).Count() amigos</a>
+                <a class="post-bio perfil row">@perfil.Biografia  </a>
+                <div class="divBtnConectar">
+                    @if (MeuPerfil.Id != perfil.Usuario.Perfil.Id)
+                    {
+                            @if (!perfil.Amigos.Where(a => a.IdPerfilSolicitado == MeuPerfil.Id || a.IdPerfilSolicitante == MeuPerfil.Id).Any())
+                        {
+                            <form asp-action="PedidoAmizade" asp-controller="Perfil" method="post">
+                                <input type="hidden" id="id" name="id" value="@perfil.Usuario.Perfil.Id" runat="server" />
+                                <button class="btn row btnConectar" name="id">Conectar</button>
+                            </form>
+                        }
+                        else
+                        {
+                                if (perfil.Amigos.Where(a => (a.IdPerfilSolicitado == MeuPerfil.Id || a.IdPerfilSolicitante == MeuPerfil.Id) && a.Status == SI3.Domain.Enums.StatusAmizadeEnum.Pendente).Any())
+                            {
+                                <button disabled class="btn row btnPendente">Pendente</button>
+                            }
+                            else
+                            {
+                                <form asp-action="DesfazerPedidoAmizade" asp-controller="Perfil" method="post">
+                                    <input type="hidden" id="id" name="id" value="@perfil.Usuario.Perfil.Id" runat="server" />
+                                    <button class="btn row btnConectado" name="id">Desconectar</button>
+                                </form>
+                            }
+                        }
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+        }
+    }
+ </div>
+
+
